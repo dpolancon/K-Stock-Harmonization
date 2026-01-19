@@ -1,0 +1,3 @@
+ME: family=weibull, scale=15.902822467212603, shape=2.4195589043160686, mean_life=14.099758276809624, rmse=7481.915299387603, status=ok
+NRC: family=weibull, scale=41.30495458726274, shape=5.0, mean_life=37.92491820826626, rmse=7525.654814840147, status=ok
+RC: family=weibull, scale=51.16480363121812, shape=5.0, mean_life=46.977923405206255, rmse=5329.914845455709, status=ok

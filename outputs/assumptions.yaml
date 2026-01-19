@@ -1,0 +1,28 @@
+deflator: Hofman 1980 -> 2003
+deflator_factor: 57.30637899487871
+perez_scaling_applied: true
+perez_scaling_lambda_bar: 0.24707555236849596
+perez_scaling_source: mean(lambda_ratio) from overlap_investment_ratio_lambda.csv
+share_source: Hofman2000_GrossInvestment.xlsx
+control_total: PerezEyzaguirre_DemandaAgregada.xlsx
+share_extension: ffill/bfill outside Hofman coverage
+gap_ratio: constant pre/post using overlap medians
+survival:
+  ME:
+    family: weibull
+    scale: 7.5
+    shape: 1.9986553872828603
+    mean_life: 6.646783877652735
+    rmse: 1959253.400362647
+  NRC:
+    family: weibull
+    scale: 40.0
+    shape: 2.0
+    mean_life: 35.449077018110316
+    rmse: 2858091.5590240415
+  RC:
+    family: weibull
+    scale: 50.0
+    shape: 2.0
+    mean_life: 44.3113462726379
+    rmse: 1783456.69292633

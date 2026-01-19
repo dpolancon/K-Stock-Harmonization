@@ -1,0 +1,3 @@
+ME: anchor_factor=1.013542647628332
+NRC: anchor_factor=1.0257453116923791
+RC: anchor_factor=1.045246473614116

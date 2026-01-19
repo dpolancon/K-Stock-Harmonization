@@ -1,0 +1,26 @@
+mode: BASELINE_1980_HOFMAN
+investment_source: Hofman2000_GrossInvestment.xlsx (1980 CLP)
+stocks_source: Hofman_Kstock_gross_net_19501994.xlsx (1980 CLP)
+shares_residual: Ig_residual retained, no forced additivity
+survival_family:
+  ME: weibull
+  NRC: weibull
+  RC: weibull
+survival_params:
+  ME:
+    scale: 15.902822467212603
+    shape: 2.4195589043160686
+    mean_life: 14.099758276809624
+    status: ok
+  NRC:
+    scale: 41.30495458726274
+    shape: 5.0
+    mean_life: 37.92491820826626
+    status: ok
+  RC:
+    scale: 51.16480363121812
+    shape: 5.0
+    mean_life: 46.977923405206255
+    status: ok
+anchor: Multiplicative factor per asset to match Kg(1950) observed
+gap_extension: Constant B/Kg ratio = median overlap per asset

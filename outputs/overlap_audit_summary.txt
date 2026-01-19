@@ -1,0 +1,4 @@
+Total overlap years: 45
+R_imp<0 (Total): 0/45 (0.000%)
+D_imp<0 (Total): 0/45 (0.000%)
+Hofman-only overlap coherence holds within 5% threshold.

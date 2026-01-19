@@ -1,0 +1,4 @@
+Full-period audit 1900-1994
+Total records: 475
+Total z out-of-bounds count: 7
+Total delta out-of-bounds count: 0

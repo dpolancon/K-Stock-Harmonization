@@ -1,0 +1,2970 @@
+[
+  {
+    "type":"definitional mismatch",
+    "asset":"Total",
+    "year":1991,
+    "message":"Hofman investment components deviate from total",
+    "value":-0.0104859907
+  },
+  {
+    "type":"definitional mismatch",
+    "asset":"Total",
+    "year":1991,
+    "message":"Split investment does not add to control total",
+    "value":-0.0104859907
+  },
+  {
+    "type":"survival model misfit",
+    "asset":"NRC",
+    "year":1860,
+    "message":"No non-negative retirements; falling back to prior",
+    "value":40.0
+  },
+  {
+    "type":"survival model misfit",
+    "asset":"RC",
+    "year":1860,
+    "message":"No non-negative retirements; falling back to prior",
+    "value":50.0
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1950,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-29.2281244331
+  },
+  {
+    "type":"definitional mismatch",
+    "asset":"ME",
+    "year":1950,
+    "message":"Bridge identity deviation",
+    "value":-12300789.3082773276
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1951,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0606889866
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1951,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.071424458
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1952,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0625444084
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1952,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0784072761
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1953,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0507082104
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1953,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0598796812
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1954,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0397399247
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1954,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0332455815
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1955,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0434978887
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1955,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0334338897
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1956,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0565980669
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1956,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0548222199
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1957,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0816210704
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1957,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0830821289
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1958,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0947073586
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1958,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0935492714
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1959,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0713498118
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1959,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0495086777
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1960,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0578791164
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1960,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0263277516
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1961,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0647067527
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1961,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0491529751
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1962,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.053770771
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1962,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0504538415
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1963,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0375505678
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1963,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0286040677
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1964,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0315862128
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1964,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0193252003
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1965,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0274216392
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1965,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0128641159
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1966,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0264320536
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1966,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.01298372
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1967,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0303079635
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1967,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0261558845
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1968,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0382000649
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1968,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0338322271
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1969,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0468382279
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1969,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0365344133
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1970,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0437128643
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1970,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.031629157
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1971,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0322544002
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1971,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0225459222
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1972,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0075062491
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1974,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0045144184
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1975,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0068322745
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1978,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0164796299
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1978,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.020318229
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1979,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0310789303
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1979,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0424962788
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1980,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0464939169
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1980,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0638666465
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1981,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.05979179
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1981,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0852097324
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1982,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.033320652
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1982,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0422751328
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1987,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0089052526
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1988,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0312449612
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1988,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0280625808
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1989,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0493462304
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1989,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.059388254
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1990,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.061581186
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1990,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0733798124
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1991,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0568120665
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1991,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0545510316
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1992,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0620701631
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1992,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0669492197
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1993,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0755055676
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1993,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.1044329034
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1994,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0759634896
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"ME",
+    "year":1994,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.1091932517
+  },
+  {
+    "type":"definitional mismatch",
+    "asset":"ME",
+    "year":1995,
+    "message":"Bridge identity deviation",
+    "value":74075039.2994148433
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1950,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-16.7545101256
+  },
+  {
+    "type":"definitional mismatch",
+    "asset":"NRC",
+    "year":1950,
+    "message":"Bridge identity deviation",
+    "value":-31045120.5479299352
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1951,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0241521809
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1951,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0291348189
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1952,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0262548242
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1952,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0383752812
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1953,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0271964244
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1953,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.03769253
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1954,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0263103205
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1954,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0302300634
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1955,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0309385654
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1955,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0266411565
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1956,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0333864565
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1956,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.031737334
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1957,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0330894429
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1957,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0423155628
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1958,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0374792373
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1958,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0476732831
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1959,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0333869354
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1959,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0357634834
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1960,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0376643692
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1960,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0355766097
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1961,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0475001344
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1961,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0423355173
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1962,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0486222019
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1962,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.04210385
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1963,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0559305175
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1963,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0586303079
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1964,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0576353685
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1964,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0647849139
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1965,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0455366152
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1965,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0510115202
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1966,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0308540227
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1966,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0383629719
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1967,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0283889085
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1967,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0331881801
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1968,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0320311662
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1968,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0334480987
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1969,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.027458615
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1969,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.033106522
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1970,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0248229807
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1970,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0375529923
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1971,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0301015005
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1971,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.03691191
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1972,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0318071747
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1972,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0238697285
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1973,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0268598037
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1973,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0120874083
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1974,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0281315778
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1974,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0133284306
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1975,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0237328423
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1975,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0083141726
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1976,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0110789077
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1977,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0084677858
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1978,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0107074874
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1978,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0000962315
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1979,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.01627335
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1979,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0071250186
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1980,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0224204545
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1980,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0131929105
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1981,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0318484007
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1981,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0296912677
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1982,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0314448556
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1982,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0255390478
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1983,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0232184681
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1983,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0079530092
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1984,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0283733929
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1984,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.017578006
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1985,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0323611036
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1985,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0291473108
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1986,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0305881474
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1986,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0282943136
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1987,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0307670246
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1987,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0311247434
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1988,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0337795275
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1988,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0368109893
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1989,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0375989082
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1989,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.043250393
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1990,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0412597428
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1990,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0485254988
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1991,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0392133787
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1991,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0436795908
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1992,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0382423632
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1992,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0439639137
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1993,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0440335276
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1993,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0527686729
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1994,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0470067421
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NRC",
+    "year":1994,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0547425131
+  },
+  {
+    "type":"definitional mismatch",
+    "asset":"NRC",
+    "year":1995,
+    "message":"Bridge identity deviation",
+    "value":140451128.1483412385
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1950,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-17.5825486154
+  },
+  {
+    "type":"definitional mismatch",
+    "asset":"RC",
+    "year":1950,
+    "message":"Bridge identity deviation",
+    "value":-32257288.5206512883
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1951,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0348560103
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1951,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0315712186
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1952,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0311457602
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1952,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0293126642
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1953,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0328699738
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1953,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0331678922
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1954,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0362466007
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1954,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0399194586
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1955,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0413068738
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1955,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0459036424
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1956,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0344114722
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1956,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0351346519
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1957,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0179376298
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1957,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0138968995
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1958,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0118876852
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1958,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0060412466
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1959,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0165779242
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1959,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0103593295
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1960,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0268751621
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1960,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0224800851
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1961,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0256583371
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1961,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0234907175
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1962,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0254093104
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1962,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0260025739
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1963,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0348980054
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1963,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.039652362
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1964,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0351694103
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1964,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0369498178
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1965,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0338087082
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1965,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.029267495
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1966,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0339102301
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1966,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0299880229
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1967,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0285431333
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1967,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0273097531
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1968,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0291235289
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1968,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0276282529
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1969,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0347048042
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1969,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0338299815
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1970,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0377863002
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1970,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0349846254
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1971,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0416429309
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1971,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.036356355
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1972,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0403217782
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1972,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0333681658
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1973,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0304171112
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1973,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0206931051
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1974,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0265815741
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1974,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0170468896
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1975,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0217758656
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1975,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0132633973
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1976,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0105432825
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1976,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0023416725
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1977,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0081826175
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1978,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0087969302
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1979,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0092939503
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1980,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0169982634
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1980,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0093446462
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1981,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0238163836
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1981,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0151890709
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1982,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0193743134
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1982,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0050896518
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1983,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0112640059
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1984,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0066537663
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1985,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0062623333
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1986,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0106353203
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1987,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0135110379
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1987,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.004955583
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1988,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0166024144
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1988,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0110189852
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1989,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0205228691
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1989,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0192884339
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1990,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0213885495
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1990,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0239893628
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1991,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.022252601
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1991,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0261939429
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1992,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0279603765
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1992,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0342988879
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1993,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0339138179
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1993,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0446962819
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1994,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0352186954
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"RC",
+    "year":1994,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0491292118
+  },
+  {
+    "type":"definitional mismatch",
+    "asset":"RC",
+    "year":1995,
+    "message":"Bridge identity deviation",
+    "value":103611400.6861754358
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1950,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-19.1011844736
+  },
+  {
+    "type":"definitional mismatch",
+    "asset":"NR",
+    "year":1950,
+    "message":"Bridge identity deviation",
+    "value":-43345909.8562072664
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1951,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0343522424
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1951,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0411542057
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1952,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.036674648
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1952,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.050138922
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1953,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0341344713
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1953,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0444156792
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1954,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0303450112
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1954,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0311602297
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1955,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0347526147
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1955,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0287460925
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1956,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0405109363
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1956,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0389485893
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1957,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0482530182
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1957,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.055294071
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1958,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0559844723
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1958,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0627327709
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1959,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0461455545
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1959,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0404250868
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1960,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0446313621
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1960,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0324054654
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1961,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0535140988
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1961,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0446650599
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1962,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0504445997
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1962,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0449798368
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1963,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0493945832
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1963,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0482070821
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1964,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0484740572
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1964,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0492879671
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1965,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0392633563
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1965,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.038357921
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1966,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0293392101
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1966,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0301399865
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1967,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0290454
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1967,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0309411114
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1968,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0341470679
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1968,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0335706251
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1969,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0341435664
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1969,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0342040674
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1970,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0314287295
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1970,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0356461472
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1971,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0308643011
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1971,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0322922707
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1972,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0231759632
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1972,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0151762825
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1973,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0151629644
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1973,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0035662733
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1974,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0200312515
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1974,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0053729725
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1975,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0180191536
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1975,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0008242188
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1976,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.004765207
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1977,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0034195463
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1978,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0126038264
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1978,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0061156819
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1979,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0211682382
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1979,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0178573987
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1980,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.030479396
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1980,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0290291092
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1981,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0413778802
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1981,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0477357843
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1982,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0320977837
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1982,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0312034629
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1983,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0119087383
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1984,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0118181979
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1985,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0167809218
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1985,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0115960985
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1986,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0174851565
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1986,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0136583296
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1987,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0239310771
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1987,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0208547626
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1988,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0329975369
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1988,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0342174893
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1989,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0412240262
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1989,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0480238417
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1990,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0475967041
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1990,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0559951379
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1991,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0447877787
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1991,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0470154319
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1992,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0458920697
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1992,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0510944936
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1993,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0543245569
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1993,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0691277639
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1994,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0566985782
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"NR",
+    "year":1994,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0726587358
+  },
+  {
+    "type":"definitional mismatch",
+    "asset":"NR",
+    "year":1995,
+    "message":"Bridge identity deviation",
+    "value":214526167.4477560818
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1950,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-18.3835041731
+  },
+  {
+    "type":"definitional mismatch",
+    "asset":"Total",
+    "year":1950,
+    "message":"Bridge identity deviation",
+    "value":-75603198.3768585473
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1951,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0345678968
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1951,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0368170352
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1952,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0343094123
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1952,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.040776912
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1953,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0335957129
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1953,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0394238282
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1954,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0328562619
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1954,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0350201484
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1955,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0375503057
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1955,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0363395512
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1956,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0378985221
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1956,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0372460078
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1957,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0353267115
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1957,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0368858892
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1958,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0375329444
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1958,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0381583873
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1959,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0341015492
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1959,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0278327057
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1960,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0375268241
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1960,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0283245565
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1961,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0424941393
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1961,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0360233685
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1962,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0407132148
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1962,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0373453246
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1963,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0438475219
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1963,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0448085642
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1964,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0434309679
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1964,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0444180269
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1965,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0372143985
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1965,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0348022224
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1966,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0310494153
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1966,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0300809379
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1967,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0288570925
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1967,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0295319512
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1968,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0322658909
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1968,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0312730802
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1969,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0343529268
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1969,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.034060142
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1970,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0337996743
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1970,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.035391967
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1971,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0348960418
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1971,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0338509679
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1972,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0296286854
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1972,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.02216549
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1973,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0209621538
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1973,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0102156835
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1974,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0225434153
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1974,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0099487244
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1975,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0194649255
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1975,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0057300512
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1976,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0069929617
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1977,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0052616067
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1978,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0111284126
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1978,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0020975827
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1979,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0165826801
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1979,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.009888153
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1980,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0253168657
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1980,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0213073117
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1981,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0347157364
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1981,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0351455109
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1982,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0273307522
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1982,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0213278035
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1983,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0116692837
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1984,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0099024569
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1985,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0128965718
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1985,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0047072065
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1986,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0149752119
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1986,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.008613382
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1987,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0201330793
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1987,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.01515642
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1988,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0270681892
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1988,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.026004913
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1989,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0338237314
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1989,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.038022746
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1990,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.03836398
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1990,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0450877651
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1991,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0369915399
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1991,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0400814283
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1992,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0397838902
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1992,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0455862245
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1993,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0474614852
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1993,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.061220822
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1994,
+    "message":"Retirement rate outside [0,1]",
+    "value":-0.0495812775
+  },
+  {
+    "type":"rate out of bounds",
+    "asset":"Total",
+    "year":1994,
+    "message":"Depreciation rate outside [0,1]",
+    "value":-0.0651813733
+  },
+  {
+    "type":"definitional mismatch",
+    "asset":"Total",
+    "year":1995,
+    "message":"Bridge identity deviation",
+    "value":318137568.1339315176
+  }
+]
