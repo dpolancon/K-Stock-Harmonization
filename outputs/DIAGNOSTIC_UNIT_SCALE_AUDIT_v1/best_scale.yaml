@@ -1,0 +1,6 @@
+best_pair:
+  baseline_multiplier: 1.0
+  perez_multiplier: 1.0
+score: 1.5710308129030128
+decision_rule: minimize abs(logdiff_mean) + logdiff_sd
+n_obs: 95

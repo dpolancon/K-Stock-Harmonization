@@ -1,0 +1,12 @@
+inputs:
+  perez_scaled_anchor: /workspace/K-Stock-Harmonization/outputs/ANCHOR_PEREZ_FBFK_2003CLP_v2_SCALED/perez_anchor_pack_1860_2010_scaled.csv
+  hofman_shares: /workspace/K-Stock-Harmonization/outputs/investment_block_hofman_1980.csv
+  baseline_reporting_series: /workspace/K-Stock-Harmonization/outputs/EXTENSION_REPORTING_2003CLP_v1/converted_series_2003CLP_1900_1994.csv
+lambda_source: /workspace/K-Stock-Harmonization/outputs/DIAGNOSTIC_LEVEL_NORMALIZATION_LAMBDA_v1/lambda_estimates.yaml
+share_source: /workspace/K-Stock-Harmonization/outputs/investment_block_hofman_1980.csv
+asset_mapping:
+  ME: s_ME
+  NRC: s_NRC
+  RC: s_RC
+candidate_total_definition: Perez FBKF total excl inventories scaled by lambda
+notes: Candidate total excludes inventories by design.
