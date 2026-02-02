@@ -1,0 +1,7 @@
+inputs:
+  investment_block_candidate: /workspace/K-Stock-Harmonization/outputs/EXTENSION_INVESTMENT_BLOCK_CANDIDATE_PEREZ_SCALED_HOFMAN_SHARES_2003CLP_v1/investment_block_candidate_1900_1994.csv
+  survival_fit: /workspace/K-Stock-Harmonization/outputs/survival_fit_hofman_1980.csv
+  baseline_reporting_series: /workspace/K-Stock-Harmonization/outputs/EXTENSION_REPORTING_2003CLP_v1/converted_series_2003CLP_1900_1994.csv
+notes: candidate stocks computed from candidate investment block; baseline untouched
+inventories_excluded: true
+engine_reference: weibull survival + stock_from_survival from codes/run_harmonization.py

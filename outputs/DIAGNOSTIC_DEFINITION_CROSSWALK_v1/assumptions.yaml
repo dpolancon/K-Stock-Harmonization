@@ -1,0 +1,8 @@
+files_read:
+  baseline_reporting_series: /workspace/K-Stock-Harmonization/outputs/EXTENSION_REPORTING_2003CLP_v1/converted_series_2003CLP_1900_1994.csv
+  perez_demanda_agregada: /workspace/K-Stock-Harmonization/data/raw/PerezEyzaguirre_DemandaAgregada.xlsx
+perez_investment_column_logic: First column containing 'Invers' in header row
+perez_price_space_statement: "PIB Real (milllones de pesos de 2003) | Exportaciones\
+  \ FOB (millones de pesos de 2003) | Importaciones CIF (millones de pesos de 2003)\
+  \ | Exportaciones netas | FBKF en maquinaria | FBKF en construcci\xF3n | Variaci\xF3\
+  n de inventarios | Inversi\xF3n Interna Bruta | Consumo del Gobierno | Consumo privado"

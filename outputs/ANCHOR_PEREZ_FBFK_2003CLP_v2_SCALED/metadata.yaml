@@ -1,0 +1,30 @@
+source_file: /workspace/K-Stock-Harmonization/data/raw/PerezEyzaguirre_DemandaAgregada.xlsx
+sheet: Demanda Agregada
+price_space: 2003 pesos
+unit_statement: millones de pesos de 2003
+header_note: "PIB Real (milllones de pesos de 2003) | Exportaciones FOB (millones\
+  \ de pesos de 2003) | Importaciones CIF (millones de pesos de 2003) | Exportaciones\
+  \ netas | FBKF en maquinaria | FBKF en construcci\xF3n | Variaci\xF3n de inventarios\
+  \ | Inversi\xF3n Interna Bruta | Consumo del Gobierno | Consumo privado"
+columns_used:
+  FBKF en maquinaria: FBKF en maquinaria
+  "FBKF en construcci\xF3n": "FBKF en construcci\xF3n"
+  "Variaci\xF3n de inventarios": "Variaci\xF3n de inventarios"
+  "Inversi\xF3n Interna Bruta": "Inversi\xF3n Interna Bruta"
+definitions:
+  perez_fbfk_maquinaria: FBKF en maquinaria (Perez)
+  perez_fbfk_construccion: "FBKF en construcci\xF3n (Perez)"
+  perez_inventarios: "Variaci\xF3n de inventarios (Perez)"
+  perez_iib_gross: "Inversi\xF3n Interna Bruta (Perez)"
+  perez_fbfk_total_ex_inv: "FBKF total excl. inventories = maquinaria + construcci\xF3\
+    n"
+intended_usage: FBKF_total_ex_inv is admissible for capital formation; inventories
+  are not used for capital-stock accumulation but retained for macro identity checks.
+lambda_choice: 4.105381794084627
+lambda_source: /workspace/K-Stock-Harmonization/outputs/DIAGNOSTIC_LEVEL_NORMALIZATION_LAMBDA_v1/lambda_estimates.yaml
+level_normalization_note: Scaled series use lambda as a level normalization bridge;
+  this is not a unit conversion.
+scaled_columns:
+- perez_fbfk_maquinaria_scaled
+- perez_fbfk_construccion_scaled
+- perez_fbfk_total_ex_inv_scaled

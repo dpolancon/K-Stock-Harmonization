@@ -1,0 +1,8 @@
+extension: EXTENSION_REPORTING_2003CLP_v1
+classification: Reporting-space extension
+baseline_series: /workspace/K-Stock-Harmonization/outputs/harmonized_series_1980CLP_1900_1994.csv
+deflator_source: outputs/assumptions.yaml (computed from data/raw/Hofman2000_anchors.xlsx)
+deflator_factor: 57.30637899487871
+from_price_year: 1980
+to_price_year: 2003
+notes: Baseline values preserved; scaled outputs only for reporting.

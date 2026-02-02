@@ -1,0 +1,6 @@
+lambda_median: 4.105381794084627
+lambda_mean: 3.93912423675738
+lambda_trim10: 4.032850914599239
+lambda_choice: 4.105381794084627
+lambda_rule: lambda_median (robust to outliers)
+n_obs: 95
