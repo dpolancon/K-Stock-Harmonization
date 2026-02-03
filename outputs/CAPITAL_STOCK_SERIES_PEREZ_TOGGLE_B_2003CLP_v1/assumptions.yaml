@@ -1,0 +1,19 @@
+toggle_definition: 'Toggle B: I_total = FBKF machinery + FBKF construction; inventories
+  treated as residual'
+inputs:
+  perez_raw: /workspace/K-Stock-Harmonization/data/raw/PerezEyzaguirre_DemandaAgregada.xlsx
+  hofman_shares: /workspace/K-Stock-Harmonization/outputs/investment_block_hofman_1980.csv
+  baseline_reporting: /workspace/K-Stock-Harmonization/outputs/EXTENSION_REPORTING_2003CLP_v1/converted_series_2003CLP_1900_1994.csv
+  survival_params: /workspace/K-Stock-Harmonization/outputs/survival_fit_hofman_1980.csv
+  baseline_rates: /workspace/K-Stock-Harmonization/outputs/rates_1900_1994.csv
+survival_family: Weibull
+survival_mapping: R_t = sum I_tau * (S(age-1) - S(age)); Kg_t = sum I_tau * S(age)
+gap_ratio_windows:
+  pre_overlap_window: 1950-1954
+  post_overlap_window: 1990-1994
+  overlap_window: 1950-1994
+  fallback_rules: Use overlap median if pre/post median missing; if still missing,
+    use fallback ratio 0.1
+rate_formulas:
+  z: R_t / Kg_{t-1}
+  delta: D_t / Kn_{t-1}
