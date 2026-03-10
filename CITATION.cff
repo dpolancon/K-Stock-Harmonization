@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use this repository, cite the software and the canonical harmonized baseline."
+title: "K-Stock-Harmonization: Stock-Flow Consistent Capital Stocks for Chile"
+type: software
+version: v1
+date-released: 2026-03-10
+authors:
+  - family-names: "TODO"
+    given-names: "TODO"
+abstract: >-
+  Repository for a frozen Hofman-only accounting reference in constant 1980 CLP
+  and a canonical Perez-based harmonized baseline in constant 2003 CLP for
+  Chilean capital stocks, 1900-1994.

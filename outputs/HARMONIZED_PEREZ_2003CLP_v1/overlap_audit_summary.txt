@@ -1,0 +1,7 @@
+Overlap audit 1950-1994
+ME: R<0 0/45; D<0 0/45; z out 0/45; delta out 0/45
+NRC: R<0 0/45; D<0 0/45; z out 0/45; delta out 0/45
+RC: R<0 0/45; D<0 0/45; z out 0/45; delta out 0/45
+NR: R<0 0/45; D<0 0/45; z out 0/45; delta out 0/45
+Total: R<0 0/45; D<0 0/45; z out 0/45; delta out 0/45
+Status: PASS

@@ -1,166 +1,74 @@
-# BASELINE_1980_HOFMAN_v1  
-**Jointly Stock–Flow Consistent Capital Stocks for Chile (1900–1994)**
+# K-Stock-Harmonization
 
-## Status
-🔒 **FROZEN BASELINE — DO NOT MODIFY**
+Stock-flow consistent capital-stock harmonization for Chile, 1900-1994.
 
-This directory contains the frozen reference implementation of the **Hofman-only,
-1980-price baseline** for reconstructing gross and net capital stocks in Chile using
-a jointly stock–flow consistent (j-SFC) framework.
+## Repository status
 
-All subsequent harmonization work (Perez integration, deflators, alternative splices,
-robustness checks) **must branch from this baseline** and must not overwrite it.
+- Frozen accounting reference: Hofman-only baseline in constant 1980 CLP.
+- Canonical harmonized baseline: Perez FBKF excluding inventories in constant 2003 CLP.
+- Deferred but documented sources: BCCH, ClioLab, and Tafunell remain outside the production baseline in v1.
 
----
+## Canonical command
 
-## Purpose of this Baseline
+Run:
 
-This baseline establishes the **maximum internally coherent reconstruction** that can
-be achieved using:
+`python codes/run_harmonization.py`
 
-- Hofman (2000) investment and stock data only
-- Native valuation: **constant 1980 Chilean pesos**
-- No external control totals
-- No deflators
-- No cross-source scaling
+This command writes the public harmonized baseline to:
 
-It answers the question:
+`outputs/HARMONIZED_PEREZ_2003CLP_v1/`
 
-> *“What does the data look like when the accounting identities work exactly as intended?”*
+Required artifacts:
 
-This baseline is the **accounting reference point** for all later harmonization steps.
+- `harmonized_series_2003CLP_1900_1994.csv`
+- `harmonized_series_2003CLP_1900_1994.xlsx`
+- `assumptions.yaml`
+- `overlap_audit_summary.txt`
+- `audit_summary_full_1900_1994.txt`
+- `violation_log.csv`
+- `summary.md`
 
----
+## Baseline distinction
 
-## Data Sources Used (Exclusively)
+The repo keeps two distinct baselines:
 
-- **Hofman (2000)**  
-  *Standardised capital stock estimates in Latin America*  
-  - Gross fixed capital formation (by asset)
-  - Gross capital stock (Kg)
-  - Net capital stock (Kn)
-  - Asset categories:
-    - Machinery & Equipment (ME)
-    - Non-Residential Construction (NRC)
-    - Residential Construction (RC)
+- Frozen Hofman accounting reference in 1980 CLP.
+  - Main artifacts: `outputs/harmonized_series_1980CLP_1900_1994.csv`, `outputs/survival_fit_hofman_1980.csv`, `outputs/assumptions_baseline_1980.yaml`.
+- Canonical Perez harmonized baseline in 2003 CLP.
+  - Production surface: `codes/run_harmonization.py`.
+  - Control concept: Perez machinery plus construction only.
+  - Ex-inventories means excluding inventories, not ex post.
 
-No Perez-Eyzaguirre, ClioLab, Tafunell, Díaz–Wagner, or deflated series are used here.
+Inventories are excluded from accumulation because the production pipeline models fixed capital only (`ME`, `NRC`, `RC`).
 
----
+## Documentation
 
-## Valuation and Units
+Long-form reverse documentation lives in `docs/`:
 
-- **Prices**: Constant **1980 CLP**
-- **Additivity**: Preserved exactly (no chain weighting)
-- **Accounting space**: Fully additive, identity-safe
+- `docs/index.md`
+- `docs/notation.md`
+- `docs/data-landscape.md`
+- `docs/baseline-hofman.md`
+- `docs/harmonized-perez.md`
+- `docs/validation.md`
+- `docs/source-reconciliation.md`
+- `docs/code-map.md`
+- `docs/reproducibility.md`
 
----
+## Reproducibility contract
 
-## Methodological Closure
+`outputs/HARMONIZED_PEREZ_2003CLP_v1/assumptions.yaml` records:
 
-### Core Identities (j-SFC)
+- canonical command
+- git commit
+- repo clean/dirty status at generation time
+- Python version
+- SHA256 hashes of all required pipeline inputs
 
-For each asset \( a \):
+The Excel workbook is a one-sheet serialization of the same long canonical panel published in the CSV. It does not introduce reshaping or additional reporting logic.
 
-- Gross stock:
-  \[
-  \Delta K^g_{a,t} = I^g_{a,t} - R_{a,t}
-  \]
+`output/` may contain presentation derivatives such as PDFs, but it is not the public interface of the baseline.
 
-- Net stock:
-  \[
-  \Delta K^n_{a,t} = I^g_{a,t} - D_{a,t}
-  \]
+## Citation
 
-- Implied flows:
-  \[
-  R_{a,t} = I^g_{a,t} - \Delta K^g_{a,t}
-  \]
-  \[
-  D_{a,t} = I^g_{a,t} - \Delta K^n_{a,t}
-  \]
-
-- Rates:
-  \[
-  z_{a,t} = R_{a,t} / K^g_{a,t-1}
-  \]
-  \[
-  \delta_{a,t} = D_{a,t} / K^n_{a,t-1}
-  \]
-
-These rates are **diagnostics**, not calibration parameters.
-
----
-
-## Retirement & Survival Logic
-
-- **Observed period (1950–1994)**:
-  - Retirements and depreciation recovered directly from identities
-  - No imposed schedules
-
-- **Estimated survival functions**:
-  - Weibull fits to implied retirements in the overlap
-  - Used only to reconstruct **pre-1950** stocks
-
-Estimated mean service lives (overlap-based):
-
-| Asset | Mean Life (years) |
-|------|------------------|
-| ME   | ~14 |
-| NRC  | ~38 |
-| RC   | ~47 |
-
----
-
-## Pre-1950 Reconstruction Strategy
-
-- **Anchoring**:
-  - Pre-1950 stocks are scaled to exactly hit observed \( K^g_{1950} \) by asset
-
-- **Gap extension rule**:
-  - The **median overlap capital gap ratio**  
-    \[
-    B_t / K^g_t
-    \]
-    (where \( B_t = K^g_t - K^n_t \))  
-    is extended backward by asset to recover net stocks.
-
-This rule is simple, transparent, and identity-preserving.
-
----
-
-## Diagnostics Summary
-
-### Overlap Period (1950–1994)
-
-- Negative retirements: **0 / 45 years**
-- Negative depreciation: **0 / 45 years**
-- All admissibility constraints satisfied
-
-### Full Period (1900–1994)
-
-- No negative stocks
-- Early-period rate warnings only (expected in retropolation)
-- No identity violations
-
-This is the **only run** that passes all j-SFC admissibility checks without qualification.
-
----
-
-## Outputs
-
-Key files:
-
-- `harmonized_series_1980CLP_1900_1994.csv`
-- `rates_1900_1994.csv`
-- `audit_full_1900_1994.csv`
-- `survival_fit_hofman_1980.csv`
-- `assumptions_baseline_1980.yaml`
-- `violation_log_baseline_1980.csv`
-
----
-
-## Naming & Versioning
-
-This baseline is locked as:
-
+Citation metadata is in `CITATION.cff`.

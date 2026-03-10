@@ -1,0 +1,66 @@
+primary_price_space: 2003 CLP
+control_concept: FBKF ex inventories
+inventories_excluded_from_accumulation: true
+git_commit: a7500823ecc4f0e8b61c11c34ee351fccf596b3a
+python_version: 3.11.9
+command: python codes/run_harmonization.py
+repo_status: dirty
+lambda_choice: 4.105381794084627
+lambda_rule: lambda_median (robust to outliers)
+lambda_stats:
+  lambda_choice: 4.105381794084627
+  lambda_median: 4.105381794084627
+  lambda_mean: 3.93912423675738
+  lambda_trim10: 4.032850914599239
+  n_obs: 95
+  lambda_rule: lambda_median (robust to outliers)
+lambda_source: C:\ReposGitHub\K-Stock-Harmonization\outputs\DIAGNOSTIC_LEVEL_NORMALIZATION_LAMBDA_v1\lambda_estimates.yaml
+hofman_share_source: C:\ReposGitHub\K-Stock-Harmonization\data\raw\Hofman2000_GrossInvestment.xlsx
+survival_parameter_source: C:\ReposGitHub\K-Stock-Harmonization\outputs\survival_fit_hofman_1980.csv
+gap_ratio_source: C:\ReposGitHub\K-Stock-Harmonization\outputs\harmonized_series_1980CLP_1900_1994.csv
+frozen_baseline_reference: C:\ReposGitHub\K-Stock-Harmonization\outputs\harmonized_series_1980CLP_1900_1994.csv
+deferred_sources:
+- BCCH_1985_2024.xlsx
+- BCCH_ref2018_Pk.xlsx
+- ClioLab_GFKF_Freal_nominal_Pk.xlsx
+- Kn_ClioLab.xlsx
+- Tafunell_Ducoing_2016_Kg.xlsx
+- tafunel_2013_Ig.xlsx
+perez_metadata:
+  source_file: C:\ReposGitHub\K-Stock-Harmonization\data\raw\PerezEyzaguirre_DemandaAgregada.xlsx
+  sheet: Demanda Agregada
+  header_note: "PIB Real (milllones de pesos de 2003) | Exportaciones FOB (millones\
+    \ de pesos de 2003) | Importaciones CIF (millones de pesos de 2003) | Exportaciones\
+    \ netas | FBKF en maquinaria | FBKF en construcci\xF3n | Variaci\xF3n de inventarios\
+    \ | Inversi\xF3n Interna Bruta | Consumo del Gobierno | Consumo privado"
+  columns_used:
+    FBKF en maquinaria: FBKF en maquinaria
+    FBKF en construccion: "FBKF en construcci\xF3n"
+    Variacion de inventarios: "Variaci\xF3n de inventarios"
+  control_concept: FBKF ex inventories
+  inventories_excluded_from_accumulation: true
+regression_vs_extension_candidate:
+  investment_max_abs_diff_ME: 1.862645149230957e-09
+  investment_max_abs_diff_NRC: 1.862645149230957e-09
+  investment_max_abs_diff_RC: 9.313225746154785e-10
+  investment_max_abs_diff_Total: 7.450580596923828e-09
+  kg_max_abs_diff_ME: 2.9802322387695312e-08
+  kn_max_abs_diff_ME: 2.2351741790771484e-08
+  kg_max_abs_diff_NRC: 2.9802322387695312e-08
+  kn_max_abs_diff_NRC: 2.9802322387695312e-08
+  kg_max_abs_diff_RC: 1.4901161193847656e-08
+  kn_max_abs_diff_RC: 1.4901161193847656e-08
+  kg_max_abs_diff_Total: 5.960464477539063e-08
+  kn_max_abs_diff_Total: 8.940696716308594e-08
+regression_ok: true
+meets_overlap_admissibility: true
+meets_full_period_admissibility: true
+early_rate_out_count: 0
+early_rate_out_max: 0
+input_hashes:
+  data/raw/PerezEyzaguirre_DemandaAgregada.xlsx: b750e3d2e0e94dfaf0355a54a2b64d1bbeaf9afecafcdbfdc9735dbca7fbbf94
+  data/raw/Hofman2000_GrossInvestment.xlsx: 79f48d96de1595afacfcb1b7b99fdb447aeb8550d319db56c6fe28a0c4132988
+  outputs/DIAGNOSTIC_LEVEL_NORMALIZATION_LAMBDA_v1/lambda_estimates.yaml: f6417b820dc7866d6419519a6d81bfee497e355db7fd36d9c2ff2b32957a5bd2
+  outputs/survival_fit_hofman_1980.csv: 9275922753ce200f57b7c9f65d29b86efce2253e8c4c27f5cd9d2648adfeba9f
+  outputs/harmonized_series_1980CLP_1900_1994.csv: c04637de75d6aea74241b520edfa335fce12470a9855b264d15ef95b4b266500
+generated_at_utc: '2026-03-10T17:41:39Z'

@@ -1,42 +1,67 @@
 from __future__ import annotations
+
 from dataclasses import dataclass
+from datetime import datetime, timezone
+import hashlib
 from pathlib import Path
+import re
+import subprocess
+import sys
+import tempfile
 from typing import Dict, Iterable, List, Tuple
+import zipfile
 
 import numpy as np
 import pandas as pd
-import scipy.optimize as opt
-from scipy.special import gamma
 import yaml
 
 
 ASSETS = ["ME", "NRC", "RC"]
-ASSET_PRIORS = {"ME": 15.0, "NRC": 40.0, "RC": 50.0}
+PANEL_ASSETS = ["ME", "NRC", "RC", "NR", "Total"]
 OVERLAP_START = 1950
 OVERLAP_END = 1994
-ADDITIVITY_TOL = 0.005  # 0.5%
+ADDITIVITY_TOL = 0.005
+IDENTITY_ABS_TOL = 1e-6
 AGE_MAX = 150
-LAMBDA_FALLBACK = 0.247
+EARLY_RATE_OUT_MAX = 0
+REGRESSION_INVEST_TOL = 1e-6
+REGRESSION_STOCK_TOL = 1e-6
+CANONICAL_COMMAND = "python codes/run_harmonization.py"
+
+DEFERRED_SOURCES = [
+    "BCCH_1985_2024.xlsx",
+    "BCCH_ref2018_Pk.xlsx",
+    "ClioLab_GFKF_Freal_nominal_Pk.xlsx",
+    "Kn_ClioLab.xlsx",
+    "Tafunell_Ducoing_2016_Kg.xlsx",
+    "tafunel_2013_Ig.xlsx",
+]
 
 
 @dataclass
-class SurvivalResult:
+class SurvivalSpec:
     asset: str
     scale: float
     shape: float
     mean_life: float
     rmse: float
-    survival: pd.Series  # indexed by age
-    retirements_model: pd.Series  # indexed by year
+    family: str
+    status: str
 
 
 class ViolationLog:
     def __init__(self) -> None:
-        self.records: List[Dict] = []
+        self.records: List[Dict[str, object]] = []
 
-    def add(self, vtype: str, asset: str, year: int, message: str, value) -> None:
+    def add(self, vtype: str, asset: str, year: int, message: str, value: float | None) -> None:
         self.records.append(
-            {"type": vtype, "asset": asset, "year": int(year), "message": message, "value": float(value) if pd.notna(value) else None}
+            {
+                "type": vtype,
+                "asset": asset,
+                "year": int(year),
+                "message": message,
+                "value": None if value is None or pd.isna(value) else float(value),
+            }
         )
 
     def to_frame(self) -> pd.DataFrame:
@@ -46,49 +71,159 @@ class ViolationLog:
 
 
 def ensure_dirs(paths: Iterable[Path]) -> None:
-    for p in paths:
-        p.mkdir(parents=True, exist_ok=True)
+    for path in paths:
+        path.mkdir(parents=True, exist_ok=True)
 
 
-def compute_deflator(anchor_path: Path) -> float:
-    kg_anchor = pd.read_excel(anchor_path, sheet_name="Hofman_2000_1950_anchors_Kg")
-    kg_1980 = kg_anchor[kg_anchor["prices"] == 1980].iloc[0]
-    kg_2003 = kg_anchor[kg_anchor["prices"] == 2003].iloc[0]
-    ratio = (kg_2003["Kg_ME_H2000"] * 1000) / kg_1980["Kg_ME_H2000"]
-    return float(ratio)
+def repo_relative(base_dir: Path, path: Path) -> str:
+    try:
+        return path.resolve().relative_to(base_dir.resolve()).as_posix()
+    except ValueError:
+        return str(path.resolve())
 
 
-def load_perez(path: Path) -> pd.DataFrame:
-    df = pd.read_excel(path, sheet_name="Demanda Agregada")
-    col_year = df.columns[0]
-    col_total = next(c for c in df.columns if "Invers" in c)
-    df = df.rename(columns={col_year: "year", col_total: "I_tot_control"})
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def git_stdout(base_dir: Path, args: List[str]) -> str | None:
+    try:
+        completed = subprocess.run(
+            ["git", *args],
+            cwd=base_dir,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    return completed.stdout.strip()
+
+
+def build_provenance(base_dir: Path, input_paths: List[Path]) -> Dict[str, object]:
+    git_commit = git_stdout(base_dir, ["rev-parse", "HEAD"])
+    git_status = git_stdout(base_dir, ["status", "--porcelain"])
+    if git_status is None:
+        repo_status = "unknown"
+    else:
+        repo_status = "clean" if git_status == "" else "dirty"
+
+    input_hashes = {repo_relative(base_dir, path): sha256_file(path) for path in input_paths}
+    return {
+        "git_commit": git_commit,
+        "python_version": sys.version.split()[0],
+        "command": CANONICAL_COMMAND,
+        "repo_status": repo_status,
+        "input_hashes": input_hashes,
+    }
+
+
+def resolve_generated_at(assumptions_path: Path, assumptions: Dict[str, object]) -> str:
+    generated_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+    if not assumptions_path.exists():
+        return generated_at
+
+    try:
+        existing = yaml.safe_load(assumptions_path.read_text(encoding="utf-8")) or {}
+    except Exception:
+        return generated_at
+
+    existing_generated_at = existing.get("generated_at_utc")
+    if not existing_generated_at:
+        return generated_at
+
+    current_compare = dict(assumptions)
+    existing_compare = dict(existing)
+    current_compare.pop("generated_at_utc", None)
+    existing_compare.pop("generated_at_utc", None)
+    if current_compare == existing_compare:
+        return str(existing_generated_at)
+    return generated_at
+
+
+def normalize_xlsx(path: Path) -> None:
+    fixed_dt = (1980, 1, 1, 0, 0, 0)
+    fixed_w3cdtf = "1980-01-01T00:00:00Z"
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".xlsx", dir=path.parent) as temp_handle:
+        temp_path = Path(temp_handle.name)
+
+    try:
+        with zipfile.ZipFile(path, "r") as source, zipfile.ZipFile(temp_path, "w", compression=zipfile.ZIP_DEFLATED) as target:
+            for name in sorted(source.namelist()):
+                payload = source.read(name)
+                if name == "docProps/core.xml":
+                    payload = re.sub(
+                        rb"<dcterms:(created|modified)[^>]*>.*?</dcterms:\1>",
+                        lambda match: match.group(0).split(b">", 1)[0] + b">" + fixed_w3cdtf.encode("utf-8") + b"</dcterms:" + match.group(1) + b">",
+                        payload,
+                    )
+                info = zipfile.ZipInfo(filename=name, date_time=fixed_dt)
+                info.compress_type = zipfile.ZIP_DEFLATED
+                info.create_system = 0
+                target.writestr(info, payload)
+        temp_path.replace(path)
+    finally:
+        if temp_path.exists():
+            temp_path.unlink()
+
+
+def find_column_any(columns: List[str], needles: List[str]) -> str:
+    normalized = {str(column): str(column).casefold() for column in columns}
+    for needle in needles:
+        needle_cf = needle.casefold()
+        for column, column_cf in normalized.items():
+            if needle_cf in column_cf:
+                return column
+    raise ValueError(f"Column containing any of {needles} not found.")
+
+
+def load_perez_ex_inventory(path: Path) -> Tuple[pd.DataFrame, Dict[str, object]]:
+    raw_header = pd.read_excel(path, sheet_name="Demanda Agregada", header=None)
+    header_note = " | ".join(str(value) for value in raw_header.iloc[0].tolist() if isinstance(value, str))
+
+    df = pd.read_excel(path, sheet_name="Demanda Agregada", header=0)
+    df = df.rename(columns={df.columns[0]: "year"})
     df["year"] = df["year"].astype(int)
-    df = df[["year", "I_tot_control"]].copy()
-    return df
+
+    maquinaria_col = find_column_any(list(df.columns), ["FBKF en maquinaria"])
+    construccion_col = find_column_any(list(df.columns), ["FBKF en construccion", "FBKF en construcción"])
+    inventarios_col = find_column_any(list(df.columns), ["Variacion de inventarios", "Variación de inventarios"])
+
+    out = df[["year", maquinaria_col, construccion_col, inventarios_col]].copy()
+    out = out.rename(
+        columns={
+            maquinaria_col: "perez_fbfk_maquinaria",
+            construccion_col: "perez_fbfk_construccion",
+            inventarios_col: "perez_inventarios",
+        }
+    )
+    out["I_control_ex_inventory"] = out["perez_fbfk_maquinaria"] + out["perez_fbfk_construccion"]
+    out = out[(out["year"] >= 1900) & (out["year"] <= 1994)].copy()
+
+    metadata = {
+        "source_file": str(path),
+        "sheet": "Demanda Agregada",
+        "header_note": header_note,
+        "columns_used": {
+            "FBKF en maquinaria": maquinaria_col,
+            "FBKF en construccion": construccion_col,
+            "Variacion de inventarios": inventarios_col,
+        },
+        "control_concept": "FBKF ex inventories",
+        "inventories_excluded_from_accumulation": True,
+    }
+    return out, metadata
 
 
-def load_lambda_bar(base_dir: Path) -> Tuple[float, str]:
-    lambda_path = base_dir / "data" / "diagnostics" / "overlap_investment_ratio_lambda.csv"
-    if lambda_path.exists():
-        lambda_df = pd.read_csv(lambda_path)
-        source_col = None
-        if "lambda" in lambda_df.columns:
-            source_col = "lambda"
-        elif "lambda_ratio" in lambda_df.columns:
-            source_col = "lambda_ratio"
-        if source_col:
-            lambda_bar = float(lambda_df[source_col].mean())
-            source = f"mean({source_col}) from overlap_investment_ratio_lambda.csv"
-            return lambda_bar, source
-    # fallback
-    return float(LAMBDA_FALLBACK), "fallback constant 0.247"
-
-
-def load_hofman_shares(path: Path, log: ViolationLog) -> pd.DataFrame:
+def load_hofman_investment(path: Path) -> pd.DataFrame:
     df = pd.read_excel(path, sheet_name="Gross_Investment_Ig_Hofman2000")
     df = df.rename(
         columns={
+            "year": "year",
             "Ig_ME_H2000": "I_ME",
             "Ig_NRC_H2000": "I_NRC",
             "Ig_RC_H2000": "I_RC",
@@ -96,112 +231,65 @@ def load_hofman_shares(path: Path, log: ViolationLog) -> pd.DataFrame:
         }
     )
     df["year"] = df["year"].astype(int)
-    df["I_NR"] = df["I_ME"] + df["I_NRC"]
-    df["I_sum_components"] = df["I_ME"] + df["I_NRC"] + df["I_RC"]
-    df["share_ME"] = df["I_ME"] / df["I_tot"]
-    df["share_NRC"] = df["I_NRC"] / df["I_tot"]
-    df["share_RC"] = df["I_RC"] / df["I_tot"]
-    df["share_NR"] = df["share_ME"] + df["share_NRC"]
+    return df[["year", "I_ME", "I_NRC", "I_RC", "I_tot"]].copy()
 
-    mismatch = (df["I_sum_components"] - df["I_tot"]) / df["I_tot"]
-    for idx, rel in mismatch[mismatch.abs() > ADDITIVITY_TOL].items():
+
+def load_hofman_shares(path: Path, years: pd.Index, log: ViolationLog) -> pd.DataFrame:
+    df = load_hofman_investment(path)
+
+    for component in ASSETS:
+        df[f"share_{component}_raw"] = df[f"I_{component}"] / df["I_tot"]
+    df["share_sum_raw"] = df[["share_ME_raw", "share_NRC_raw", "share_RC_raw"]].sum(axis=1)
+
+    bad_sum = df["share_sum_raw"].dropna()
+    for idx, value in bad_sum[(bad_sum - 1.0).abs() > ADDITIVITY_TOL].items():
         log.add(
-            "definitional mismatch",
+            "share normalization",
             "Total",
             int(df.loc[idx, "year"]),
-            "Hofman investment components deviate from total",
-            rel,
+            "Hofman raw asset shares do not sum to 1; normalizing shares for production harmonization",
+            value - 1.0,
         )
-    shares = df[["year", "share_ME", "share_NRC", "share_RC", "share_NR"]].copy()
-    return shares
+
+    for component in ASSETS:
+        df[f"share_{component}"] = df[f"share_{component}_raw"] / df["share_sum_raw"]
+
+    shares = df[["year", "share_ME", "share_NRC", "share_RC"]].set_index("year")
+    shares = shares.reindex(years).ffill().bfill()
+    shares["share_NR"] = shares["share_ME"] + shares["share_NRC"]
+    return shares.reset_index()
 
 
-def extend_shares(shares: pd.DataFrame, target_years: pd.Index) -> pd.DataFrame:
-    shares = shares.set_index("year").reindex(target_years)
-    shares = shares.ffill().bfill()
-    return shares
-
-
-def split_investment(control: pd.DataFrame, shares: pd.DataFrame, log: ViolationLog) -> pd.DataFrame:
-    df = control.set_index("year").join(shares, how="left")
-    for col in ["share_ME", "share_NRC", "share_RC"]:
-        df[col] = df[col].ffill().bfill()
-    df["I_ME"] = df["I_tot_control"] * df["share_ME"]
-    df["I_NRC"] = df["I_tot_control"] * df["share_NRC"]
-    df["I_RC"] = df["I_tot_control"] * df["share_RC"]
-    df["I_NR"] = df["I_ME"] + df["I_NRC"]
-    df["I_Total"] = df["I_ME"] + df["I_NRC"] + df["I_RC"]
-
-    rel = (df["I_Total"] - df["I_tot_control"]) / df["I_tot_control"]
-    for year, val in rel[rel.abs() > ADDITIVITY_TOL].items():
-        log.add("definitional mismatch", "Total", int(year), "Split investment does not add to control total", val)
-    return df.reset_index()
-
-
-def load_hofman_stocks(path: Path, deflator: float) -> Tuple[pd.DataFrame, pd.DataFrame]:
-    kg = pd.read_excel(path, sheet_name="Kg")
-    kn = pd.read_excel(path, sheet_name="Kn")
-    kg = kg.rename(columns={"year": "year"}).astype({"year": int})
-    kn = kn.rename(columns={"year": "year"}).astype({"year": int})
-    scale_cols = ["Total", "NR", "ME", "NRC", "RC"]
-    kg[scale_cols] = kg[scale_cols] * deflator
-    kn[scale_cols] = kn[scale_cols] * deflator
-    return kg, kn
-
-
-def to_long(df: pd.DataFrame, value_cols: List[str], var_name: str, value_name: str) -> pd.DataFrame:
-    return df.melt(id_vars="year", value_vars=value_cols, var_name=var_name, value_name=value_name)
-
-
-def compute_overlap_flows(inv: pd.DataFrame, kg_obs: pd.DataFrame, kn_obs: pd.DataFrame) -> Dict[str, pd.DataFrame]:
-    assets = ["ME", "NRC", "RC"]
-    inv_idx = inv.set_index("year") if "year" in inv.columns else inv
-    kg_obs = kg_obs.set_index("year")
-    kn_obs = kn_obs.set_index("year")
-
-    flows = []
-    for asset in assets:
-        kg_series = kg_obs[asset]
-        kn_series = kn_obs[asset]
-        years = kg_series.index
-        delta_kg = kg_series.diff()
-        delta_kn = kn_series.diff()
-        I_asset = inv_idx.loc[years, f"I_{asset}"]
-
-        r_imp = I_asset - delta_kg
-        d_imp = I_asset - delta_kn
-        b = kg_series - kn_series
-        delta_b = b.diff()
-        z = r_imp / kg_series.shift(1)
-        delta_rate = d_imp / kn_series.shift(1)
-
-        tmp = pd.DataFrame(
-            {
-                "year": years,
-                "asset": asset,
-                "kg_obs": kg_series.values,
-                "kn_obs": kn_series.values,
-                "r_imp": r_imp.values,
-                "d_imp": d_imp.values,
-                "b": b.values,
-                "delta_b": delta_b.values,
-                "z_rate": z.values,
-                "delta_rate": delta_rate.values,
-            }
-        )
-        flows.append(tmp)
-    return {"overlap": pd.concat(flows, ignore_index=True)}
+def load_lambda_choice(path: Path) -> Tuple[float, Dict[str, object]]:
+    if not path.exists():
+        raise FileNotFoundError(f"Lambda estimates file not found: {path}")
+    payload = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    if "lambda_choice" not in payload:
+        raise ValueError(f"lambda_choice missing in {path}")
+    lambda_choice = float(payload["lambda_choice"])
+    stats = {
+        "lambda_choice": lambda_choice,
+        "lambda_median": float(payload.get("lambda_median", lambda_choice)),
+        "lambda_mean": float(payload.get("lambda_mean", lambda_choice)),
+        "lambda_trim10": float(payload.get("lambda_trim10", lambda_choice)),
+        "n_obs": int(payload.get("n_obs", 0)),
+        "lambda_rule": payload.get("lambda_rule", "unknown"),
+    }
+    return lambda_choice, stats
 
 
 def weibull_survival(scale: float, shape: float, max_age: int) -> np.ndarray:
     ages = np.arange(max_age + 1)
-    surv = np.exp(-((ages / scale) ** shape))
-    surv[0] = 1.0
-    return surv
+    survival = np.exp(-((ages / scale) ** shape))
+    survival[0] = 1.0
+    return survival
 
 
-def mean_life_weibull(scale: float, shape: float) -> float:
-    return float(scale * gamma(1.0 + 1.0 / shape))
+def rectangular_survival(life: float, max_age: int) -> np.ndarray:
+    ages = np.arange(max_age + 1)
+    survival = (ages <= life).astype(float)
+    survival[0] = 1.0
+    return survival
 
 
 def retirement_from_survival(investment: pd.Series, survival: np.ndarray) -> pd.Series:
@@ -215,412 +303,505 @@ def stock_from_survival(investment: pd.Series, survival: np.ndarray) -> pd.Serie
     return pd.Series(values, index=investment.index)
 
 
-def estimate_survival(
-    asset: str,
-    investment: pd.Series,
-    r_imp: pd.Series,
-    prior_mean: float,
-    log: ViolationLog,
-    max_age: int = AGE_MAX,
-) -> SurvivalResult:
-    valid_all = r_imp.dropna()
-    fit_series = valid_all[valid_all >= 0]
-    if fit_series.empty:
-        scale = prior_mean
-        shape = 2.0
-        survival = weibull_survival(scale, shape, max_age)
-        r_model = retirement_from_survival(investment, survival)
-        rmse = float(np.sqrt(((r_model.loc[valid_all.index] - valid_all) ** 2).mean())) if not valid_all.empty else float("nan")
-        log.add("survival model misfit", asset, int(investment.index.min()), "No non-negative retirements; falling back to prior", prior_mean)
-        return SurvivalResult(
+def load_survival_specs(path: Path) -> Dict[str, SurvivalSpec]:
+    if not path.exists():
+        raise FileNotFoundError(f"Survival parameter file not found: {path}")
+    df = pd.read_csv(path)
+    specs: Dict[str, SurvivalSpec] = {}
+    for asset in ASSETS:
+        row = df[df["asset"] == asset]
+        if row.empty:
+            raise ValueError(f"Survival parameters missing for asset: {asset}")
+        record = row.iloc[0]
+        specs[asset] = SurvivalSpec(
             asset=asset,
-            scale=scale,
-            shape=shape,
-            mean_life=mean_life_weibull(scale, shape),
-            rmse=rmse,
-            survival=pd.Series(survival, index=np.arange(max_age + 1)),
-            retirements_model=r_model,
+            scale=float(record["scale"]),
+            shape=float(record["shape"]),
+            mean_life=float(record.get("mean_life", np.nan)),
+            rmse=float(record.get("rmse", np.nan)),
+            family=str(record.get("family", "weibull")),
+            status=str(record.get("status", "unknown")),
         )
-
-    years = fit_series.index
-
-    def objective(params: np.ndarray) -> float:
-        scale, shape = params
-        survival = weibull_survival(scale, shape, max_age)
-        r_model = retirement_from_survival(investment, survival)
-        diff = (r_model.loc[years] - fit_series) ** 2
-        rmse = np.sqrt(diff.mean())
-        mean_life = mean_life_weibull(scale, shape)
-        penalty = 1.0 * ((mean_life - prior_mean) / prior_mean) ** 2
-        return rmse + penalty
-
-    bounds = [(prior_mean * 0.5, prior_mean * 2.5), (0.5, 4.0)]
-    x0 = np.array([prior_mean, 2.5])
-    result = opt.minimize(objective, x0=x0, bounds=bounds, method="L-BFGS-B")
-    scale, shape = result.x
-    survival = weibull_survival(scale, shape, max_age)
-    r_model = retirement_from_survival(investment, survival)
-    rmse = float(np.sqrt(((r_model.loc[valid_all.index] - valid_all) ** 2).mean()))
-    mean_life = mean_life_weibull(scale, shape)
-
-    if result.status != 0:
-        log.add("survival model misfit", asset, int(years.min()), f"Optimizer status {result.status}", result.fun)
-
-    return SurvivalResult(
-        asset=asset,
-        scale=float(scale),
-        shape=float(shape),
-        mean_life=mean_life,
-        rmse=rmse,
-        survival=pd.Series(survival, index=np.arange(max_age + 1)),
-        retirements_model=r_model,
-    )
+    return specs
 
 
-def build_non_overlap_gross(
-    investment: pd.DataFrame,
-    survival_map: Dict[str, SurvivalResult],
-    kg_obs: pd.DataFrame,
-) -> Dict[str, pd.Series]:
-    kg_obs = kg_obs.set_index("year")
-    years = investment.index
-    kg_modeled: Dict[str, pd.Series] = {}
-
-    for asset in ASSETS:
-        surv = survival_map[asset].survival.values
-        kg_model = stock_from_survival(investment[f"I_{asset}"], surv)
-        kg_final = kg_model.copy()
-        kg_final.loc[(kg_final.index >= OVERLAP_START) & (kg_final.index <= OVERLAP_END)] = kg_obs.loc[
-            (kg_obs.index >= OVERLAP_START) & (kg_obs.index <= OVERLAP_END), asset
-        ]
-        kg_modeled[asset] = kg_final
-    kg_modeled["NR"] = kg_modeled["ME"] + kg_modeled["NRC"]
-    kg_modeled["Total"] = kg_modeled["ME"] + kg_modeled["NRC"] + kg_modeled["RC"]
-    return kg_modeled
+def survival_from_spec(spec: SurvivalSpec) -> np.ndarray:
+    if spec.family.lower() == "rectangular":
+        life = spec.mean_life if np.isfinite(spec.mean_life) else spec.scale
+        return rectangular_survival(life, AGE_MAX)
+    if not np.isfinite(spec.shape):
+        life = spec.mean_life if np.isfinite(spec.mean_life) else spec.scale
+        return rectangular_survival(life, AGE_MAX)
+    return weibull_survival(spec.scale, spec.shape, AGE_MAX)
 
 
-def compose_retirements(
-    investment: pd.DataFrame,
-    survival_map: Dict[str, SurvivalResult],
-    r_imp_df: pd.DataFrame,
-) -> Dict[str, pd.Series]:
-    r_imp = r_imp_df.pivot(index="year", columns="asset", values="r_imp")
-    retirements: Dict[str, pd.Series] = {}
-    for asset in ASSETS:
-        surv = survival_map[asset].survival.values
-        r_model = retirement_from_survival(investment[f"I_{asset}"], surv)
-        combined = r_model.copy()
-        if asset in r_imp.columns:
-            combined.update(r_imp[asset])
-        retirements[asset] = combined
-    retirements["NR"] = retirements["ME"] + retirements["NRC"]
-    retirements["Total"] = retirements["ME"] + retirements["NRC"] + retirements["RC"]
-    return retirements
-
-
-def build_gap_ratios(kg_obs: pd.DataFrame, kn_obs: pd.DataFrame) -> Dict[str, Dict[str, float]]:
-    kg_obs = kg_obs.set_index("year")
-    kn_obs = kn_obs.set_index("year")
+def build_gap_ratios_from_baseline(path: Path) -> Dict[str, Dict[str, float]]:
+    if not path.exists():
+        raise FileNotFoundError(f"Frozen baseline panel not found: {path}")
+    panel = pd.read_csv(path)
+    kg_idx = panel.pivot(index="year", columns="asset", values="Kg")
+    kn_idx = panel.pivot(index="year", columns="asset", values="Kn")
     ratios: Dict[str, Dict[str, float]] = {}
     for asset in ASSETS:
-        b = kg_obs[asset] - kn_obs[asset]
-        gap_ratio = (b / kg_obs[asset]).dropna()
+        gap_ratio = ((kg_idx[asset] - kn_idx[asset]) / kg_idx[asset]).replace([np.inf, -np.inf], np.nan).dropna()
         early = gap_ratio.loc[gap_ratio.index <= OVERLAP_START + 4].median()
         late = gap_ratio.loc[gap_ratio.index >= OVERLAP_END - 4].median()
+        overall = gap_ratio.median()
+        if pd.isna(early):
+            early = overall
+        if pd.isna(late):
+            late = overall
         ratios[asset] = {"pre": float(early), "post": float(late)}
     return ratios
 
 
+def build_investment_block(
+    raw_dir: Path,
+    lambda_path: Path,
+    log: ViolationLog,
+) -> Tuple[pd.DataFrame, Dict[str, object]]:
+    target_years = pd.Index(range(1900, 1995), name="year")
+
+    perez, perez_meta = load_perez_ex_inventory(raw_dir / "PerezEyzaguirre_DemandaAgregada.xlsx")
+    perez = perez.set_index("year").reindex(target_years)
+    if perez["I_control_ex_inventory"].isna().any():
+        missing_years = perez[perez["I_control_ex_inventory"].isna()].index.tolist()
+        raise ValueError(f"Perez control total missing for years: {missing_years}")
+
+    lambda_choice, lambda_stats = load_lambda_choice(lambda_path)
+    shares = load_hofman_shares(raw_dir / "Hofman2000_GrossInvestment.xlsx", target_years, log).set_index("year")
+
+    investment = perez.join(shares, how="left")
+    investment["I_control_scaled"] = investment["I_control_ex_inventory"] * lambda_choice
+    investment["I_ME"] = investment["I_control_scaled"] * investment["share_ME"]
+    investment["I_NRC"] = investment["I_control_scaled"] * investment["share_NRC"]
+    investment["I_RC"] = investment["I_control_scaled"] * investment["share_RC"]
+    investment["I_NR"] = investment["I_ME"] + investment["I_NRC"]
+    investment["I_Total"] = investment["I_ME"] + investment["I_NRC"] + investment["I_RC"]
+
+    rel_gap = (investment["I_Total"] - investment["I_control_scaled"]) / investment["I_control_scaled"]
+    for year, value in rel_gap[rel_gap.abs() > ADDITIVITY_TOL].items():
+        log.add("definitional mismatch", "Total", int(year), "Split investment does not add to scaled control total", value)
+
+    metadata = {
+        "lambda_choice": float(lambda_choice),
+        "lambda_rule": lambda_stats.get("lambda_rule", "unknown"),
+        "lambda_stats": lambda_stats,
+        "lambda_source": str(lambda_path),
+        "control_total_definition": "Perez FBKF en maquinaria + FBKF en construccion",
+        "inventories_excluded_from_accumulation": True,
+        "perez_metadata": perez_meta,
+        "hofman_share_source": str(raw_dir / "Hofman2000_GrossInvestment.xlsx"),
+    }
+    return investment, metadata
+
+
+def accumulate_stocks(
+    investment: pd.DataFrame,
+    survival_specs: Dict[str, SurvivalSpec],
+) -> Tuple[Dict[str, pd.Series], Dict[str, pd.Series]]:
+    kg_series: Dict[str, pd.Series] = {}
+    retirements: Dict[str, pd.Series] = {}
+
+    for asset in ASSETS:
+        spec = survival_specs[asset]
+        survival = survival_from_spec(spec)
+        kg_series[asset] = stock_from_survival(investment[f"I_{asset}"], survival)
+        retirements[asset] = retirement_from_survival(investment[f"I_{asset}"], survival)
+
+    kg_series["NR"] = kg_series["ME"] + kg_series["NRC"]
+    kg_series["Total"] = kg_series["ME"] + kg_series["NRC"] + kg_series["RC"]
+    retirements["NR"] = retirements["ME"] + retirements["NRC"]
+    retirements["Total"] = retirements["ME"] + retirements["NRC"] + retirements["RC"]
+    return kg_series, retirements
+
+
 def build_net_block(
     kg_series: Dict[str, pd.Series],
-    kg_obs: pd.DataFrame,
-    kn_obs: pd.DataFrame,
     gap_ratios: Dict[str, Dict[str, float]],
 ) -> Tuple[Dict[str, pd.Series], Dict[str, pd.Series]]:
-    kg_obs = kg_obs.set_index("year")
-    kn_obs = kn_obs.set_index("year")
+    years = kg_series["ME"].index
     kn_series: Dict[str, pd.Series] = {}
     b_series: Dict[str, pd.Series] = {}
-    years = kg_series["ME"].index
 
     for asset in ASSETS:
         kg = kg_series[asset]
         gap = pd.Series(index=years, dtype=float)
-        obs_gap = (kg_obs[asset] - kn_obs[asset])
-        gap.loc[obs_gap.index] = obs_gap
-        pre_mask = kg.index < OVERLAP_START
-        post_mask = kg.index > OVERLAP_END
+        pre_mask = gap.index < OVERLAP_START
         gap.loc[pre_mask] = kg.loc[pre_mask] * gap_ratios[asset]["pre"]
-        gap.loc[post_mask] = kg.loc[post_mask] * gap_ratios[asset]["post"]
-        kn = kg - gap
-        kn_series[asset] = kn
+        gap.loc[~pre_mask] = kg.loc[~pre_mask] * gap_ratios[asset]["post"]
+        kn_series[asset] = kg - gap
         b_series[asset] = gap
 
     kn_series["NR"] = kn_series["ME"] + kn_series["NRC"]
-    kn_series["Total"] = kn_series["ME"] + kn_series["NRC"] + kn_series["RC"]
     b_series["NR"] = b_series["ME"] + b_series["NRC"]
+    kn_series["Total"] = kn_series["ME"] + kn_series["NRC"] + kn_series["RC"]
     b_series["Total"] = b_series["ME"] + b_series["NRC"] + b_series["RC"]
     return kn_series, b_series
 
 
-def compute_depreciation(
-    investment: pd.DataFrame,
-    kn_series: Dict[str, pd.Series],
-) -> Dict[str, pd.Series]:
+def compute_depreciation(investment: pd.DataFrame, kn_series: Dict[str, pd.Series]) -> Dict[str, pd.Series]:
     depreciation: Dict[str, pd.Series] = {}
-    for asset, kn in kn_series.items():
-        delta_kn = kn.diff()
-        d = investment[f"I_{asset}"] - delta_kn
-        depreciation[asset] = d
+    for asset in PANEL_ASSETS:
+        depreciation[asset] = investment[f"I_{asset}"] - kn_series[asset].diff()
     return depreciation
 
 
-def diagnostics_checks(
-    kg_series: Dict[str, pd.Series],
-    kn_series: Dict[str, pd.Series],
-    retirements: Dict[str, pd.Series],
-    depreciation: Dict[str, pd.Series],
-    b_series: Dict[str, pd.Series],
-    log: ViolationLog,
-) -> pd.DataFrame:
-    records = []
-    years = kg_series["ME"].index
-    for asset in ["ME", "NRC", "RC", "NR", "Total"]:
-        kg = kg_series[asset]
-        kn = kn_series[asset]
-        r = retirements[asset]
-        d = depreciation[asset]
-        b = b_series[asset]
-        delta_b = b.diff()
-        z_rate = r / kg.shift(1)
-        delta_rate = d / kn.shift(1)
-        for year in years:
-            if kg.loc[year] < -1e-6:
-                log.add("admissibility", asset, year, "Gross stock negative", kg.loc[year])
-            if kn.loc[year] < -1e-6:
-                log.add("admissibility", asset, year, "Net stock negative", kn.loc[year])
-            if b.loc[year] < -1e-6:
-                log.add("admissibility", asset, year, "Capital gap negative", b.loc[year])
-            if year > years.min():
-                if pd.notna(z_rate.loc[year]) and (z_rate.loc[year] < 0 or z_rate.loc[year] > 1):
-                    log.add("rate out of bounds", asset, year, "Retirement rate outside [0,1]", z_rate.loc[year])
-                if pd.notna(delta_rate.loc[year]) and (delta_rate.loc[year] < 0 or delta_rate.loc[year] > 1):
-                    log.add("rate out of bounds", asset, year, "Depreciation rate outside [0,1]", delta_rate.loc[year])
-                bridge_gap = (d.loc[year] - r.loc[year]) - delta_b.loc[year]
-                if pd.notna(bridge_gap) and abs(bridge_gap) > ADDITIVITY_TOL * max(abs(b.loc[year]), 1e-9):
-                    log.add("definitional mismatch", asset, year, "Bridge identity deviation", bridge_gap)
-
-            records.append(
-                {
-                    "year": year,
-                    "asset": asset,
-                    "kg": kg.loc[year],
-                    "kn": kn.loc[year],
-                    "b": b.loc[year],
-                    "r": r.loc[year],
-                    "d": d.loc[year],
-                    "delta_b": delta_b.loc[year],
-                    "z_rate": z_rate.loc[year],
-                    "delta_rate": delta_rate.loc[year],
-                }
-            )
-    return pd.DataFrame(records)
-
-
-def overlap_post_scaling_report(diagnostics: pd.DataFrame, out_path: Path) -> Tuple[str, bool]:
-    overlap_df = diagnostics[(diagnostics["year"] >= OVERLAP_START + 1) & (diagnostics["year"] <= OVERLAP_END)].copy()
-    assets = ["ME", "NRC", "RC", "NR", "Total"]
-    lines: List[str] = []
-    stop_flag = False
-    overlap_years = len(range(OVERLAP_START + 1, OVERLAP_END + 1))
-
-    for asset in assets:
-        sub = overlap_df[overlap_df["asset"] == asset]
-        r_neg = (sub["r"] < 0).sum()
-        d_neg = (sub["d"] < 0).sum()
-        z_out = ((sub["z_rate"] < 0) | (sub["z_rate"] > 1)).sum()
-        delta_out = ((sub["delta_rate"] < 0) | (sub["delta_rate"] > 1)).sum()
-        z_desc = sub["z_rate"].describe(percentiles=[0.5])[["min", "50%", "max"]]
-        delta_desc = sub["delta_rate"].describe(percentiles=[0.5])[["min", "50%", "max"]]
-        lines.append(
-            f"{asset}: R_imp<0 {r_neg}/{overlap_years} ({r_neg/overlap_years:.3%}); "
-            f"D_imp<0 {d_neg}/{overlap_years} ({d_neg/overlap_years:.3%}); "
-            f"z out {z_out}/{overlap_years} ({z_out/overlap_years:.3%}); "
-            f"delta out {delta_out}/{overlap_years} ({delta_out/overlap_years:.3%}); "
-            f"z min/med/max {z_desc['min']:.6f}/{z_desc['50%']:.6f}/{z_desc['max']:.6f}; "
-            f"delta min/med/max {delta_desc['min']:.6f}/{delta_desc['50%']:.6f}/{delta_desc['max']:.6f}"
-        )
-        if asset == "Total" and (r_neg / overlap_years) > 0.01:
-            stop_flag = True
-    content = "\n".join(lines)
-    out_path.write_text(content, encoding="utf-8")
-    return content, stop_flag
-
-
-def save_outputs(
+def compose_panel(
     investment: pd.DataFrame,
     kg_series: Dict[str, pd.Series],
     kn_series: Dict[str, pd.Series],
     retirements: Dict[str, pd.Series],
     depreciation: Dict[str, pd.Series],
     b_series: Dict[str, pd.Series],
-    diagnostics: pd.DataFrame,
-    survival_results: Dict[str, SurvivalResult],
-    deflator: float,
-    lambda_bar: float,
-    lambda_source: str,
-    log: ViolationLog,
-    base_dir: Path,
-) -> None:
-    processed_dir = base_dir / "data" / "processed"
-    diag_dir = base_dir / "data" / "diagnostics"
-    out_dir = base_dir / "outputs"
-
-    # Harmonized series with stocks
-    records = []
+) -> pd.DataFrame:
+    records: List[Dict[str, float | int | str | None]] = []
     years = investment.index
-    assets_all = ["ME", "NRC", "RC", "NR", "Total"]
-    for asset in assets_all:
-        for year in years:
-            records.append({"year": int(year), "asset": asset, "variable": "I", "value": float(investment.loc[year, f"I_{asset}"])})
-            records.append({"year": int(year), "asset": asset, "variable": "Kg", "value": float(kg_series[asset].loc[year])})
-            records.append({"year": int(year), "asset": asset, "variable": "Kn", "value": float(kn_series[asset].loc[year])})
-    harmonized = pd.DataFrame(records)
-    harmonized.to_csv(processed_dir / "harmonized_series.csv", index=False)
 
-    # Flows and rates
-    flow_records = []
-    for asset in assets_all:
+    for asset in PANEL_ASSETS:
+        kg = kg_series[asset]
+        kn = kn_series[asset]
+        b = b_series[asset]
         r = retirements[asset]
         d = depreciation[asset]
-        b = b_series[asset]
+        i = investment[f"I_{asset}"]
+        delta_kg = kg.diff()
+        delta_kn = kn.diff()
         delta_b = b.diff()
-        z_rate = r / kg_series[asset].shift(1)
-        delta_rate = d / kn_series[asset].shift(1)
+        z_rate = r / kg.shift(1)
+        delta_rate = d / kn.shift(1)
+        residual_kg = delta_kg - (i - r)
+        residual_kn = delta_kn - (i - d)
+
         for year in years:
-            flow_records.append(
+            records.append(
                 {
                     "year": int(year),
                     "asset": asset,
+                    "I": float(i.loc[year]),
+                    "Kg": float(kg.loc[year]),
+                    "Kn": float(kn.loc[year]),
+                    "B": float(b.loc[year]),
                     "R": float(r.loc[year]) if pd.notna(r.loc[year]) else np.nan,
                     "D": float(d.loc[year]) if pd.notna(d.loc[year]) else np.nan,
-                    "B": float(b.loc[year]) if pd.notna(b.loc[year]) else np.nan,
+                    "DeltaKg": float(delta_kg.loc[year]) if pd.notna(delta_kg.loc[year]) else np.nan,
+                    "DeltaKn": float(delta_kn.loc[year]) if pd.notna(delta_kn.loc[year]) else np.nan,
                     "DeltaB": float(delta_b.loc[year]) if pd.notna(delta_b.loc[year]) else np.nan,
-                    "z_rate": float(z_rate.loc[year]) if pd.notna(z_rate.loc[year]) else np.nan,
-                    "delta_rate": float(delta_rate.loc[year]) if pd.notna(delta_rate.loc[year]) else np.nan,
+                    "z": float(z_rate.loc[year]) if pd.notna(z_rate.loc[year]) else np.nan,
+                    "delta": float(delta_rate.loc[year]) if pd.notna(delta_rate.loc[year]) else np.nan,
+                    "residual_kg": float(residual_kg.loc[year]) if pd.notna(residual_kg.loc[year]) else np.nan,
+                    "residual_kn": float(residual_kn.loc[year]) if pd.notna(residual_kn.loc[year]) else np.nan,
                 }
             )
-    flows_df = pd.DataFrame(flow_records)
-    flows_df.to_csv(processed_dir / "recovered_flows.csv", index=False)
 
-    diagnostics.to_csv(diag_dir / "flows_and_stocks.csv", index=False)
+    panel = pd.DataFrame(records)
+    total_i = investment["I_ME"] + investment["I_NRC"] + investment["I_RC"]
+    panel["I_residual"] = np.nan
+    total_mask = panel["asset"] == "Total"
+    panel.loc[total_mask, "I_residual"] = panel.loc[total_mask, "I"].values - total_i.values
+    return panel
+
+
+def add_additivity_checks(panel: pd.DataFrame, log: ViolationLog) -> None:
+    for year in sorted(panel["year"].unique()):
+        subset = panel[panel["year"] == year].set_index("asset")
+        nr_kg_gap = subset.loc["NR", "Kg"] - (subset.loc["ME", "Kg"] + subset.loc["NRC", "Kg"])
+        nr_kn_gap = subset.loc["NR", "Kn"] - (subset.loc["ME", "Kn"] + subset.loc["NRC", "Kn"])
+        nr_i_gap = subset.loc["NR", "I"] - (subset.loc["ME", "I"] + subset.loc["NRC", "I"])
+        total_kg_gap = subset.loc["Total", "Kg"] - (subset.loc["ME", "Kg"] + subset.loc["NRC", "Kg"] + subset.loc["RC", "Kg"])
+        total_kn_gap = subset.loc["Total", "Kn"] - (subset.loc["ME", "Kn"] + subset.loc["NRC", "Kn"] + subset.loc["RC", "Kn"])
+        total_i_gap = subset.loc["Total", "I"] - (subset.loc["ME", "I"] + subset.loc["NRC", "I"] + subset.loc["RC", "I"])
+
+        checks = [
+            ("NR", "NR Kg additivity", nr_kg_gap, subset.loc["NR", "Kg"]),
+            ("NR", "NR Kn additivity", nr_kn_gap, subset.loc["NR", "Kn"]),
+            ("NR", "NR I additivity", nr_i_gap, subset.loc["NR", "I"]),
+            ("Total", "Total Kg additivity", total_kg_gap, subset.loc["Total", "Kg"]),
+            ("Total", "Total Kn additivity", total_kn_gap, subset.loc["Total", "Kn"]),
+            ("Total", "Total I additivity", total_i_gap, subset.loc["Total", "I"]),
+        ]
+        for asset, message, gap, scale in checks:
+            if abs(gap) > ADDITIVITY_TOL * max(abs(scale), 1.0):
+                log.add("definitional mismatch", asset, int(year), message, gap)
+
+
+def diagnostics_checks(panel: pd.DataFrame, log: ViolationLog) -> None:
+    add_additivity_checks(panel, log)
+    min_year = int(panel["year"].min())
+
+    for row in panel.itertuples(index=False):
+        if row.Kg < -IDENTITY_ABS_TOL:
+            log.add("admissibility", row.asset, int(row.year), "Gross stock negative", row.Kg)
+        if row.Kn < -IDENTITY_ABS_TOL:
+            log.add("admissibility", row.asset, int(row.year), "Net stock negative", row.Kn)
+        if row.B < -IDENTITY_ABS_TOL:
+            log.add("admissibility", row.asset, int(row.year), "Capital gap negative", row.B)
+        if int(row.year) > min_year:
+            if pd.notna(row.z) and (row.z < 0 or row.z > 1):
+                log.add("rate out of bounds", row.asset, int(row.year), "Retirement rate outside [0,1]", row.z)
+            if pd.notna(row.delta) and (row.delta < 0 or row.delta > 1):
+                log.add("rate out of bounds", row.asset, int(row.year), "Depreciation rate outside [0,1]", row.delta)
+            if pd.notna(row.residual_kg) and abs(row.residual_kg) > IDENTITY_ABS_TOL:
+                log.add("definitional mismatch", row.asset, int(row.year), "DeltaKg identity residual", row.residual_kg)
+            if pd.notna(row.residual_kn) and abs(row.residual_kn) > IDENTITY_ABS_TOL:
+                log.add("definitional mismatch", row.asset, int(row.year), "DeltaKn identity residual", row.residual_kn)
+            bridge_gap = (row.D - row.R) - row.DeltaB if pd.notna(row.DeltaB) else np.nan
+            if pd.notna(bridge_gap) and abs(bridge_gap) > IDENTITY_ABS_TOL:
+                log.add("definitional mismatch", row.asset, int(row.year), "Bridge identity deviation", bridge_gap)
+
+
+def build_overlap_summary(panel: pd.DataFrame) -> Tuple[str, bool]:
+    overlap = panel[(panel["year"] >= OVERLAP_START) & (panel["year"] <= OVERLAP_END)].copy()
+    overlap_years = overlap["year"].nunique()
+    lines = ["Overlap audit 1950-1994"]
+    meets_bar = True
+
+    for asset in PANEL_ASSETS:
+        subset = overlap[overlap["asset"] == asset]
+        r_neg = int((subset["R"] < 0).sum())
+        d_neg = int((subset["D"] < 0).sum())
+        z_bad = int(((subset["z"] < 0) | (subset["z"] > 1)).sum())
+        delta_bad = int(((subset["delta"] < 0) | (subset["delta"] > 1)).sum())
+        lines.append(
+            f"{asset}: R<0 {r_neg}/{overlap_years}; D<0 {d_neg}/{overlap_years}; z out {z_bad}/{overlap_years}; delta out {delta_bad}/{overlap_years}"
+        )
+        if any([r_neg, d_neg, z_bad, delta_bad]):
+            meets_bar = False
+
+    lines.append(f"Status: {'PASS' if meets_bar else 'FAIL'}")
+    return "\n".join(lines), meets_bar
+
+
+def build_full_summary(panel: pd.DataFrame, log: ViolationLog) -> Tuple[str, bool, int]:
+    violations = log.to_frame()
+    admissibility = violations[violations["type"] == "admissibility"]
+    mismatch = violations[violations["type"] == "definitional mismatch"]
+    rate_out = violations[violations["type"] == "rate out of bounds"]
+    early_rate_out = rate_out[rate_out["year"] < OVERLAP_START]
+    overlap_or_late_rate_out = rate_out[rate_out["year"] >= OVERLAP_START]
+
+    meets_bar = (
+        admissibility.empty
+        and mismatch.empty
+        and overlap_or_late_rate_out.empty
+        and len(early_rate_out) <= EARLY_RATE_OUT_MAX
+    )
+    lines = [
+        "Full-period audit 1900-1994",
+        f"Negative stock/gap violations: {len(admissibility)}",
+        f"Identity/additivity violations: {len(mismatch)}",
+        f"Rate out-of-bounds violations (all years): {len(rate_out)}",
+        f"Rate out-of-bounds violations (<1950): {len(early_rate_out)}",
+        f"Rate out-of-bounds violations (>=1950): {len(overlap_or_late_rate_out)}",
+        f"Early-rate tolerance (max allowed): {EARLY_RATE_OUT_MAX}",
+        f"Status: {'PASS' if meets_bar else 'FAIL'}",
+    ]
+    return "\n".join(lines), meets_bar, len(early_rate_out)
+
+
+def compare_with_reference(panel: pd.DataFrame, base_dir: Path) -> Tuple[Dict[str, float], bool]:
+    metrics: Dict[str, float] = {}
+    ok = True
+
+    investment_ref = (
+        base_dir
+        / "outputs"
+        / "EXTENSION_INVESTMENT_BLOCK_CANDIDATE_PEREZ_SCALED_HOFMAN_SHARES_2003CLP_v1"
+        / "investment_block_candidate_1900_1994.csv"
+    )
+    if investment_ref.exists():
+        ref = pd.read_csv(investment_ref)
+        merged = panel[["year", "asset", "I"]].merge(
+            ref[["year", "asset", "I_candidate"]],
+            on=["year", "asset"],
+            how="inner",
+        )
+        merged["abs_diff"] = (merged["I"] - merged["I_candidate"]).abs()
+        for asset in PANEL_ASSETS:
+            subset = merged[merged["asset"] == asset]
+            if not subset.empty:
+                max_diff = float(subset["abs_diff"].max())
+                metrics[f"investment_max_abs_diff_{asset}"] = max_diff
+                if max_diff > REGRESSION_INVEST_TOL:
+                    ok = False
+
+    stock_ref = (
+        base_dir
+        / "outputs"
+        / "EXTENSION_CANDIDATE_STOCKS_PEREZ_SCALED_HOFMAN_SHARES_2003CLP_v1"
+        / "candidate_stocks_1900_1994.csv"
+    )
+    if stock_ref.exists():
+        ref = pd.read_csv(stock_ref)
+        for asset in ["ME", "NRC", "RC", "Total"]:
+            kg_col = f"Kg_{asset}"
+            kn_col = f"Kn_{asset}"
+            if kg_col in ref.columns:
+                subset = panel[panel["asset"] == asset][["year", "Kg", "Kn"]].merge(
+                    ref[["year", kg_col, kn_col]],
+                    on="year",
+                    how="inner",
+                )
+                kg_diff = float((subset["Kg"] - subset[kg_col]).abs().max())
+                kn_diff = float((subset["Kn"] - subset[kn_col]).abs().max())
+                metrics[f"kg_max_abs_diff_{asset}"] = kg_diff
+                metrics[f"kn_max_abs_diff_{asset}"] = kn_diff
+                if kg_diff > REGRESSION_STOCK_TOL or kn_diff > REGRESSION_STOCK_TOL:
+                    ok = False
+
+    return metrics, ok
+
+
+def write_outputs(
+    panel: pd.DataFrame,
+    log: ViolationLog,
+    base_dir: Path,
+    metadata: Dict[str, object],
+    regression_metrics: Dict[str, float],
+    regression_ok: bool,
+    overlap_ok: bool,
+    full_ok: bool,
+    early_rate_out_count: int,
+) -> None:
+    out_dir = base_dir / "outputs" / "HARMONIZED_PEREZ_2003CLP_v1"
+    ensure_dirs([out_dir])
+
+    panel.to_csv(out_dir / "harmonized_series_2003CLP_1900_1994.csv", index=False)
+    panel.to_excel(
+        out_dir / "harmonized_series_2003CLP_1900_1994.xlsx",
+        index=False,
+        sheet_name="harmonized_panel",
+    )
+    normalize_xlsx(out_dir / "harmonized_series_2003CLP_1900_1994.xlsx")
     log.to_frame().to_csv(out_dir / "violation_log.csv", index=False)
-    log.to_frame().to_json(out_dir / "violation_log.json", orient="records", indent=2)
 
-    survival_dump = {
-        asset: {
-            "family": "weibull",
-            "scale": res.scale,
-            "shape": res.shape,
-            "mean_life": res.mean_life,
-            "rmse": res.rmse,
-        }
-        for asset, res in survival_results.items()
-    }
+    overlap_text, _ = build_overlap_summary(panel)
+    full_text, _, _ = build_full_summary(panel, log)
+    (out_dir / "overlap_audit_summary.txt").write_text(overlap_text + "\n", encoding="utf-8")
+    (out_dir / "audit_summary_full_1900_1994.txt").write_text(full_text + "\n", encoding="utf-8")
+
     assumptions = {
-        "deflator": "Hofman 1980 -> 2003",
-        "deflator_factor": deflator,
-        "perez_scaling_applied": True,
-        "perez_scaling_lambda_bar": lambda_bar,
-        "perez_scaling_source": lambda_source,
-        "share_source": "Hofman2000_GrossInvestment.xlsx",
-        "control_total": "PerezEyzaguirre_DemandaAgregada.xlsx",
-        "share_extension": "ffill/bfill outside Hofman coverage",
-        "gap_ratio": "constant pre/post using overlap medians",
-        "survival": survival_dump,
+        "primary_price_space": "2003 CLP",
+        "control_concept": "FBKF ex inventories",
+        "inventories_excluded_from_accumulation": True,
+        "git_commit": metadata["git_commit"],
+        "python_version": metadata["python_version"],
+        "command": metadata["command"],
+        "repo_status": metadata["repo_status"],
+        "lambda_choice": metadata["lambda_choice"],
+        "lambda_rule": metadata["lambda_rule"],
+        "lambda_stats": metadata["lambda_stats"],
+        "lambda_source": metadata["lambda_source"],
+        "hofman_share_source": metadata["hofman_share_source"],
+        "survival_parameter_source": metadata["survival_parameter_source"],
+        "gap_ratio_source": metadata["gap_ratio_source"],
+        "frozen_baseline_reference": metadata["frozen_baseline_reference"],
+        "deferred_sources": DEFERRED_SOURCES,
+        "perez_metadata": metadata["perez_metadata"],
+        "regression_vs_extension_candidate": regression_metrics,
+        "regression_ok": regression_ok,
+        "meets_overlap_admissibility": overlap_ok,
+        "meets_full_period_admissibility": full_ok,
+        "early_rate_out_count": early_rate_out_count,
+        "early_rate_out_max": EARLY_RATE_OUT_MAX,
+        "input_hashes": metadata["input_hashes"],
     }
-    with open(out_dir / "assumptions.yaml", "w", encoding="utf-8") as f:
-        yaml.safe_dump(assumptions, f, sort_keys=False)
+    assumptions["generated_at_utc"] = resolve_generated_at(out_dir / "assumptions.yaml", assumptions)
+    with (out_dir / "assumptions.yaml").open("w", encoding="utf-8") as handle:
+        yaml.safe_dump(assumptions, handle, sort_keys=False)
+
+    summary_lines = [
+        "# HARMONIZED_PEREZ_2003CLP_v1 summary",
+        "",
+        "Canonical harmonized baseline built from Perez FBKF ex inventories scaled by lambda_choice and split by normalized Hofman shares.",
+        "Frozen Hofman 1980 baseline remains unchanged.",
+        "",
+        "## Status",
+        f"- Primary price space: {assumptions['primary_price_space']}",
+        f"- Control concept: {assumptions['control_concept']}",
+        f"- Inventories excluded from accumulation: {assumptions['inventories_excluded_from_accumulation']}",
+        f"- Meets overlap admissibility bar: {overlap_ok}",
+        f"- Meets full-period admissibility bar: {full_ok}",
+        f"- Regression vs extension candidate: {regression_ok}",
+        f"- Early rate out-of-bounds count (<1950): {early_rate_out_count}",
+        f"- Early rate tolerance (max allowed): {EARLY_RATE_OUT_MAX}",
+        "",
+        "## Provenance",
+        f"- Generated at UTC: {assumptions['generated_at_utc']}",
+        f"- Git commit: {assumptions['git_commit']}",
+        f"- Repo status at generation: {assumptions['repo_status']}",
+        f"- Command: {assumptions['command']}",
+        "",
+        "## Regression vs extension candidate",
+    ]
+    if regression_metrics:
+        for key, value in sorted(regression_metrics.items()):
+            summary_lines.append(f"- {key}: {value:.12f}")
+    else:
+        summary_lines.append("- Reference extension outputs not found; regression comparison skipped.")
+
+    summary_lines.extend(
+        [
+            "",
+            "## Deferred non-Perez sources",
+            *(f"- {source}" for source in DEFERRED_SOURCES),
+            "",
+            "## Notes",
+            "- Inventories remain outside fixed-capital accumulation because the repo models fixed capital only (ME, NRC, RC).",
+            "- The canonical production command is `codes/run_harmonization.py`.",
+            "- The canonical production artifacts are written to `outputs/HARMONIZED_PEREZ_2003CLP_v1/`.",
+            "- Exact required-input hashes are recorded in `assumptions.yaml`.",
+        ]
+    )
+    (out_dir / "summary.md").write_text("\n".join(summary_lines) + "\n", encoding="utf-8")
 
 
 def main() -> None:
     base_dir = Path(__file__).resolve().parents[1]
     raw_dir = base_dir / "data" / "raw"
-    processed_dir = base_dir / "data" / "processed"
-    diag_dir = base_dir / "data" / "diagnostics"
-    out_dir = base_dir / "outputs"
-    ensure_dirs([processed_dir, diag_dir, out_dir])
+
+    lambda_path = base_dir / "outputs" / "DIAGNOSTIC_LEVEL_NORMALIZATION_LAMBDA_v1" / "lambda_estimates.yaml"
+    survival_path = base_dir / "outputs" / "survival_fit_hofman_1980.csv"
+    gap_ratio_path = base_dir / "outputs" / "harmonized_series_1980CLP_1900_1994.csv"
+    required_inputs = [
+        raw_dir / "PerezEyzaguirre_DemandaAgregada.xlsx",
+        raw_dir / "Hofman2000_GrossInvestment.xlsx",
+        lambda_path,
+        survival_path,
+        gap_ratio_path,
+    ]
 
     log = ViolationLog()
 
-    deflator = compute_deflator(raw_dir / "Hofman2000_anchors.xlsx")
-    lambda_bar, lambda_source = load_lambda_bar(base_dir)
-    control = load_perez(raw_dir / "PerezEyzaguirre_DemandaAgregada.xlsx")
-    control["I_tot_control"] = control["I_tot_control"] * lambda_bar
-    shares = load_hofman_shares(raw_dir / "Hofman2000_GrossInvestment.xlsx", log)
-    shares_ext = extend_shares(shares, control["year"])
-    investments = split_investment(control, shares_ext, log)
+    investment, metadata = build_investment_block(raw_dir, lambda_path, log)
+    survival_specs = load_survival_specs(survival_path)
+    gap_ratios = build_gap_ratios_from_baseline(gap_ratio_path)
 
-    kg_obs, kn_obs = load_hofman_stocks(raw_dir / "Hofman_Kstock_gross_net_19501994.xlsx", deflator)
-    overlap = compute_overlap_flows(investments, kg_obs, kn_obs)["overlap"]
+    kg_series, retirements = accumulate_stocks(investment, survival_specs)
+    kn_series, b_series = build_net_block(kg_series, gap_ratios)
+    depreciation = compute_depreciation(investment, kn_series)
+    panel = compose_panel(investment, kg_series, kn_series, retirements, depreciation, b_series)
+    diagnostics_checks(panel, log)
 
-    survival_results: Dict[str, SurvivalResult] = {}
-    for asset in ASSETS:
-        r_imp_series = overlap[overlap["asset"] == asset].set_index("year")["r_imp"]
-        survival_results[asset] = estimate_survival(
-            asset=asset,
-            investment=investments.set_index("year")[f"I_{asset}"],
-            r_imp=r_imp_series,
-            prior_mean=ASSET_PRIORS[asset],
-            log=log,
-        )
-
-    # Survival fit diagnostics
-    fit_records = []
-    for asset in ASSETS:
-        r_imp_series = overlap[overlap["asset"] == asset].set_index("year")["r_imp"].dropna()
-        r_model = survival_results[asset].retirements_model.loc[r_imp_series.index]
-        for year in r_imp_series.index:
-            fit_records.append(
-                {
-                    "year": int(year),
-                    "asset": asset,
-                    "r_imp": float(r_imp_series.loc[year]),
-                    "r_model": float(r_model.loc[year]),
-                    "residual": float(r_model.loc[year] - r_imp_series.loc[year]),
-                }
-            )
-    pd.DataFrame(fit_records).to_csv(diag_dir / "survival_fit.csv", index=False)
-
-    kg_series = build_non_overlap_gross(investments.set_index("year"), survival_results, kg_obs)
-    retirements = compose_retirements(investments.set_index("year"), survival_results, overlap)
-    gap_ratios = build_gap_ratios(kg_obs, kn_obs)
-    kn_series, b_series = build_net_block(kg_series, kg_obs, kn_obs, gap_ratios)
-    depreciation = compute_depreciation(investments.set_index("year"), kn_series)
-
-    diagnostics = diagnostics_checks(kg_series, kn_series, retirements, depreciation, b_series, log)
-    post_diag_content, stop_flag = overlap_post_scaling_report(
-        diagnostics, diag_dir / "diagnostic_post_scaling.txt"
+    metadata.update(
+        {
+            "survival_parameter_source": str(survival_path),
+            "gap_ratio_source": str(gap_ratio_path),
+            "frozen_baseline_reference": str(gap_ratio_path),
+            **build_provenance(base_dir, required_inputs),
+        }
     )
-    print("\nPost-scaling overlap diagnostics:\n" + post_diag_content)
 
-    save_outputs(
-        investment=investments.set_index("year"),
-        kg_series=kg_series,
-        kn_series=kn_series,
-        retirements=retirements,
-        depreciation=depreciation,
-        b_series=b_series,
-        diagnostics=diagnostics,
-        survival_results=survival_results,
-        deflator=deflator,
-        lambda_bar=lambda_bar,
-        lambda_source=lambda_source,
-        log=log,
-        base_dir=base_dir,
-    )
-    if stop_flag:
-        print("Scaling did not resolve overlap mismatch; investigate deflator/definition.")
+    regression_metrics, regression_ok = compare_with_reference(panel, base_dir)
+    overlap_text, overlap_ok = build_overlap_summary(panel)
+    full_text, full_ok, early_rate_out_count = build_full_summary(panel, log)
+
+    write_outputs(panel, log, base_dir, metadata, regression_metrics, regression_ok, overlap_ok, full_ok, early_rate_out_count)
+
+    print(overlap_text)
+    print("")
+    print(full_text)
+    if not overlap_ok or not full_ok or not regression_ok:
         raise SystemExit(1)
 
 
