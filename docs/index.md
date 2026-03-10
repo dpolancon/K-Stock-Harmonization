@@ -18,6 +18,7 @@ This repository now exposes a citable canonical harmonized baseline for Chilean 
 - Read `docs/source-reconciliation.md` for the treatment of Perez, BCCH, ClioLab, and Tafunell sources.
 - Read `docs/code-map.md` for the script-to-output map.
 - Read `docs/reproducibility.md` for the execution contract and provenance fields.
+- Read `docs/release-v1.0.0.md` for the first canonical release scope and validation status.
 
 ## What is citable
 
