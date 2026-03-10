@@ -1,7 +1,7 @@
 primary_price_space: 2003 CLP
 control_concept: FBKF ex inventories
 inventories_excluded_from_accumulation: true
-git_commit: 3c7dfc6d707614204a4c65d4d9c5b69029ce2c2f
+git_commit: 22d94f49e11ccb9bfe9491c881affc30e3c1b708
 python_version: 3.11.9
 command: python codes/run_harmonization.py
 repo_status: dirty
@@ -63,4 +63,4 @@ input_hashes:
   outputs/DIAGNOSTIC_LEVEL_NORMALIZATION_LAMBDA_v1/lambda_estimates.yaml: f6417b820dc7866d6419519a6d81bfee497e355db7fd36d9c2ff2b32957a5bd2
   outputs/survival_fit_hofman_1980.csv: 9275922753ce200f57b7c9f65d29b86efce2253e8c4c27f5cd9d2648adfeba9f
   outputs/harmonized_series_1980CLP_1900_1994.csv: c04637de75d6aea74241b520edfa335fce12470a9855b264d15ef95b4b266500
-generated_at_utc: '2026-03-10T19:17:52Z'
+generated_at_utc: '2026-03-10T19:20:56Z'

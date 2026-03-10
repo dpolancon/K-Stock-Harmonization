@@ -14,8 +14,8 @@ Frozen Hofman 1980 baseline remains unchanged.
 - Early rate tolerance (max allowed): 0
 
 ## Provenance
-- Generated at UTC: 2026-03-10T19:17:52Z
-- Git commit: 3c7dfc6d707614204a4c65d4d9c5b69029ce2c2f
+- Generated at UTC: 2026-03-10T19:20:56Z
+- Git commit: 22d94f49e11ccb9bfe9491c881affc30e3c1b708
 - Repo status at generation: dirty
 - Command: python codes/run_harmonization.py
 

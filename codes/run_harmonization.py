@@ -122,27 +122,33 @@ def build_provenance(base_dir: Path, input_paths: List[Path]) -> Dict[str, objec
     }
 
 
-def resolve_generated_at(assumptions_path: Path, assumptions: Dict[str, object]) -> str:
+def stabilize_provenance(assumptions_path: Path, assumptions: Dict[str, object]) -> Dict[str, object]:
     generated_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
     if not assumptions_path.exists():
-        return generated_at
+        assumptions["generated_at_utc"] = generated_at
+        return assumptions
 
     try:
         existing = yaml.safe_load(assumptions_path.read_text(encoding="utf-8")) or {}
     except Exception:
-        return generated_at
-
-    existing_generated_at = existing.get("generated_at_utc")
-    if not existing_generated_at:
-        return generated_at
+        assumptions["generated_at_utc"] = generated_at
+        return assumptions
 
     current_compare = dict(assumptions)
     existing_compare = dict(existing)
-    current_compare.pop("generated_at_utc", None)
-    existing_compare.pop("generated_at_utc", None)
+    for field in ["generated_at_utc", "git_commit"]:
+        current_compare.pop(field, None)
+        existing_compare.pop(field, None)
+
     if current_compare == existing_compare:
-        return str(existing_generated_at)
-    return generated_at
+        if existing.get("git_commit"):
+            assumptions["git_commit"] = existing["git_commit"]
+        if existing.get("generated_at_utc"):
+            assumptions["generated_at_utc"] = existing["generated_at_utc"]
+            return assumptions
+
+    assumptions["generated_at_utc"] = generated_at
+    return assumptions
 
 
 def normalize_xlsx(path: Path) -> None:
@@ -706,7 +712,7 @@ def write_outputs(
         "early_rate_out_max": EARLY_RATE_OUT_MAX,
         "input_hashes": metadata["input_hashes"],
     }
-    assumptions["generated_at_utc"] = resolve_generated_at(out_dir / "assumptions.yaml", assumptions)
+    assumptions = stabilize_provenance(out_dir / "assumptions.yaml", assumptions)
     with (out_dir / "assumptions.yaml").open("w", encoding="utf-8") as handle:
         yaml.safe_dump(assumptions, handle, sort_keys=False)
 
