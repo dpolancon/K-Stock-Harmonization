@@ -1,0 +1,7 @@
+Full-period audit 1900-2024
+Source extraction issues: 0
+Negative stock/gap violations: 0
+Identity/additivity violations: 0
+Rate out-of-bounds violations (all years): 0
+Rate out-of-bounds violations (1995-2024): 0
+Status: PASS

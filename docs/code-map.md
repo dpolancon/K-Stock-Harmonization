@@ -17,14 +17,15 @@ This map links scripts to their committed outputs and methodological role.
 | `codes/extension_external_compare_perez_fbfk_2003clp_v1.py` | Perez FBKF comparison stage | `outputs/EXTENSION_EXTERNAL_COMPARE_PEREZ_FBFK_2003CLP_v1/` |
 | `codes/extension_external_compare_perez_fbfk_2003clp_v2.py` | Follow-up Perez FBKF comparison stage | `outputs/EXTENSION_EXTERNAL_COMPARE_PEREZ_FBFK_2003CLP_v2/` |
 | `codes/extension_external_compare_perez_fbfk_2003clp_v3_scaled.py` | Scaled Perez FBKF comparison stage | `outputs/EXTENSION_EXTERNAL_COMPARE_PEREZ_FBFK_2003CLP_v3_SCALED/` |
-| `codes/capital_stock_series_perez_toggle_b_2003clp_v1.py` | Earlier candidate stock experiment with fixed-capital closure | `outputs/CAPITAL_STOCK_SERIES_PEREZ_TOGGLE_B_2003CLP_v1/` |
-| `codes/run_harmonization.py` | Canonical production baseline in 2003 CLP | `outputs/HARMONIZED_PEREZ_2003CLP_v1/` |
+| `codes/run_harmonization.py` | Canonical production baseline in 2003 CLP, `1900-1994` | `outputs/HARMONIZED_PEREZ_2003CLP_v1/` |
+| `codes/run_harmonization_bcch.py` | Additive BCCh production bundle in 2003 CLP, `1900-2024`, with companion `Pk` | `outputs/HARMONIZED_BCCH_2003CLP_v1/` |
 
 ## Reading rule
 
-For dissertation-level reverse documentation, the scripts above should be read as a history with one active endpoint:
+For dissertation-level reverse documentation, the scripts above should be read as a history with three active endpoints:
 
 - frozen reference endpoint: `codes/run_baseline_hofman_1980.py`
-- production endpoint: `codes/run_harmonization.py`
+- canonical `1900-1994` endpoint: `codes/run_harmonization.py`
+- additive `1900-2024` endpoint: `codes/run_harmonization_bcch.py`
 
 All other scripts are historical diagnostics, bridges, or candidate builders.

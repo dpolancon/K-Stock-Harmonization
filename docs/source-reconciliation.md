@@ -1,17 +1,17 @@
 # Source Reconciliation
 
-This chapter explains how the repository currently reconciles the main source families and why only part of that source landscape enters the production baseline.
+This chapter explains how the repository currently reconciles the main source families and why they enter different publication surfaces in different ways.
 
 ## Hofman versus Perez
 
-The active repository resolution is asymmetric:
+The active repository resolution remains asymmetric:
 
 - Hofman defines the frozen accounting reference in 1980 CLP.
-- Perez defines the promoted aggregate investment control total in 2003 CLP.
+- Perez defines the promoted aggregate investment control total in 2003 CLP for the canonical `1900-1994` publication surface.
 
 The bridge between them is not a unit conversion. `outputs/DIAGNOSTIC_LEVEL_NORMALIZATION_LAMBDA_v1/summary.md` states explicitly that the chosen lambda is a level-normalization bridge. `outputs/DIAGNOSTIC_DEFINITION_CROSSWALK_v1/summary.md` records comparability as `PARTIAL`, not fully resolved.
 
-The current production design accepts that partial comparability and handles it operationally by:
+The canonical production design handles that partial comparability operationally by:
 
 - excluding inventories from the canonical control total
 - scaling the Perez aggregate with `lambda_choice`
@@ -19,65 +19,68 @@ The current production design accepts that partial comparability and handles it 
 
 ## Perez
 
-Perez is the only non-Hofman source family that currently enters the production baseline. Repository evidence establishes:
+Perez remains the promoted mother series for the canonical `1900-1994` bundle:
 
-- coverage: 1860-2010 in the committed anchor summaries
-- price space: 2003 pesos from sheet headers and committed summaries
+- coverage: `1860-2010` in the committed anchor summaries
+- price space: `2003 CLP`
 - concept used in production: machinery plus construction, excluding inventories
 
-Perez is included because it is the only non-Hofman source already wired into the complete active chain from raw data to a committed candidate stock path and now to the promoted baseline.
+Perez is still the only non-Hofman source family that enters the repo’s validated `1900-1994` stock-flow closure end to end.
 
 ## BCCH
 
-Two BCCH workbooks are present in `data/raw/`:
+Two BCCh workbooks now enter the additive extension bundle:
 
 - `BCCH_1985_2024.xlsx`
 - `BCCH_ref2018_Pk.xlsx`
 
-Repository evidence for active use is limited. `codes/run_harmonization.py` lists both files as deferred sources, but no production script reads them. `BCCH_ref2018_Pk.xlsx` shows `FBKF_nom`, `FBKF_real`, and `Pk` in its first sheet. `BCCH_1985_2024.xlsx` is present but its active role, exact concept, and unit treatment are not established from code.
+Current role:
 
-Current exclusion reason:
+- `BCCH_1985_2024.xlsx` supplies real `Kn` and `D` by asset for `1985-2024`
+- the repo crosswalks BCCh asset names to `RC`, `NRC`, `ME`
+- `NR` and `Total` are recomputed from components
+- BCCh published totals are used only as extraction audits
+- a `1994` hard anchor maps BCCh `Kn` into the repo’s 2003-CLP stock level surface
+- the same asset factor is applied to `D`, preserving BCCh depreciation rates
 
-- no active harmonization code path
-- no committed crosswalk from BCCH concepts into the fixed-capital baseline
-- no decision log in repo that promotes BCCH above the Perez path
+This does not replace the Perez baseline. It creates an additive `1900-2024` bundle that keeps the validated `1900-1994` canonical history fixed and uses BCCh only from `1995` onward.
+
+For `Pk`, BCCh is the primary source for `1960-2024` through the ratio deflator `FBKF_nom / FBKF_real`, rebased to `2003=100`. The workbook also carries a BCCh-supplied `Pk` field, but that field is non-production and does not enter the current public diagnostics.
 
 ## ClioLab
 
-Two ClioLab-related workbooks are present:
+Two ClioLab-related workbooks remain relevant, but with narrower roles:
 
 - `ClioLab_GFKF_Freal_nominal_Pk.xlsx`
 - `Kn_ClioLab.xlsx`
 
-The first workbook appears, from file name and headers, to provide gross fixed capital formation and a price index. The second provides net-capital columns by asset. Neither workbook is consumed by active production code.
+Current role:
 
-Current exclusion reason:
+- `ClioLab_GFKF_Freal_nominal_Pk.xlsx` provides the ratio-deflator growth path used to backcast `1940-1959`, chained to the BCCh ratio level at `1960`
+- `Kn_ClioLab.xlsx` is diagnostic only and is used to compare secondary level patterns against the BCCh extension
 
-- no active code integration
-- no committed bridge from ClioLab flows/stocks to the promoted accounting closure
-- no published admissibility comparison in repo that would justify replacing the Perez-first route
+ClioLab therefore enters the repo only as a deflator backcast and a diagnostic stock comparator. It is not used as a primary production stock input.
 
 ## Tafunell
 
-Two Tafunell-related workbooks are present:
+The Tafunell family remains outside the active publication surfaces:
 
 - `tafunel_2013_Ig.xlsx`
 - `Tafunell_Ducoing_2016_Kg.xlsx`
 
-Repository evidence shows investment-flow columns in the former and gross-stock columns in the latter. Again, there are no active production code references beyond deferred-source listing.
-
 Current exclusion reason:
 
-- no active harmonization step
-- no committed price-space reconciliation into the production baseline
-- no documented decision in repo that resolves Tafunell against Perez and Hofman for publication use
+- no active integration into either the canonical Perez bundle or the BCCh extension bundle
+- no committed price-space reconciliation that would justify promotion into production
 
 ## Current repository position
 
-For v1 publication, the repository is methodologically explicit:
+For the current repo state, the source hierarchy is explicit:
 
-- Perez is the promoted production mother series.
-- Hofman remains the frozen accounting reference.
-- BCCH, ClioLab, and Tafunell are part of the documented empirical landscape, but not part of the production baseline.
+- Hofman remains the frozen accounting reference
+- Perez remains the promoted mother series for the canonical `1900-1994` bundle
+- BCCh now supplies the forward extension from `1995` onward and the primary ratio-deflator surface from `1960` onward
+- ClioLab supplies only the `1940-1959` `Pk` backcast growth path and stock diagnostics
+- Tafunell remains deferred
 
-This is a defensible dissertation position because the exclusion is documented as an implementation and comparability status, not as a claim that those sources lack value.
+This keeps the validated Perez-first real harmonization intact while allowing a stock-flow-consistent BCCh splice for the later period.

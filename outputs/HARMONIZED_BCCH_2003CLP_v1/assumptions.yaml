@@ -1,0 +1,46 @@
+primary_price_space: 2003 CLP
+bundle_type: additive BCCh extension
+command: python codes/run_harmonization_bcch.py
+git_commit: 57bd6129f8a870162b3288b79bf521022d645e16
+generated_by: HARMONIZED_BCCH_2003CLP_v1
+python_version: 3.11.9
+repo_status: clean
+history_through_1994_exact: true
+bcch_start_year: 1995
+pk_start_year: 1940
+pk_primary_start_year: 1960
+bridge_rule: 1994 hard anchor by asset on Kn; same asset factor applied to D
+bridge_factors_1994:
+  ME: 5.888124411553565
+  NRC: 1.0333035386670686
+  RC: 1.0499331890263923
+pk_splice_rule: BCCh ratio deflator (FBKF_nom/FBKF_real) rebased to 2003=100 for 1960-2024;
+  ClioLab ratio deflator growth chained backward to the BCCh ratio level at 1960 for
+  1940-1959
+source_quality_flags:
+  historical: Clio backcast for Pk only, 1940-1959
+  official: BCCh source series used to compute ratio-deflator production values
+  provisional: BCCh 2023 provisional
+  preliminary: BCCh 2024 preliminary
+bcch_recent_year_flags:
+  2023: provisional
+  2024: preliminary
+pk_recent_year_flags:
+  2023: provisional
+  2024: preliminary
+survival_parameter_source: C:\ReposGitHub\K-Stock-Harmonization\outputs\survival_fit_hofman_1980.csv
+legacy_panel_source: C:\ReposGitHub\K-Stock-Harmonization\outputs\HARMONIZED_PEREZ_2003CLP_v1\harmonized_series_2003CLP_1900_1994.csv
+bcch_stock_source: C:\ReposGitHub\K-Stock-Harmonization\data\raw\BCCH_1985_2024.xlsx
+bcch_pk_source: C:\ReposGitHub\K-Stock-Harmonization\data\raw\BCCH_ref2018_Pk.xlsx
+clio_pk_source: C:\ReposGitHub\K-Stock-Harmonization\data\raw\ClioLab_GFKF_Freal_nominal_Pk.xlsx
+kn_clio_diagnostic_source: C:\ReposGitHub\K-Stock-Harmonization\data\raw\Kn_ClioLab.xlsx
+pk_2003base_anchor_check: true
+meets_full_period_admissibility: true
+input_hashes:
+  outputs/HARMONIZED_PEREZ_2003CLP_v1/harmonized_series_2003CLP_1900_1994.csv: 13e03d197b51b234eadd53c94291e5758789acce8b6612ee9da4098f153ad612
+  outputs/survival_fit_hofman_1980.csv: 9275922753ce200f57b7c9f65d29b86efce2253e8c4c27f5cd9d2648adfeba9f
+  data/raw/BCCH_1985_2024.xlsx: ddf0b1e83ca549b7083fdeb93e3cb56ddd8900471a19ede52913dde928061380
+  data/raw/BCCH_ref2018_Pk.xlsx: 6e0c2ed29b005091d717056f38e6a25c84f51b032f50f929c9ecb849253e74e0
+  data/raw/ClioLab_GFKF_Freal_nominal_Pk.xlsx: 502b4d2e8d213df0b49fbaee585abeac297171fbb31abb7f387ced009c776b98
+  data/raw/Kn_ClioLab.xlsx: cfa25be0bcb7ab3a8649e2289a463fed5863b900886c0e9358c0b802418d9750
+generated_at_utc: '2026-03-11T04:09:34Z'

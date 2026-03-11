@@ -1,0 +1,56 @@
+I've created a branch, to work the splicing of our data set with the NET capital stock of in the folder of the repo with data series from the Central Bank of Chile, extensions:  
+- "data/rawBCCH_1985_2024.xlsx"  where you can identify the following variables in constant and real prices: 
+     + "Edificación habitacional"  (RC) 
+     + "Resto construcción" (NRC) 
+     + "Maquinarias y equipos" (ME) 
+     + "Total" (T) 
+- Several points should be noted, the .xlsx file has several sheets with numbers "1", "2", up to "6": 
+     + "1" contains the four variables as written above, you need to crosswalk to the notation of this project for capital stock and build the implicit variables such as total capital stock for the non residential sector (NR) and validate total capital stocks when necessary 
+     + Real from Nominal capital stocks can be identified as "Precios constantes"  and "Precios corrientes" respectively. 
+     + This distinction in the data set is "per sheet" in sheet. We'll be using sheet "1" and sheet "2" 
+     + Sheet "1" has data on "Stock de capital neto por tipo de activo, 1985-2024 (1)(2)", i.e.  K net in our notation. 
+     + Sheet "1" contains real capital stocks with the first data rwo for RC NRC ME T ranging cell span C10:F10 while B10:B49 with the first period year: 1985 running up to 2024 (note: years 2023 and 2024 have a (3) and (4) note signaling provisionary measures, and preliminary correspondingly. 
+     + Likewise, sheet "1" also contains nominal  capital stocks with the first data rwo for RC NRC ME T ranging cell span H11:F11 while B11:B49 with the first period year: 1986 running up to 2024 (note: years 2023 and 2024 have a (3) and (4) note signaling provisionary measures, and preliminary correspondingly.
+     + Hence, we can leverage on real capital stocks having data for 1985, but considering that this source has complete information for 1985-2024, considering warnings for 2023-2024 period. Otherwise, are oficial. 
+     + Similarly, sheet "2" presents data for "Consumo de capital fijo por tipo de activo, 1985-2024 (1)(2)", i.e.  D_t in our notation. 
+     + Thus, the data set presents implicit depreciation rates for net capital stocks, i.e. d_t in our notation. 
+     + Note: all data is on "Miles de millones de pesos", i.e thousands million pesos.
+
+
+- As a companion to  "data/rawBCCH_1985_2024.xlsx" you can also find the file "raw/BCCH_ref2018_Pk.xlsx"  which has period "year" + three variables: "FBKF_nom" "FBKF_real" "Pk" corresponding to the long series to 1960 of "Formación Bruta de Capital Fijo" or "Gross Formation of Fixed Capital", i.e. a series of gross investment in nominal and real terms  correspondingly, and their ratio which builds a deflator "Pk". We can leverage for profiling total investment relative to its components as we did previously, to finish the full harmonization from secondary sources. 
+
+- The variable "Pk" directs us to a third data set, "ClioLab_GFKF_Freal_nominal_Pk", with an only sheet "ig_nom_ig_real_Pk", which includes series for the same variables, here classified as: "year" "FBKFNOM" "FBKFREAL" "Pk". 
+
+ 
+Research objective: include this data in our harmonization to use this sources and extend our data set currently providing data availability up to 1994 by means of splicing under a Stock-Flow-Consistency Framework. 
+
+Outputs: 
+- A new harmonized series of Pk ranging from 1940 to 2024 with credibility hieararchy for the data of the central bank "BCCH" data set, in second order complementing with the data available in clio lab for capital stocks. This is a drift from Perez consistency, but is not actually a problem because we have harmonized everything in real terms and we haven't touched anything in nominal terms so far. This should not lead to any inconsistency. 
+
+-Extended series for NRC RC ME T NR both net and gross under our stock-flow consistent approach from 1994 to 2024. 
+
+-Note: The hierarchy in real terms of harmonization still relies on our current harmonized data set, which is basically Hofman being stock-flow consistent with Perez (excluding variation of inventories) 
+ 
+-Note: all data is on "Miles de millones de pesos", i.e thousands million pesos, except for data on ClioLab that you already have profiled. 
+
+- All documentation can be used as leverage and should be updated with the new integration of Central Bank data to our data sources. 
+
+Means: 
+- Design a plan to deliver outputs in a new harmonization with BCCh, keeping real prices in 2003 = 100 basis. No need of building "nominal capital stocks", but we do need the deflator series for all the period available from 1940 up to 2024
+
+* Documentation for leverage: 
+
+ -Recently we built the following artifacts: 
+    "artifacts/stock-flow-consistent-approach.md" 
+    "artifacts/harmonization-implementation-procedure"
+
+ -While also you can find all the documentation at: 
+   + repo README.md 
+   + K-Stock-Harmonization/docs/ folder including: "baseline-hofman.md", "code-map", "data-landscape", "harmonized-perez", "index", "notation", "release-v1.0.0", "reproducibility", "source-reconciliation", "validation".   
+ - Git history arriving to a successful harmonization, might be helpful for this task. 
+
+* References: 
+- "references/Henriquez2008.pdf"  this document is official methodology of central bank data that backs up through perpetual inventory method the construction of the central bank series. 
+- "references/FernandezPinto2017.pdf" this document is official methodology for extending Henriquez2008, by means of estimating a capital services index which later on is used by the central bank officials to extend capital stocks. 
+
+
