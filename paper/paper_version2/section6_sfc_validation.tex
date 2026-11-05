@@ -1,0 +1,56 @@
+\section{Accounting Validation and Source Reconciliation}\label{sec:validation}
+
+To ensure high empirical reliability, the harmonized dataset was subjected to systematic Stock--Flow Consistency (SFC) accounting verification across all 125 annual observations (1900--2024) and 5 asset categories.
+
+\subsection{Data Quality Evaluation and Stock--Flow Verification}
+Table~\ref{tab:audit_summary} reports the quantitative evaluation outcomes across six core accounting principles.
+
+\begin{table}[htbp]
+\centering
+\caption{Stock--Flow Accounting Verification Results (1900--2024)}\label{tab:audit_summary}
+\small
+\begin{tabularx}{\textwidth}{p{4.8cm} >{\centering\arraybackslash}p{2.2cm} >{\centering\arraybackslash}p{4.2cm} >{\centering\arraybackslash}p{3.0cm}}
+\toprule
+\textbf{Accounting Principle} & \textbf{Empirical Scope} & \textbf{Verification Condition} & \textbf{Consistency Outcome} \\
+\midrule
+1. Net--Gross Hierarchy & 625 asset-years & $K_{g,t,a} \ge K_{n,t,a} \ge 0 \quad \forall t, a$ & Fully Satisfied \\
+2. Gross Accumulation Identity & 625 asset-years & $|\Delta K_g - (I - R)| = 0$ & Exact ($\epsilon < 10^{-10}$) \\
+3. Net Accumulation Identity & 625 asset-years & $|\Delta K_n - (I - D)| = 0$ & Exact ($\epsilon < 10^{-10}$) \\
+4. Non-negativity of Flows & 625 asset-years & $I_t, R_t, D_t, z_t, \delta_t \ge 0$ & Fully Satisfied \\
+5. Asset Component Additivity & 625 asset-years & $\text{Total}_t = \text{ME}_t + \text{NRC}_t + \text{RC}_t$ & Fully Satisfied \\
+6. Historical Series Continuity & 475 asset-years & Historical 1900--1994 series unrevised & Preserved Without Revision \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{1. Net--Gross Ordering ($K_g \ge K_n$):}
+The evaluation confirms that real net capital stock never exceeds real gross capital stock for any asset or year. The historical scale distortions present in raw Clio-Lab net series are fully eliminated by our 1950 Hofman level-normalization ($\lambda_a$).
+
+\paragraph{2. Numerical Exactness of Accumulation Identities:}
+Algebraic residuals for gross accumulation ($\Delta K_g - (I - R)$) and net accumulation ($\Delta K_n - (I - D)$) are on the order of $10^{-10}$, confirming exact numerical fulfillment of stock-flow identities across the complete 125-year panel.
+
+\paragraph{3. Component Additivity:}
+For all years $1900 \le t \le 2024$, aggregate non-residential capital ($\text{NR}_t$) and total capital ($\text{Total}_t$) equal the sum of their sub-components exactly. Residual additivity checks ($I_{\text{Total}} - (I_{\text{ME}} + I_{\text{NRC}} + I_{\text{RC}})$) register zero discrepancy.
+
+\paragraph{4. Historical Continuity and Non-Revision:}
+The level-preserving extension preserves historical estimates for 1900--1994 without altering published baseline series. Modern extension dynamics begin at 1995 while maintaining historical series integrity.
+
+\subsection{Source Reconciliation and Comparative Assessment}
+Table~\ref{tab:source_reconciliation} provides a comparative synthesis contrasting raw individual sources with our harmonized baseline.
+
+\begin{table}[htbp]
+\centering
+\caption{Source Reconciliation and Methodological Comparison}\label{tab:source_reconciliation}
+\small
+\begin{tabularx}{\textwidth}{p{3.2cm} p{3.5cm} p{4.2cm} p{4.2cm}}
+\toprule
+\textbf{Data Source} & \textbf{Raw Valuation Scope} & \textbf{Raw Limitations} & \textbf{Harmonized Baseline Role} \\
+\midrule
+\citet{DiazWagner2016} (Clio-Lab) & Net stock ($K_n$) in 2003 CLP (1833--2010) & Level scale distortions from early splices; no gross stock or retirements. & Provides pre-1950 relative net growth trends; rescaled via 1950 Hofman anchor ($\lambda_a$). \\
+\citet{Hofman2000a} & Gross/net stocks and flows in 1980 CLP (1950--1994) & Exogenous PIM decay; limited to 1950--1994; missing long pre-1950 GFCF. & Provides 1950 level anchors ($K_g, K_n$) and asset-share allocations ($s_{t,a}^I$). \\
+\citet{TafunellDucoing2016} & Non-residential gross indices ($1929=100$) & Unanchored index levels; excludes residential construction. & Provides relative non-residential gross composition profiles. \\
+\citet{PerezEyzaguirre2019} & Aggregate GFCF in 2003 CLP (1860--1940) & Focuses on GDP demand side; no stock accumulation. & Serves as absolute real level anchor for investment flow ($I_t$). \\
+\citet{BCCH2024} & Net stock and $D$ in 2018 CLP (1985--2024) & Base year shift; starts in 1985; no pre-1985 coverage. & Provides post-1994 forward extension dynamics scaled via 1994 level-conversion ratios ($\gamma_a$). \\
+\bottomrule
+\end{tabularx}
+\end{table}

@@ -3,3 +3,21 @@ __pycache__/
 tmp/
 output/
 data/interim/
+.pytest_cache/
+.DS_Store
+.idea/
+.vscode/
+.system_generated/
+.agents/
+
+# LaTeX auxiliary files
+*.aux
+*.log
+*.out
+*.toc
+*.blg
+*.bbl
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+

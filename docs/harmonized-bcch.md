@@ -40,6 +40,8 @@ The public `Pk` diagnostics are ratio-only. `pk_splice_diagnostics.csv` records 
 
 The committed BCCh bundle is `outputs/HARMONIZED_BCCH_2003CLP_v1/`:
 
+- `harmonized_master_dataset_2003CLP_1900_2024.csv` (Definitive Master Dataset combining stocks, flows, rates, and Pk)
+- `harmonized_master_dataset_2003CLP_1900_2024.xlsx`
 - `harmonized_series_2003CLP_1900_2024.csv`
 - `harmonized_series_2003CLP_1900_2024.xlsx`
 - `harmonized_pk_2003base_1940_2024.csv`

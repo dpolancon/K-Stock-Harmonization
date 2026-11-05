@@ -11,9 +11,9 @@ The legacy Perez-based 1900-1994 production surface remains frozen and is preser
 - Pk(2003)=100 check: True
 
 ## Provenance
-- Generated at UTC: 2026-03-11T04:09:34Z
-- Git commit: 57bd6129f8a870162b3288b79bf521022d645e16
-- Repo status at generation: clean
+- Generated at UTC: 2026-08-28T23:25:56Z
+- Git commit: 54800133bb9cb47ed0e060009f5a5d5c9f5af995
+- Repo status at generation: dirty
 - Command: python codes/run_harmonization_bcch.py
 
 ## Bridge factors (1994)

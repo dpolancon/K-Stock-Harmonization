@@ -327,7 +327,7 @@ def main() -> None:
     r_series_map: Dict[str, pd.Series] = {}
     for asset in ASSETS:
         inv_asset = inv_series[f"I_{asset}"].loc[1900:1950]
-        kg_obs_1950 = float(kg_obs.loc[kg_obs["year"] == 1950, asset])
+        kg_obs_1950 = float(kg_obs.loc[kg_obs["year"] == 1950, asset].iloc[0])
         kg_model, r_model, factor = anchor_pre1950_kg(inv_asset, fits[asset].survival, kg_obs_1950)
         kg_series[asset] = kg_model
         r_series_map[asset] = r_model
@@ -460,19 +460,19 @@ def main() -> None:
         b_total_pre = subset["B"].sum()
         I_total = inv_series["I_tot"].loc[y] if y in inv_series.index else np.nan
         if y >= 1950:
-            kg_total = float(kg_obs.loc[kg_obs["year"] == y, "Total_obs"])
-            kn_total = float(kn_obs.loc[kn_obs["year"] == y, "Total_obs"])
+            kg_total = float(kg_obs.loc[kg_obs["year"] == y, "Total_obs"].iloc[0])
+            kn_total = float(kn_obs.loc[kn_obs["year"] == y, "Total_obs"].iloc[0])
             b_total = kg_total - kn_total
         else:
             kg_total = kg_total_pre
             kn_total = kn_total_pre
             b_total = b_total_pre
-        delta_kg_total = kg_total - (float(kg_obs.loc[kg_obs["year"] == y - 1, "Total_obs"]) if y > 1950 else (panel[panel["year"] == y - 1]["Kg"].sum() if y > 1900 else np.nan))
-        delta_kn_total = kn_total - (float(kn_obs.loc[kn_obs["year"] == y - 1, "Total_obs"]) if y > 1950 else (panel[panel["year"] == y - 1]["Kn"].sum() if y > 1900 else np.nan))
+        delta_kg_total = kg_total - (float(kg_obs.loc[kg_obs["year"] == y - 1, "Total_obs"].iloc[0]) if y > 1950 else (panel[panel["year"] == y - 1]["Kg"].sum() if y > 1900 else np.nan))
+        delta_kn_total = kn_total - (float(kn_obs.loc[kn_obs["year"] == y - 1, "Total_obs"].iloc[0]) if y > 1950 else (panel[panel["year"] == y - 1]["Kn"].sum() if y > 1900 else np.nan))
         r_total = I_total - delta_kg_total
         d_total = I_total - delta_kn_total
-        z_total = r_total / (float(kg_obs.loc[kg_obs["year"] == y - 1, "Total_obs"]) if y > 1950 else (panel[panel["year"] == y - 1]["Kg"].sum() if y > 1900 else np.nan))
-        delta_total = d_total / (float(kn_obs.loc[kn_obs["year"] == y - 1, "Total_obs"]) if y > 1950 else (panel[panel["year"] == y - 1]["Kn"].sum() if y > 1900 else np.nan))
+        z_total = r_total / (float(kg_obs.loc[kg_obs["year"] == y - 1, "Total_obs"].iloc[0]) if y > 1950 else (panel[panel["year"] == y - 1]["Kg"].sum() if y > 1900 else np.nan))
+        delta_total = d_total / (float(kn_obs.loc[kn_obs["year"] == y - 1, "Total_obs"].iloc[0]) if y > 1950 else (panel[panel["year"] == y - 1]["Kn"].sum() if y > 1900 else np.nan))
         total_records.append(
             {
                 "year": y,

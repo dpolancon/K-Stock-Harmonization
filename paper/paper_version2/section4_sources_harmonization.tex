@@ -1,0 +1,83 @@
+\section{Data Sources, Level Normalization, and Splicing Procedure}\label{sec:harmonization}
+
+The construction of the continuous 1900--2024 harmonized capital stock panel synthesizes five primary data sources, each contributing specific empirical strengths across different historical sub-periods. Table~\ref{tab:sources_summary} summarizes the raw inputs, covered time horizons, valuation concepts, and functional roles within the harmonization.
+
+\begin{table}[htbp]
+\centering
+\caption{Primary Data Sources and Functional Roles in Harmonization}\label{tab:sources_summary}
+\small
+\begin{tabularx}{\textwidth}{>{\centering\arraybackslash}p{2.8cm} >{\centering\arraybackslash}p{1.8cm} p{4.0cm} p{5.2cm}}
+\toprule
+\textbf{Source} & \textbf{Period} & \textbf{Primary Variables} & \textbf{Role in Harmonization Framework} \\
+\midrule
+\citet{PerezEyzaguirre2019} & 1900--1994 & Aggregate GFCF ($I_t$) in 2003 CLP & \textbf{Real Level Anchor} for aggregate investment flow excluding inventories. \\
+\citet{Hofman2000a, Hofman2000b} & 1950--1994 & $I_t, K_g, K_n$ in 1980 CLP (ME, NRC, RC) & \textbf{Benchmark Level Anchor at 1950} and asset-share breakdown ($s_{t,a}^I$). \\
+\citet{DiazWagner2016} (Clio-Lab) & 1900--1994 & $K_n, I_t$ in 2003 CLP & \textbf{Relative Growth Profiles} for pre-1950 net stocks (rescaled to Hofman level). \\
+\citet{TafunellDucoing2016} & 1900--1994 & Non-residential $K_g$ indices ($1929=100$) & \textbf{Relative Composition Profiles} for gross non-residential capital. \\
+\citet{BCCH2024} & 1985--2024 & Real $K_n, D$, nominal/real FBKF & \textbf{Modern Period Extension} (1995--2024) and primary $P_k$ ratio deflator (1960--2024). \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Perez GFCF Baseline and Asset-Share Allocation (1900--1994)}
+The real investment flow baseline for 1900--1994 is anchored on \citet{PerezEyzaguirre2019} aggregate real gross fixed capital formation in constant 2003 CLP, excluding inventories. To disaggregate total GFCF into asset classes ($a \in \{\text{ME}, \text{NRC}, \text{RC}\}$), we compute dynamic asset shares $s_{t,a}^I$ using \citet{Hofman2000a} investment breakdown:
+\begin{equation}\label{eq:share_allocation}
+I_{t,a} = s_{t,a}^I \cdot I_t^{\text{Perez}}, \quad \text{where } \sum_{a \in \{\text{ME},\text{NRC},\text{RC}\}} s_{t,a}^I = 1.0 \quad \forall t
+\end{equation}
+
+Asset-level gross stocks ($K_{g,t,a}$) for 1900--1994 are generated via perpetual inventory accumulation using cohort survival functions fitted to historical asset mortality:
+\begin{equation}\label{eq:weibull_survival}
+S(a) = \exp\left[ -\left( \frac{a}{\alpha} \right)^\beta \right]
+\end{equation}
+where $\alpha$ is the scale parameter and $\beta$ is the Weibull shape parameter. Table~\ref{tab:weibull_params} reports the survival parameters calibrated from the Hofman 1980 accounting reference.
+
+\begin{table}[htbp]
+\centering
+\caption{Calibrated Weibull Survival Parameters by Asset Class}\label{tab:weibull_params}
+\small
+\begin{tabularx}{\textwidth}{p{4.8cm} >{\centering\arraybackslash}p{2.0cm} >{\centering\arraybackslash}p{1.8cm} >{\centering\arraybackslash}p{1.8cm} >{\centering\arraybackslash}p{2.2cm} >{\centering\arraybackslash}p{1.8cm}}
+\toprule
+\textbf{Asset Class} & \textbf{Distribution} & \textbf{Scale ($\alpha$)} & \textbf{Shape ($\beta$)} & \textbf{Mean Life (yrs)} & \textbf{Fit RMSE} \\
+\midrule
+Machinery \& Equipment (ME) & Weibull & 16.24 & 2.18 & 14.4 & 0.0012 \\
+Non-Residential Construction (NRC) & Weibull & 48.50 & 2.85 & 43.2 & 0.0008 \\
+Residential Construction (RC) & Weibull & 62.10 & 3.10 & 55.6 & 0.0005 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Level Normalization ($\lambda$) and Pre-1950 Rescaling}
+Raw pre-1950 net capital series from Clio-Lab \citep{DiazWagner2016} exhibit scale distortions due to historical currency re-basings. To preserve Clio-Lab's long-run growth profiles while eliminating level distortions, we estimate an optimal level-normalization scalar ($\lambda$) anchored to Hofman's 1950 level in 2003 CLP:
+\begin{equation}\label{eq:lambda_scaling}
+\lambda_{a} = \frac{K_{n,1950,a}^{\text{Hofman, 2003CLP}}}{K_{n,1950,a}^{\text{ClioLab}}}, \quad K_{n,t,a}^{\text{harmonized}} = \lambda_{a} \cdot K_{n,t,a}^{\text{ClioLab}} \quad \forall t \le 1950
+\end{equation}
+
+For 1950--1994, net capital levels $K_{n,t,a}$ match Hofman's benchmark levels converted to 2003 CLP exactly, ensuring a seamless join at 1950.
+
+\subsection{BCCh Forward Extension (1995--2024)}
+To extend capital stock estimates from 1995 to 2024 while preserving historical series for 1900--1994 without revision, we apply a level-preserving splice using official Central Bank of Chile (\citealt{BCCH2024}) real net stocks ($K_{n,t,a}^{\text{BCCh}}$) and depreciation ($D_{t,a}^{\text{BCCh}}$).
+
+Because official BCCh series begin in 1985 on a 2018 national accounts base, we calculate asset-specific level-conversion ratios ($\gamma_a$) at the 1994 overlap year:
+\begin{equation}\label{eq:bridge_factor}
+\gamma_a \equiv \frac{K_{n,1994,a}^{\text{Perez 2003CLP}}}{K_{n,1994,a}^{\text{BCCh Raw}}}, \quad a \in \{\text{ME}, \text{NRC}, \text{RC}\}
+\end{equation}
+
+The resulting 1994 level-conversion ratios are:\footnote{The ratio $\gamma_{\text{ME}} \approx 5.89$ reflects the boundary difference between historical 1980 CLP machinery benchmarks and official 2018-base BCCh national accounts, which re-categorized transport equipment, ICT, and specialized mining equipment into separate sub-accounts while re-basing to 2018 prices.}
+\begin{align}
+\gamma_{\text{ME}} &= 5.888124 \label{eq:gamma_me} \\
+\gamma_{\text{NRC}} &= 1.033304 \label{eq:gamma_nrc} \\
+\gamma_{\text{RC}} &= 1.049933 \label{eq:gamma_rc}
+\end{align}
+
+For the extension period ($1995 \le t \le 2024$), post-1994 rescaled net stocks and depreciation are set to:
+\begin{align}
+K_{n,t,a}^{\text{scaled}} &= \gamma_a \cdot K_{n,t,a}^{\text{BCCh Raw}} \label{eq:scaled_kn} \\
+D_{t,a}^{\text{scaled}} &= \gamma_a \cdot D_{t,a}^{\text{BCCh Raw}} \label{eq:scaled_d}
+\end{align}
+
+Post-1994 real investment is inferred directly from rescaled net accumulation and depreciation:
+\begin{equation}\label{eq:inferred_I}
+I_{t,a} = \Delta K_{n,t,a}^{\text{scaled}} + D_{t,a}^{\text{scaled}} = (K_{n,t,a}^{\text{scaled}} - K_{n,t-1,a}^{\text{scaled}}) + D_{t,a}^{\text{scaled}}
+\end{equation}
+
+Gross capital stocks ($K_{g,t,a}$) and retirements ($R_{t,a}$) for 1995--2024 are then accumulated forward using the inferred investment flows $I_{t,a}$ and the calibrated Weibull survival parameters from Equation~\eqref{eq:weibull_survival}. This preserves historical series for 1900--1994 while extending post-1994 dynamics under full stock--flow consistency.

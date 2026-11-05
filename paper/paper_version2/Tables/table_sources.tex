@@ -1,0 +1,41 @@
+\begin{table}[h]
+\centering
+\small
+\caption{Data Sources, Coverage, and Transformations}
+\label{tab:data_sources}
+\begin{tabular}{p{2.9cm} p{3.1cm} p{3.1cm} p{3.1cm} p{3.1cm}}
+\toprule
+\textbf{Source} & \textbf{Sectors / Variables} & \textbf{Concept / Unit} & \textbf{Period / Freq.} & \textbf{Transformation (to 2003 CLP, levels)} \\
+\midrule
+\citet{Hofman2000} &
+Aggregate, ME, C; GFCF shares &
+Levels (1980 CLP), benchmarks &
+1900s--1950s; annual &
+Deflate/convert to 2003 CLP; use 1950 as level anchor; extract NRC share in C \\
+\addlinespace
+\citet{Luders2016}, \citet{Diaz2016} &
+Net capital stocks ($K^n$), national accounts &
+Net (PIM), CLP &
+1833--2010; annual &
+Rescale to 2003 CLP; splice where documented; compute $\Delta K^n_t$ \\
+\addlinespace
+\citet{PerezEyzaguirre2019} &
+GFCF by sector &
+Flows, CLP &
+1860--1940+; annual &
+Harmonize with Clio--Lab totals; adopt as $I^g_t$ where consistent \\
+\addlinespace
+\citet{Tafunell2016} &
+ME and NRC gross stock indices &
+Index (real), sectoral &
+1875--2008; annual &
+Scale indices to Hofman 1950 levels; convert to 2003 CLP; use NRC proxy, not RC \\
+\addlinespace
+Derived (this paper) &
+C, RC, NR, T; $\delta_t$, $z_t$ &
+Levels (2003 CLP), rates &
+1901--1994; annual &
+Iterate stock--flow identities; compute $\delta_t$ and $z_t$; validate additivity \\
+\bottomrule
+\end{tabular}
+\end{table}

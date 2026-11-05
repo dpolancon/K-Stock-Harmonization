@@ -4,10 +4,14 @@ This repository exposes two citable 2003-CLP publication surfaces plus a frozen 
 
 ## Canonical repository objects
 
+- Master reproduction entry-point: `run_all.py`
+- Master Data Dictionary & Codebook: `CODEBOOK.md`
+- Definitive Master Dataset: `outputs/HARMONIZED_BCCH_2003CLP_v1/harmonized_master_dataset_2003CLP_1900_2024.csv`
 - Frozen accounting reference: `codes/run_baseline_hofman_1980.py` and `outputs/harmonized_series_1980CLP_1900_1994.csv`
 - Canonical harmonized baseline: `codes/run_harmonization.py` and `outputs/HARMONIZED_PEREZ_2003CLP_v1/`
 - Additive BCCh extension bundle: `codes/run_harmonization_bcch.py` and `outputs/HARMONIZED_BCCH_2003CLP_v1/`
 - Citation metadata: `CITATION.cff`
+- Open access license: `LICENSE`
 
 ## How to use this documentation
 

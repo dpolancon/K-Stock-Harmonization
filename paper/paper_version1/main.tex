@@ -1,0 +1,329 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{color} % Define colors for hyperlinks
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec} % Include the titlesec package
+\usepackage[nottoc]{tocbibind} % Manage Table of Contents entries
+\usepackage[authoryear]{natbib}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{xcolor}    
+\usepackage{pdflscape}  % For landscape pages
+\usepackage{tikz}         % For drawing with TikZ
+\usetikzlibrary{arrows.meta, positioning, decorations.pathreplacing}  % Load 
+\usepackage[toc,page]{appendix}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+\usepackage{chngcntr}
+
+
+% For specifying colors like darkgreen
+
+\newcommand{\DashDelta}{\overset{-}{\Delta}}  % Define stagnation symbo
+
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+
+
+% Customize section spacing
+\titlespacing*{\section}{0pt}{1.5ex plus 1ex minus .2ex}{1ex plus .2ex}
+\titlespacing*{\subsection}{0pt}{1ex plus .5ex minus .2ex}{0.8ex plus .2ex}
+\titlespacing*{\subsubsection}{0pt}{0.25ex plus .2ex minus .1ex}{0.5ex plus .1ex}
+\setcounter{secnumdepth}{3}
+
+
+\pagestyle{fancy}
+
+% Clear the header only
+\fancyhead{}
+
+% Keep the default footer (optional, you can customize if needed)
+\fancyfoot[C]{\thepage}
+
+
+% Remove the line under the header
+\renewcommand{\headrulewidth}{0pt}
+
+
+\usepackage{tocloft}
+
+% Customize the ToC spacing
+\setlength{\cftbeforesecskip}{0.5em}     % Space before sections
+\setlength{\cftbeforesubsecskip}{0.3em}  % Space before subsections
+\setlength{\cftbeforesubsubsecskip}{0.2em}  % Space before subsubsections
+
+% Customize the indentations for the different levels of ToC entries
+\cftsetindents{section}{0em}{2.3em}      % No indentation for sections
+\cftsetindents{subsection}{1.5em}{3.2em} % Indent subsections
+\cftsetindents{subsubsection}{3em}{4.2em} % Indent subsubsections
+
+% Adding a bit more space between lines in the ToC
+\renewcommand{\cftdotsep}{1}  % Dot spacing between section titles and page numbers
+
+
+
+% Customizing section titles
+\titleformat*{\section}{\normalfont\large\bfseries}
+\titleformat*{\subsection}{\normalfont\normalsize\bfseries}
+\titleformat*{\subsubsection}{\normalfont\normalsize\itshape}
+
+\titleformat{\chapter}[hang]
+{\normalfont\Large\bfseries} % Adjust \Large to a smaller font size like \large, \normalsize, etc.
+{Chapter \thechapter}{1em}{}
+
+\geometry{left=0.8in, right=0.8in, top=1in, bottom=1in}
+\setlength{\parindent}{1mm}
+\setlength{\parskip}{1mm}
+\renewcommand{\baselinestretch}{1}
+
+\definecolor{darkblue}{rgb}{0,0,0.8}
+\hypersetup{
+	colorlinks=true, 
+	citecolor=darkblue,
+	linkcolor=darkblue, 
+	urlcolor=darkblue
+}
+
+% Bibliography and citations
+\bibliographystyle{apalike} % Change to a natbib-compatible style
+
+% Author and title
+\title{Reconstructing Capital Stocks for Chile, 1900--1994: \\
+A Stock–Flow Consistent Approach}
+\author{Diego Polanco}
+\date{Working Paper – 2025}
+
+\begin{document}
+\maketitle
+
+
+\begin{abstract}
+This paper reconstructs new long–run series of gross and net capital stocks for Chile (1901–1994) under an explicitly stock–flow consistent framework. 
+By harmonizing the historical estimates of Hofman (2000), Lüders et al. (2016), Díaz and Wagner (2016), Tafunell and Ducoing (2016), and Pérez (2019), 
+it provides the first integrated dataset distinguishing machinery and equipment, non–residential and residential construction, and total capital stocks. 
+The methodology leverages on a stock-flow consistency between net and gross capital stock series, to currently available and consolidated series of multiple previously mentioned secondary sources. Implicit depreciation and depletion rates are computed for each component, validating internal consistency and revealing long–term patterns of capital durability and replacement in Chile’s industrialization and post–1970 restructuring periods. 
+\end{abstract}
+
+\pagebreak
+\section{Introduction}
+
+
+Measuring the stock of fixed capital is central to empirical growth analysis and to any account of profitability and accumulation over the long run. For Chile, the historical record remains fractured along two lines: valuation (gross versus net) and asset composition (residential versus non-residential). Net series derived from perpetual inventory methods (Clio-Lab; \citealt{Luders2016,Diaz2016}) coexist with gross indices for machinery and non-residential construction produced by the Barcelona school (\citealt{TafunellDucoing2016}), yet no long-run dataset integrates both valuation concepts while separating residential and non-residential assets under an explicit accounting rule. This gap limits credible inference about capital durability, replacement, and the pace of capacity accumulation through the twentieth century.
+
+This paper addresses that gap by reconstructing new long-run series of \emph{gross} and \emph{net} capital stocks for Chile, 1900–1994, within a stock–flow consistent framework. The approach harmonizes \citet{Hofman2000a} benchmark levels, Clio-Lab’s net stocks, \citet{DiazWagner2016} perpetual-inventory results, \citet{PerezEyzaguirre2019} extension of gross fixed capital formation (GFCF), and the gross indices of \citet{TafunellDucoing2016}. By aligning levels and growth rates across these sources in common units (2003 CLP), the paper delivers coherent series for machinery and equipment (ME), total construction (C), non-residential construction (NRC), residential construction (RC), total non-residential capital (NR), and the total stock (T).
+
+The theoretical motivation is practical: empirical work on profitability, accumulation, and structural change is sensitive to whether one tracks book-value net stocks or the physical magnitude of installed capacity. Following \citet{BasuRama2013}, comparing gross and net measures strengthens robustness, while maintaining the accounting link between investment flows and capital stocks avoids well-known inconsistencies in chain-weighted series highlighted by \citet{Shaikh2016}. The emphasis here is operational rather than doctrinal: build series that preserve stock–flow identities, reveal depreciation and depletion behavior, and travel easily between real and nominal magnitudes.
+
+Methodologically, the paper implements a simple accounting system that enforces the accumulation identities for gross and net stocks and yields two diagnostic indicators for each sector and year: an implicit depreciation rate for net capital, $\delta_t$, and an implicit depletion rate for gross capital, $z_t$. These are derived from observed investment and from the joint movement of gross and net stocks, allowing direct internal checks at each step. The reconstruction proceeds by anchoring levels to benchmark years, scaling indices to common units, and iterating the identities so that investment, consumption of fixed capital, and retirements reconcile with observed changes in stocks.
+
+The contribution is empirical and immediate. First, it provides the \emph{first integrated} Chilean dataset that reports both gross and net capital stocks \emph{by sector} for 1901–1994 under explicit stock–flow consistency. Second, it documents a transparent harmonization to 2003 CLP with reproducible anchoring (mid-century benchmarks) and scaling (sectoral indices), so that levels and growth rates align across sources. Third, it offers new time series of $\delta_t$ and $z_t$ that summarize durability and replacement dynamics and can be used directly in studies of profitability and capacity accumulation. Finally, it includes internal diagnostics (identity residuals, additivity) and external comparisons with established aggregates to gauge coherence.
+
+The rest of the paper follows a straightforward sequence. Section~\ref{sec:data} describes sources and harmonization. Section~\ref{sec:method} outlines the stock–flow consistent framework and the estimation procedure. Section~\ref{sec:results} presents the results: it begins with \emph{validation within the results}—sectoral behavior and plausibility of the reconstructed series—and then turns to aggregate patterns over the century. Section~\ref{sec:validation_discussion} provides external validation and discusses implications for research on profitability, accumulation, and structural change. Section~\ref{sec:conclusion} concludes and notes the forthcoming public release of the dataset and replication code.
+
+
+
+\section{Literature Review}
+
+
+A central question in development economics, economic history, and political economy is how the accumulation of fixed capital shapes long-run growth, structural change, and for classical political economy: the dynamics of profitability. In most empirical work, namely mainstream or neoclassical, capital stocks enter quietly in the background as inputs into production functions, as denominators of productivity indicators, or as variable ``$K$'' in capital--output ratios. 
+
+Yet the historical reconstruction of capital stock series is far from mechanical or straightforward. It involves choices about the treatment of depreciation, the separation between productive and non-productive assets, the valuation of stocks at replacement or historical cost, and the harmonization of investment flows with inherited assets and retirements of machinery and equipment. These choices are particularly consequential in economies such as Chile, whose twentieth-century trajectory combines an export-led growth model with an emergent but unstable infant industry and domestic market, an interrupted experience with state-led industrialization via import-substitution, and an aggressive liberalization and financialization process as immediate result of the democratic collapse of 1973. The existing literature on Latin America economic history and clio-metrics on capital-stocks have provided significant contributions to reconstruct long-run investment and capital series, national accounts projects that provide the backbone for country-level analysis, methodological debates on how to measure capital, and a smaller but growing set of heterodox and Marxist applications that use these data to study profit rates, crisis and accumulation regimes as institutional configurations throughout Chile's history as my own preliminary work to my doctoral dissertation using PUC Clio-Lab series \citep{Polanco2019}.  
+
+
+A first strand consists of regional projects that reconstruct investment for a broad set of Latin American economies with standardized methods. \citet{Carreras2006} set out an explicit research program centered on foreign trade statistics. Their argument is that in the absence of reliable historical national accounts, the best available quantitative window into the process of ``modernization'' in Latin America comes from the composition of imports and the apparent consumption of key inputs. They propose to use imports of capital goods as a proxy for fixed capital formation, imports of durable consumer goods as an indicator of private consumption and its social distribution, and the apparent consumption of modern energy sources as an indicator of technological modernization. This program is less a finished database than a methodological charter for exploiting external trade statistics in a systematic way across the region.
+
+The first account in this research agenda developed by \citet{Hofman2000a,Hofman2000b}, remains under my assessment to be the most comprehensive account on regional work with standarized methodologies for Latin America. Using a standard perpetual inventory method (PIM) with exogenous depreciation rates by asset class \citet{Hofman2000a} produces gross and net capital stock estimates for six Latin American economies for the period 1950-1994, but equally importantly he present an harmonized data set of investment expenditures by class of assets for a long-series from 1900 to 1994. The coverage of \citet{Hofman2000a}  \footnote{Which can be visisted in paper format at \citet{Hofman2000b}.}, includes assets on machinery and equipment, non-residential, and residential construction sector, in gross and net capital stock measures. His contribution present the first seminal reconstruction of capital stocks in Latin America. His objective is mainly comparative: document regional patterns of growth, capital deepening and productivity, rather than to enforce year-by-year stock--flow identities. The resulting series have become the standard reference for post-1950 capital in the region and underpin many comparative growth and productivity studies, while also the work here developed as will be presented below. 
+
+Building wihtin this research agenda, but clustered at the "Economic History School of Barcelona", \citet{Tafunell2013} offers the first region-wide reconstruction of gross fixed capital formation (GFCF) for seventeen Latin American economies from 1856 to 1950 and spliced with ECLAC series thereafter. This contribution extended widely the covering of capital stocks in Latin America to more countries, and considerably backwards in time. This account constructs chain-linked series for indices constructed with trade data from major industrialized economies, and consumptions of inputs related to construction activities such as iron, steeel, and cement.   
+
+The resulting series display strong cyclical volatility, and an ``early peak'' in per capita investment: the second half of the nineteenth century emerges as a period of exceptionally high dynamism of accumulation demand, often exceeding that observed in the first half of the twentieth century once measured in per capita terms. \citet{Tafunell2013} thus provides a long-run view of investment dynamics and divergence within the region, but it stops short of constructing capital stocks. 
+
+\citet{TafunellDucoing2016} present a continuation of this research avenue, presenting new estimates of non-residential capital stock in four Latin American economies (Argentina, Brazil, Chile and Mexico) from 1875 to 2008. The emphasis on non-residential capital reflects under my assesment, an implicit concern with productive capacities, excluding residential capital stocks. Starting from \citet{Tafunell2013}'s GFCF series for equipment and construction, they implement a PIM with explicit service lives (longer in the early period, shorter in recent decades) and three depreciation schemes (linear, geometric and mixed). The resulting stock series allow them to compare capital--output and capital--labour ratios between Latin American economies including Chile, and advanced economies with comparable development in past periods such as Australia, as well as to trace the timing of ``backwardness'' and partial catch-up in capital intensity. Among their findings, the authors report that capital--output ratios in some Latin American economies were already relatively high at the end of the nineteenth century, and that much of the subsequent divergence arises from the disruption of international trade and the uneven dynamics of state-led industrialization during the mid XX century. 
+
+Taken together, these regional contributions provide the comparative frame within which any national reconstruction must be situated. They define an order of magnitude for investment and capital in Latin America and offer plausible benchmarks for Chile. At the same time, they rely on relatively simple PIM implementations with exogenous depreciation assumptions and limited asset disaggregation. They do not aim at enforcing stock--flow consistency for any single country, nor at diagnosing the implied time profile of depreciation and retirements. The present article can therefore be seen as a country-level extension and deepening of this regional program, applying a stock--flow consistent approach to Chile, under an approach designed from the outset to be suitable for comparability of its results in future research. 
+
+At the national level, the central reference for Chilean historical macroeconomic statistics is the work of \citet{DiazWagner2016}, consolidated in \emph{La Rep\'{u}blica en cifras} \citep{Luders2016}. This project presented a groundbreaking contribution providing the first comprehensive set of long-run series combining archival sources with official national accounts, and clio-metrics presenting seven data sets on production, aggregate demand, fiscal accounts, price indexes, trade, monetary, and human resources. In practice, \emph{``PUC Clio-Lab''} sets the statistical backbone on which subsequent historical reconstructions either building upon them or present critical inquires within the growing field of Chilean Economic History.
+
+Within this broader framework, several studies have attempted to estimate capital stocks for Chile, each with different coverage and conceptual scope. \citet{Haindl1986} offer one of the earliest attempts. Their objective is to measure a broad capital stock for 1960--1984, including fixed capital, inventories, land (agricultural and urban), natural resource deposits and even ``human capital''. Using a Harberger-style PIM with fixed depreciation rates, they construct comprehensive wealth measures rather than a narrowly defined productive capital stock. This makes their work valuable for studies of national wealth and distribution but less directly applicable to analyses of productive capacity and profitability.
+
+\citet{Aguilar2001}, working at the Central Bank of Chile, provide the first systematic ``official'' PIM implementation for 1985--2000. Grounded in the 1993 SNA and the 1986 base year of the national accounts, they estimate gross and net stocks for three aggregate asset types: residential construction, ``rest of construction'' (non-residential), and machinery and equipment. Lives are assigned following standard OECD-style assumptions (e.g.\ 65 years for housing, 50 for non-residential structures, 10--15 for different categories of equipment), depreciation is linear, and assets are assumed to be incorporated on average at mid-year. They obtain net and gross capital series, capital--output ratios and consumption of fixed capital (ACKF), and note that PIM-based depreciation tends to exceed the depreciation recorded in the production accounts, suggesting some underestimation of economic depreciation in official statistics. Their work is explicitly macro-aggregated and oriented toward consistency with the national accounts, rather than toward fine-grained disaggregation or internal diagnosis of depreciation patterns.
+
+\citet{DiazWagner2016} then extend the horizon drastically. They reconstruct investment and net capital stocks from 1833 to 2010 using a standard PIM, with separate series for construction and machinery \& equipment. Their series form the first  benchmark for long-run capital stock series in Chilean economic history and development studies. The methodology is carefully documented and the linking of pre-national-accounts data with modern SNA-based series is transparent. However, the focus remains on delivering an internally coherent net stock series for broad asset categories, not on building a stock--flow consistent system that simultaneously recovers gross and net stocks, implied depreciation and retirements, and the detailed composition of assets.
+
+In parallel to these supply-side and capital-focused exercises, other authors have revisited the historical national accounts from the demand side. \citet{PerezEyzaguirre2019} reconstructs a new real GDP series for 1860--1940 based on twelve value-added sectors, revising and extending the sectoral breakdown in \emph{La Rep\'{u}blica en cifras}. He then consolidates aggregate demand (government consumption, investment and exports) in a way that is consistent with this sectoral GDP, identifying and correcting additivity and valuation problems in the original Clio-Lab series. The result is a revised picture of Chilean growth, structural change and urbanization in which the expansion of services, rather than manufacturing, plays a central role in the transition to a more urban economy.
+
+This strand of work is particularly relevant for demand-led growth approach, since it refines the disagregation for aggregate demand components. In the context of the present paper, it is considered the refined benchmark of long-run series in Chile's national accounts, and provides an improved basis for the long-run series of gross fixed capital formation series that will be used alongside the reconstructed capital stocks in this article. 
+
+The national literature thus offers three pillars: (i) a historical national accounts backbone \citep{Luders2016}, (ii) capital stock estimates based on standard PIM implementations \citep{Diaz2016}, and (iii) revisions and extensions of GDP and aggregate demand components \citep{PerezEyzaguirre2019}. The contribution here provided is a unified, stock--flow consistent reconstruction of capital stocks that links investment flows, depreciation, retirements and gross and net stocks across asset types in a long-run horizon, and that is explicitly designed to be used in analysis of a plurality of theoretical approaches. The present paper aims to play, an analogous contribution to the one by \citet{PerezEyzaguirre2019}: re-examining and extending standard series under a coherent accounting and methodological framework.
+
+Underlying most of the work discussed so far is the standard perpetual inventory method as codified in the UN System of National Accounts and OECD manuals. In this framework, the net stock of an asset class is updated recursively as last period's stock minus depreciation plus current gross investment, with depreciation calculated as a constant fraction of the stock (linear or geometric), based on an assumed service life by assets types and their depreciation pattern. Asset lives and depreciation functions are typically taken from international guidelines or empirical studies in other countries. This approach is simple, transparent and easy to implement, which explains its widespread adoption in \citet{DiazWagner2016}, \cite{Aguilar2001}, \citet{Hofman2000}, and \citet{TafunellDucoing2016} among other accounts. 
+
+However, the PIM's simplicity comes at a cost. It treats the depreciation rate as exogenous, does not exploit the information contained in the joint time series of investment, depreciation and stocks to infer implicit retirement patterns, and often mixes current-cost and constant-price magnitudes in ambiguous ways. It also tends to blur the distinction between capital as productive capacity and capital as wealth, depending on whether gross or net stocks and which asset categories are being included. 
+
+Building on this concern with measurement, \citet[Appendix 6.3]{Shaikh2016} advances a more systematic intervention. First, he contrasts gross and net capital stocks, arguing that gross capital valued at “as new” prices is the appropriate denominator for profit rates and capital–output ratios, while net stocks reflect depreciation conventions that are more closely tied to neoclassical theoretical approachces. Second, he introduces   a Generalized Perpetual Inventory Method (GPIM), starting from a richer data environment for the US corporate sector: current-cost net stocks, real capital stock indices, and current-cost depreciation and gross investment (nominal and real). From these, he reconstructs a real stock series by rescaling the index with a known current-cost net stock level, derives an implicit capital price as the ratio of current-cost to real stock, and computes an effective depreciation rate $d^{*}(t)$ by dividing real depreciation by the lagged real stock \citep[Appendix 6.5]{Shaikh2016}. Depreciation rates thus become data-driven rather than fixed parameters.
+
+He then expresses the capital stock not as a simple recursive equation but as the convolution of past investment flows with a survival function $S(a)$ reflecting the fraction of an investment cohort still in place at age $a$. The associated retirement function $R(a)$ is modelled with a Weibull distribution, allowing for flexible shapes of asset retirement (from ``sudden death'' to more gradual decay). This cohort-based approach makes it possible to link the age structure of capital to episodes of crisis, technological change or accelerated scrapping.
+
+The GPIM is therefore attractive for Post-Keynensian and Marxist researchers: it emphasizes stock--flow consistency, separates prices and quantities, and turns depreciation into an empirical outcome rather than a pre-set assumption. However, this approach have prompted critical scrutiny as for example the critiques presented by \citet{Zarembka2019} who argues from a Marx's \textit{``materialized composition of capital'',} that he defines as the ratio of constant capital and total value added both in real terms, $c/(v+s)$ in terms of Marx's original formulation. Using both BEA net stocks and Shaikh's GPIM-based stocks for the US corporate sector, he finds that when one sticks to net BEA stocks, the materialized composition remains remarkably stable from the mid-1950s onward. The strong upward trend that appears in some studies of the value composition  would be then largely driven by changes in the rate of surplus value, not by explosive capital deepening. His conclusion is not that the Shaikh's GPIM is invalid, but that any strong narrative about rising capital intensity must be explicit about stock concepts, depreciation assumptions and deflators. 
+
+For the purposes of the present paper, this debate carries two main lessons. First, the intuition of Shaikh's GPIM -- deriving implied depreciation and retirement rates from the data, enforcing stock--flow consistency, and thinking in terms of cohorts -- is valuable and can be adapted to settings with more limited data, such as historical time series for the case of Chile. Second, the caution raised by \citet{Zarembka2019} suggests being careful and not overlooking net stocks for analyses of productivity and profitability. The methodological stance adopted here is therefore hybrid: the reconstruction for Chile takes from the GPIM its insistence on stock--flow consistency and the diagnostic use of implicit depreciation and depletion rates, while maintaining a conservative focus re-constructing both gross an net stocks for different accounts through a simple stock-flow consistent framework and validated by discussing the order of magnitude and tendencies of the implicit depreciation rates.
+
+On the empirical side, a series of contributions by Basu and Shaikh have clarified how capital-stock measurement choices shape Marxian narratives of profitability and crisis. In a first step, \citet{Basu2013} revisits the US profit rate under alternative BEA-based valuations of the \emph{net} capital stock, comparing historical- and replacement-cost series and showing that the choice of valuation prices mainly rotates the profit-rate level rather than overturning its long-run movements. 
+
+A complementary perspective comes from \citet{Marquetti2010}, who study the Brazilian profit rate between 1953 and 2003 using a perpetual-inventory-based estimate of the \emph{net} non-residential capital stock constructed by \citet{Mesquita2005}. Marquetti and co-authors compare their BEA-style PIM with alternative Latin American capital-stock estimates by \citet{Hofman2000} and \citet{Morandi2004}, highlighting how different assumptions about asset lives, retirement functions, and depreciation rates yield different levels of capital productivity but very similar long-run trends. 
+
+For the purposes of the present paper, this sequence of contributions has two main implications.  First, Shaikh's GPIM -- deriving implied depreciation and retirement rates from the data,  enforcing stock--flow consistency, and thinking in terms of cohorts -- is valuable and can be  adapted to settings with more limited data, such as the case of Chile.  Second, taken together the literature underscores the importance of capital measurement choices, but it typically treats capital stocks as exogenous inputs taken from official or PIM-based series. Those series are rarely scrutinized in terms stock--flow consistency nor in terms of the implied depreciation profiles. Moreover, disaggregation by asset type (and, eventually, by sector) is limited, which constrains the ability to distinguish between the dynamics of productive and non-productive assets, or between different forms of capital relevant for profitability and for capacity utilisation.
+
+The dataset developed in this paper is designed precisely to address these gaps for the Chilean case. By reconstructing gross and net stocks by asset type, enforcing stock--flow identities, and diagnosing implied depreciation and retirement patterns, it provides a solid basis for future analyses from different theoretical angles, while also providing comparisions and drawing insights on the meaning of the difference between net and gross stock, in each asset type. In this manner, here is pursued to develop and present an open source data set of capital stocks, opening the debate of the measurements, its sources,  and the methodology presented above subject to scrutiny. 
+
+\section{Data and Methodology}
+\label{methodology}
+
+\subsection{Gross and Net Capital Stocks, Depreciation, and Depletion: A jointly Stock--Flow Consistent Approach}
+
+This reconstruction of historical capital stocks anchored in a stock--flow consistent (SFC) framework that requires every level variable, flow variable, and implicit rate to cohere through accounting identities. The central objects are gross capital ($K^g$), net capital ($K^n$), and gross fixed capital formation ($I^g$), together with capital depreciation or fixed capital consumption ($D$), depletion also known as capital retirements ($R$), and the corresponding implicit rates of consumption and scrapping of capital ($\delta$ and $z$). 
+
+The reconstruction here presented distinct between \emph{gross} and \emph{net} capital stocks. Gross stocks record the accumulated installation of productive capacity before accounting for scrapping, obsolescence, and wear. Net stocks, by contrast, measure the productive value that remains after depreciation and retirements. Hence, its measurement better approximate distributable income and wealth. Nevertheless, given that the accounting identities of both concepts of capital stocks are interrelated by the same variable of accumulation demand, mostly known as gross investment and technically coined as gross fixed capital formation, both stocks are dynamically interrelated. 
+
+For Chile, empirical work by \citet{Ffrench2016} shows that retirements and depreciation jointly create a substantial wedge between gross and net investment, as well as between GDP and net product. Retirements---including scrapping of obsolete vintages, technological upgrading, and demolition of structures---constitute a key mechanism through which technological change reshapes effective capacity rather than merely adjusting accounting aggregates. This motivates the approach taken here: gross capital stocks are used to anchor the reconstruction of installed capacity and accumulation paths. Furthermore, net stocks are reconstructed for the very own needs of the reconstruction method, but also for validation of the procedure, robustness checks, and theoretical plurality. For example, it might be the case that a researcher is not convinced on the preferable use of gross stocks as related to productive capacities, while others might be interested on book valuation to tackle income and wealth distribution which would be a matter of interest for any author influenced by the works of \citet{Piketty2014} and his $r-g$ identity. 
+
+Let $K^{g}_{t}$ and $K^{n}_{t}$ denote gross and net capital stocks, $I^{g}_{t}$ gross investment, $R_{t}$ retirements (or depletion), and $D_{t}$ depreciation. The law of motion for the \emph{gross} stock is:
+
+\begin{equation}
+\Delta K^{g}_{t} = I^{g}_{t} - R_{t}.
+\end{equation}
+
+Here, gross investment adds to the installed stock, while capital retirements "depletes" units of capital from that stock. On the other hand, the law of motion for the \emph{net} stock is:
+
+\begin{equation}
+\Delta K^{n}_{t} = I^{g}_{t} - D_{t},
+\end{equation}
+
+Where depreciation captures wear, obsolescence, as accounted (in theory) in book values that do not require physical scrapping or retirements of capital goods from the productive proces.  
+
+Given observed gross and net stocks and investment, the implied flows are:
+
+\begin{align}
+D_{t} &= I^{g}_{t} - \Delta K^{n}_{t}, \\
+R_{t} &= I^{g}_{t} - \Delta K^{g}_{t}.
+\end{align}
+
+Implicit annual rates becomes defined as: 
+
+\begin{align}
+z_{t} &= \frac{R_{t}}{K^{g}_{t}}, \\
+\delta_{t} &= \frac{D_{t}}{K^{n}_{t}}.
+\end{align}
+
+Stock--flow consistency requires that the accumulation equations for gross and net stocks be jointly compatible. Combining the two laws of motion yields:
+
+\begin{equation}
+\Delta K^{g}_{t} + R_{t} \;=\; \Delta K^{n}_{t} + D_{t}.
+\end{equation}
+
+This identity showcases how changes in gross and net stocks constrain the combination of depreciation and retirements. Using this joint relation, the implicit rates can also be expressed as follows:
+
+\begin{align}
+z_{t} &= \frac{ \Delta K^{n}_{t} + D_{t} - \Delta K^{g}_{t} }{ K^{g}_{t} }, \\
+\delta_{t} &= \frac{ \Delta K^{g}_{t} + R_{t} - \Delta K^{n}_{t} }{ K^{n}_{t} }.
+\end{align}
+
+Which imposes an identity of  stock-flow consistency (SFC), but also requires jointly SFC for the dynamic equations of both gross and net capital stocks accumulation. The joint SFC consistency is the first feature of the architecture of the reconstruction of capital stocks in my data set.  
+
+A second feature of the SFC architecture is the hierarchical decomposition of assets. The reconstruction operates with six canonical categories: machinery and equipment (ME), non-residential construction (NRC), residential construction (RC), their aggregates ($C \equiv NRC + RC$; $NR \equiv ME + NRC$), and the total capital stock $T \equiv ME + NRC + RC$. All composite stocks and flows must equal the sum of their primitives at every $t$. This enforces additivity, but more importantly, ensures that $K^g_t \geq K^n_t$ holds for all assets and years, and allows the derivation of capital-formation dynamics. 
+
+This conceptual structure works as the backbone of the empirical reconstruction: each data source contributes either levels, growth patterns, or relative asset shares, but the final series are admissible only if stocks, flows, and accumulation rates satisfy SFC, at worst in its vecinity. 
+
+\subsection{Data Sources and Coverage}
+
+The reconstruction combines five major secondary sources presenting important contributions to Chilean economic history. The articulation of this accounts, provide complementary spans, variables, and degrees of asset disaggregation. 
+
+\begin{itemize}
+    \item \citet{PerezEyzaguirre2019} doctoral dissertation, provides as a by-product of his research the most updated data considering a consistent panel of aggregate demand expenditures. My historical reconstruction aims to be consistent with his data set, which provides gross fixed capital formation in millions of 2003 CLP for machinery and construction. These series supply the only direct, level-consistent benchmark for $I^g$ in
+    real terms. Coverage extends across the full century window used in the project.
+
+    \item \citet{Hofman2000} Supplies gross investment ($I^g$) and gross and net capital stocks ($K^g$, $K^n$) in
+    1980 CLP for ME, NRC, RC, and totals. Its strengths are temporal continuity from 1950 to 1994, a complete
+    asset structure, and internally coherent patterns of composition. Hofman is the unique benchmark
+    for post-1950 levels of both $K^g$ and $K^n$, and its 1950 values anchor several scaling procedures.
+
+    \item Clio-Lab PUC data set \textit{La República en Cifras} \citep{Diaz2016, Diaz2023} provides (i) gross fixed capital formation (real, nominal, price indices), and (ii) net capital
+    stock ($K^n$) in 2003 CLP for selected assets (ME, C, totals). Clio-Lab offers extended pre-1950 trajectories, though its levels require scaling due to inconsistent magnitude conventions with SFC as explained above. Nevertheless, these series supply long-run relative profiles for ME and infrastructure (C) prior to 1950 which this data set leverage on.
+
+    \item \citet{Tafunell2013} provides indices in base 1929 = 100, of investment expenditures for the non-residential sector with  ME and NRC assets, and NR total accumulation demand expenditures. These indices do not supply levels but contribute relative patterns of investment composition over time, especially useful when constructing $I^g$ by asset type.
+
+    \item \citet{TafunellDucoing2016} provides gross capital stock indices ($K^g$ index) with base 1929 = 100
+    across all canonical asset categories. These indices supply the primary long-run relative trajectories
+    of gross stocks by asset and are used exclusively for patterns (shares or normalized paths), never
+    levels.
+\end{itemize}
+
+Together, these sources span 1900--1994 with varying degrees of overlap: Clio-Lab dominates the early
+pre-1950 period in relative terms; \citet{Hofman2000} provides post-1950 levels; \citet{Tafunell2013} and \citet{TafunellDucoing2016} provides cross-period composition and pattern information; while I anchor $I^g$ on \citet{PerezEyzaguirre2019} in absolute real terms.
+
+\subsection{Harmonization and Construction Procedure}\label{subsec:harmonization}
+
+The empirical reconstruction proceeds through four harmonization stages: (i) standardization of raw data; (ii) construction of patterns and level anchors; (iii) derivation of $I_t^{g}$, $K_t^{g}$, and $K_t^{n}$ in 2003 CLP; and (iv) integration into a unified SFC panel with implied depreciation and retirement rates. The description here focuses on what is done at each stage, abstracting from implementation details which can be consulted in the open source repository in case of interest.
+
+All source series are first expressed in a common, long-format structure indexed by $(t,a)$, with $a \in \mathcal{A}$, where the latter is defined as the set of assets: 
+
+\begin{equation}
+\mathcal{A} = \{\text{ME},\text{NRC},\text{RC},\text{C},\text{NR},\text{T}\}    
+\end{equation}
+
+The canonical variables ${K_t^{g},K_t^{n},I_t^{g}}$ are identififed, and assets from each source are matched to every asset $a \in \mathcal{A}$. 
+
+Within this standardized structure, net capital series from Clio-Lab are identified as requiring magnitude correction (e.g., order-of-magnitude differences due to alternative units). A scale factor is later estimated to re-anchor these series to the Hofman benchmark.
+
+The second stage constructs the growth patterns and level anchors that will jointly determine the final series. \citet{PerezEyzaguirre2019} anchors the level of aggregate $I_t^{g}$ in 2003 CLP. Indices and composition information from \citet{Hofman2000} and \citet{Tafunell2013} are used to recover asset-specific investment shares $s_{t,a}^{I}$ such that
+
+\begin{equation}
+\sum_{a \in {\text{ME},\text{NRC},\text{RC}}} s_{t,a}^{I} = 1 \quad \text{for all } t.\end{equation}
+
+Asset-level investment in 2003 CLP is then defined conceptually by
+\begin{equation}
+I_{t,a}^{g,2003} = s_{t,a}^{I} \cdot I_{t}^{g,2003}.\end{equation}
+
+Composite categories are subsequently obtained by identities: $I_{t,C}^{g} = I_{t,\text{NRC}}^{g} + I_{t,\text{RC}}^{g}$, $I_{t,NR}^{g} = I_{t,\text{ME}}^{g} + I_{t,\text{NRC}}^{g}$, and $I_{t,T}^{g} = I_{t,\text{ME}}^{g} + I_{t,\text{NRC}}^{g} + I_{t,\text{RC}}^{g}$.
+
+\citet{TafunellDucoing2016} provides long-run indices of gross capital stocks, $Kg{t,a}$, for each asset. Within each year, these indices are normalized into shares\begin{equation}\omega{t,a}^{K,g} = \frac{\text{KgIndex}{t,a}}{\sum{b \in {\text{ME},\text{NRC},\text{RC}}} \text{KgIndex}_{t,b}},\end{equation}which encode the relative composition of gross capital by asset. Levels are not yet fixed at this stage.
+
+Clio-Lab net capital series for ME and $C$ in 2003 CLP are rescaled by a magnitude-correction factor to repair unit inconsistencies, generating provisional net capital levels $\widetilde{K}_{t,a}^{n,2003}$. These are treated as long-run relative profiles rather than definitive levels. Post-1950, Hofman provides the \emph{level} benchmark for $K_t^{n}$, so the qpre-1950 Clio-Lab profiles are eventually joined to the Hofman anchors at 1950.
+
+
+In the third stage, patterns and anchors are combined to produce a complete, real (2003 CLP) panel of stocks and flows. For each $t$ and asset $a \in {\text{ME},\text{NRC},\text{RC}}$,\begin{equation}I_{t,a}^{g,2003} = s_{t,a}^{I} \cdot I_{t}^{g,2003}\end{equation}is retained as the definition of asset-level real investment. Composite categories are obtained by the additivity identities described above, yielding a full set ${I_{t,a}^{g,2003}}_{a \in \mathcal{A}}$ for 1900--1994.
+
+For ME and NRC, Tafunell--Ducoing indices are anchored at 1950 to Hofman's levels converted into 2003 CLP. Let $K_{1950,a}^{g,2003}$ denote Hofman's gross stock for asset $a$ at 1950, expressed in 2003 CLP, and let $\text{KgIndex}{t,a}$ be the corresponding index. A growth-preserving reconstruction is obtained via\begin{equation}K{t,a}^{g,2003} = K_{1950,a}^{g,2003} \cdot \frac{\text{KgIndex}{t,a}}{\text{KgIndex}{1950,a}},\qquad a \in {\text{ME},\text{NRC}}.\end{equation}Residential construction is reconstructed proportionally to NRC, using Hofman's 1950 level for RC as anchor:\begin{equation}K_{t,\text{RC}}^{g,2003} = K_{1950,\text{RC}}^{g,2003} \cdot \frac{\text{KgIndex}{t,\text{NRC}}}{\text{KgIndex}{1950,\text{NRC}}}.\end{equation}Composite stocks $K_{t,C}^{g,2003}$, $K_{t,NR}^{g,2003}$, and $K_{t,T}^{g,2003}$ are then obtained by the standard additivity relations.
+
+The reconstruction of $K_t^{n}$ is split into two eras. Clio-Lab net capital series for ME and $C$ are scaled to match Hofman's 1950 levels (expressed in 2003 CLP). Let $K_{t,a}^{n,\text{Clio}}$ denote Clio-Lab net capital and $K_{1950,a}^{n,2003}$ the corresponding Hofman-based anchor. A simple growth-preserving rescaling is:\begin{equation}K_{t,a}^{n,2003} = K_{1950,a}^{n,2003} \cdot \frac{K_{t,a}^{n,\text{Clio}}}{K_{1950,a}^{n,\text{Clio}}},\qquad a \in {\text{ME},C}, \quad t \leq 1950.\end{equation}Within $C$, NRC and RC are recovered using Hofman's 1950 shares of construction,\begin{equation}\theta_{\text{NRC}}^{C} = \frac{K_{1950,\text{NRC}}^{n,2003}}{K_{1950,C}^{n,2003}},\qquad\theta_{\text{RC}}^{C} = \frac{K_{1950,\text{RC}}^{n,2003}}{K_{1950,C}^{n,2003}},\end{equation}and imposing\begin{align}K_{t,\text{NRC}}^{n,2003} &= \theta_{\text{NRC}}^{C} \cdot K_{t,C}^{n,2003}, \K_{t,\text{RC}}^{n,2003} &= \theta_{\text{RC}}^{C} \cdot K_{t,C}^{n,2003}.\end{align}Composite net stocks for $NR$ and $T$ follow from additivity.
+
+For $t \geq 1950$, Hofman's net capital stocks in 1980 CLP are converted to 2003 CLP using appropriate price conversion factors. The resulting $K_{t,a}^{n,2003}$ series for ME, NRC, and RC define the post-1950 levels, while composite categories again follow from additivity. The pre-1950 and post-1950 segments are joined at 1950 so that both segments share the same level at the anchor year.
+
+In the final stage, the real series ${I_{t,a}^{g,2003},K_{t,a}^{g,2003},K_{t,a}^{n,2003}}$ are integrated into a unified panel. For each asset $a$ and year $t$, stock variations are computed as\begin{align}\Delta K_{t,a}^{g,2003} &= K_{t,a}^{g,2003} - K_{t-1,a}^{g,2003}, \\Delta K_{t,a}^{n,2003} &= K_{t,a}^{n,2003} - K_{t-1,a}^{n,2003}.\end{align}Depreciation and retirements follow directly from the stock--flow identities:\begin{align}D_{t,a}^{2003} &= I_{t,a}^{g,2003} - \Delta K_{t,a}^{n,2003}, \R_{t,a}^{2003} &= I_{t,a}^{g,2003} - \Delta K_{t,a}^{g,2003},\end{align}and the implicit rates are obtained using lagged denominators:\begin{align}\delta_{t,a} &= \frac{D_{t,a}^{2003}}{K_{t-1,a}^{n,2003}}, \z_{t,a} &= \frac{R_{t,a}^{2003}}{K_{t-1,a}^{g,2003}}.\end{align}Additional SFC magnitudes, such as the investment--capital ratio\begin{equation}i_{t,a} = \frac{I_{t,a}^{g,2003}}{K_{t-1,a}^{g,2003}}\end{equation}and measures of net capital formation, are derived as secondary indicators. Throughout, the construction enforces exact fulfillment of the identities at the asset level and preserves additivity across assets and over time.
+
+\subsection{Methodological Closure and Link to Validation}\label{subsec:closure}
+
+The procedure yields a unified, stock--flow consistent panel of gross and net capital stocks, investment flows, and implicit depreciation and retirement rates for the six canonical asset categories over 1900--1994. The reconstruction exploits complementary strengths of the underlying sources: P'erez--Eyzaguirre provides the real level anchor for $I_t^{g}$; Hofman supplies post-1950 levels and the 1950 anchors for both gross and net stocks; Clio-Lab contributes long-run pre-1950 profiles for net capital; and Tafunell plus Tafunell--Ducoing encode the composition and growth patterns of investment and gross capital.
+
+Crucially, the series are not mechanically stitched together. Levels are determined by explicit anchor conditions, composition by observed shares and indices, and depreciation and retirements by the SFC identities. In this sense, the empirical architecture is governed by a simple rule: shares determine composition, anchors determine levels, and identities determine the implied flows and rates. As a result, the variables $(K_t^{g},K_t^{n},I_t^{g},D_t,R_t,\delta_t,z_t)$ are mutually coherent by construction.
+
+The next section subjects the reconstructed series to a set of validation exercises, including residual analysis of the identities, net--gross ordering checks, inspection of the behavior of implicit rates, additivity diagnostics across assets, and sensitivity to alternative anchors or pattern assumptions. These tests assess the credibility and internal consistency of the historical capital stock series generated by the procedure described above.
+
+
+
+
+\pagebreak
+\bibliography{references.bib}
+
+\end{document}

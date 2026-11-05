@@ -1,0 +1,195 @@
+\section{Data Sources and Harmonization}\label{sec:data}
+
+This section serves a dual purpose. First, I document the sources that underpin the reconstruction of Chile’s capital stocks (1901--1994). Second, I place those sources in a chronological arc that explains why, when read in isolation, they generate conceptual and measurement misalignment, and why a harmonized, stock–flow consistent integration is necessary. Throughout, my criterion is operational: preserve growth information from the most reliable contributor in each segment, anchor levels transparently, and enforce the accumulation identities year by year so that gross investment, consumption of fixed capital, retirements, and the observed variation of gross and net stocks reconcile.
+
+\citet{Hofman2000} benchmark estimates for Latin America provide my first indispensable ingredient: mid–century levels of fixed capital and gross fixed capital formation (GFCF) in Chile, reported in 1980 CLP. I use Hofman in two ways. First, as a \emph{level anchor} at 1950 that allows me to restore levels from long-run indices without inventing scale. Second, as a \emph{composition guide} that identifies the non–residential versus residential split within construction, which I later use to initialize proportional decompositions.\footnote{I convert \citet{Hofman2000} 1980 CLP to 2003 CLP using deflators consistent with the Clio--Lab national accounts framework. For compactness in figures and tables, I report billions of 2003 CLP; code and CSVs retain full precision.}
+
+From the mid-2000s, the research program on modernization in Latin America consolidated long-run series on physical capital with a clear emphasis on \emph{gross} magnitudes (\citealt{Carreras2006}). The most useful for my purposes are the indices reported by \citet{Tafunell2016}: machinery and equipment (ME) and non-residential construction (NRC). These indices are strong on dynamics and sectoral separation, and they are explicitly real. Their construction side relies on materials proxies (notably cement), which plausibly track NRC but are ill-suited for residential housing where traditional materials like \emph{``adobe''} had more prominence in previous decades. I therefore treat the NRC index as representative for production structures and keep residential construction on a separate track. 
+
+In parallel, the Clio--Lab project \textit{``La Republica en Cifras}'' \citep{Luders2016} systematized historical national accounts, with \citet{Diaz2016} delivering \emph{net} capital stock series via perpetual inventory (PIM). These net stocks provide me with another key ingredient for harmonize secondary sources: levels (after rescaling) and year-to-year changes $\Delta K^n_t$ that capture the accounting write-down of fixed assets over time. The strength of this approach is coherence with national accounts and careful documentation of splices; its limitation, for my purpose, is precisely that it abstracts from gross capacity and retirements that despite being preferred measurements provides data for an agnostic approximation and accounting by differences in magnitudes orders.  
+
+To stabilize the investment flow $I^g_t$ and improve coverage before mid-century, I rely on \citet{PerezEyzaguirre2019} harmonized GFCF. Where Pérez aligns with Clio--Lab aggregates, I adopt his series directly; where it does not, I reconcile to the Clio--Lab path and record the rule in the codebook. The guiding principle is to keep the flow series that best matches the national accounts backbone, not to massage the identity ex post.
+
+Taken together, these contributions provide complementary pieces—gross dynamics and sectoral detail on one side; net stocks and national accounts coherence on the other; investment flows bridging early decades. Read separately, they pull the researcher toward either book-value net measures or physical gross capacity. Read together under a stock–flow consistent rule, they can be made to speak a common language.
+
+I report six components: machinery and equipment (ME), total construction (C), non-residential construction (NRC), residential construction (RC), total non-residential capital (NR), and total capital (T). NRC follows the gross index tradition (scaled); RC is obtained residually after reconciling C with net stocks and investment flows. Aggregates obey $NR = ME + NRC$ and $T = ME + C$ by construction; I test additivity explicitly in the diagnostics.
+
+All monetary magnitudes are converted to 2003 CLP. Indices are normalized to a common base year and then scaled to levels using the \citet{Hofman2000} 1950 anchor. Where sources overlap, I retain the growth rate from the segment with better coverage or clearer methodology and adjust only the \emph{level} at the splice to avoid artificial jumps.
+
+\input{Tables/table_sources}
+
+\subsection{Harmonization logic: from chronology to accounting}
+
+The harmonization follows the chronological arc of the sources and translates it into a consistent accounting frame. I proceed as follows: i) I convert all monetary series to 2003 CLP and fix the 1950 benchmark using \citet{Hofman2000} for each relevant component, so that every series shares a common yardstick without imposing arbitrary rescalings. ii) For ME and NRC, I take the \citet{Tafunell2016} indices, normalize them to 1950, and scale them to levels using the Hofman anchor; this preserves the long-run growth profile in the segment where the gross-stock tradition is strongest. iii) For net stocks, I adopt the Clio--Lab series (\citealt{Luders2016,Diaz2016}), rescale them to 2003 CLP, compute $\Delta K^n_t$ directly from the levels, and respect the documented splices. iv) For investment flows, I use \citet{PerezEyzaguirre2019} for $I^g_t$ whenever it is consistent with the Clio--Lab totals; where inconsistencies appear, I reconcile to the national accounts path and record the reconciliation rule. v) I initialize the construction split between NRC and RC with Hofman’s composition, drive NRC with the Tafunell \& Ducoing index, and define RC residually as $C - \text{NRC}$ once total construction $C$ has been reconciled with net stocks and flows. vi) 
+
+Finally, I enforce the accumulation identities and run diagnostics: given $I^g_t$, $\Delta K^g_t$ and $\Delta K^n_t$, I recover $R_t = I^g_t - \Delta K^g_t$ and $D_t = I^g_t - \Delta K^n_t$, compute the implied rates $\delta_t := D_t/K^n_t$ and $z_t = R_t/K^g_t$, and require both identities to hold within a small tolerance. When they do not, I adjust only the splice-year levels and re-propagate the series so that growth rates remain unchanged; every correction is logged explicitly.
+
+
+\subsection{Assumptions, limitations, and why they are admissible}
+
+Three methodological choices deserve to be explicit. First, i) the use of cement as a proxy is sector-specific: I accept cement-based evidence as a credible indicator for non-residential structures (industrial and infrastructure), not for housing. Accordingly, I treat NRC using \citet{Tafunell2016} and derive RC residually. This follows differences in input intensity rather than an arbitrary modeling decision. Second, ii) I treat growth as information and levels as anchors: I preserve growth rates from the primary sources and adjust only the anchor levels when identities require small corrections. This avoids injecting spurious dynamics and keeps the long-run trajectory attributable to the original compilers. Third, iii) I treat edge cases as evidence, not as errors: implicit depreciation $\delta_t$ can be negative in machinery when quality-adjusted net stocks accelerate relative to gross capacity, and depletion $z_t$ can spike in scrappage waves or modernization drives. I report these episodes because they are economically interpretable and consistent with the accounting identities, not because I neglected to smooth the series.
+
+Enforcing the accumulation identities implies losing the first observation in recursively constructed series. All figures and tables note this explicitly, and the data package includes the exact transformation log so that the chronology of decisions remains auditable and reversible.
+
+
+
+\section{Methodology: Stock–Flow Consistent Reconstruction}\label{sec:method}
+
+
+I start from two equations of motion that describe the book-keeping of fixed capital in real terms. Let $K^g_t$ denote the \emph{gross} stock and $K^n_t$ the \emph{net} stock at the end of year $t$; $I^g_t$ is gross fixed capital formation (investment flow); $R_t$ are retirements (assets that exit the gross stock because they are fully depleted or scrapped); $D_t$ is consumption of fixed capital (depreciation in the accounting sense); $\delta_t$ is the implicit depreciation rate on \emph{net} capital; and $z_t$ is the implicit depletion rate on \emph{gross} capital.
+
+\begin{align}
+\Delta K^g_t &= I^g_t - R_t \tag{1}\label{eq:gross_motion}
+\end{align}
+
+Equation \eqref{eq:gross_motion} says: the year–to–year change in the gross stock equals new investment minus retirements. $I^g_t$ adds physical capacity; $R_t$ removes capacity that is no longer part of the productive base. This is the physical side of accumulation, abstracting from valuation adjustments.
+
+\begin{align}
+\Delta K^n_t &= I^g_t - D_t \tag{2}\label{eq:net_motion}
+\end{align}
+
+Equation \eqref{eq:net_motion} says: the change in the \emph{net} stock equals the same investment flow minus consumption of fixed capital. In other words, $D_t$ is the part of last period’s net stock that is used up (or written down) during the year.
+
+\begin{align}
+D_t &= \delta_t\, K^n_t \tag{3}\label{eq:delta_def}
+\end{align}
+
+Equation \eqref{eq:delta_def} defines an \emph{implicit} depreciation rate. I do not impose a depreciation schedule; instead I let the data determine $\delta_t$ as the rate that reconciles the observed motion of net capital with $I^g_t$.\footnote{Because this is an \emph{implicit} rate, it mixes physical wear, obsolescence and any revaluation embodied in the net series. In practice, $\delta_t$ summarizes the effective write–down of $K^n_t$ given the sources I harmonize.}
+
+Combining \eqref{eq:gross_motion}–\eqref{eq:delta_def} yields an expression to \emph{identify} $\delta_t$ from observed stocks, investment and retirements:
+
+\begin{align}
+\delta_t &= \frac{\Delta K^g_t - \Delta K^n_t + R_t}{K^n_t} \tag{4}\label{eq:delta_ident}
+\end{align}
+
+Intuition: if gross and net stocks were to move in parallel and there were no retirements, then $\Delta K^g_t \approx \Delta K^n_t$ and the numerator would vanish, implying $\delta_t \approx 0$. Whenever gross accumulation outpaces net accumulation, the difference must be absorbed by depreciation and retirements; dividing by $K^n_t$ converts that gap into a rate.
+
+To close the system I parameterize retirements as a fraction of the \emph{net} stock:
+\begin{align}
+R_t &= z_t\, K^n_t \tag{5}\label{eq:z_def}
+\end{align}
+
+This is the depletion counterpart to \eqref{eq:delta_def}. It treats the exit of assets from the gross stock as proportional to the size of the surviving (net) stock. Substituting \eqref{eq:net_motion} and \eqref{eq:delta_def} into \eqref{eq:gross_motion} and rearranging gives an identification for $z_t$:
+
+\begin{align}
+z_t &= \frac{\Delta K^n_t - \Delta K^g_t + D_t}{K^g_t} \tag{6}\label{eq:z_ident}
+\end{align}
+
+If gross capital grows faster than net capital, depletion and depreciation must be small; if gross capital lags net capital (e.g., scrappage waves), then $z_t$ must rise. Dividing by $K^g_t$ scales depletion by the capacity base to which it applies.
+
+
+All levels are expressed in 2003 CLP, while the rates $\delta_t$ and $z_t$ are dimensionless and reported in annual percentage points. i) $\delta_t$ can be negative in specific years; this occurs when the net series incorporates upward adjustments that outweigh the implied write-downs (for instance, measurement revisions, composition effects, or bursts of embodied technological renewal that raise the imputed quality of the net stock). I keep these episodes in the dataset because the accounting identities continue to hold and because they are informative about the joint motion of $K^g_t$ and $K^n_t$ in the underlying sources. ii) The depletion rate $z_t$ is typically small for structures and larger for machinery; spikes in $z_t$ are consistent with scrappage waves during downturns or with modernization programs that replace entire equipment cohorts.
+
+\subsection{Estimation procedure}\label{subsec:estimation}
+
+\section{Stock--Flow Consistency Assesment}
+
+This section reports the results of the stock--flow consistency (SFC) audit for Cluster 1, which integrates the series of \citet{Hofman2000}, \citet{Tafunell2013},\citet{Tafunell2016}, \citet{PerezEyzaguirre2019}, and \citet{Diaz2016} into a unified framework for Chile’s historical capital stocks. The aim in this section is to assess whether the harmonized dataset satisfies core SFC requirements: net--gross ordering, exact accumulation identities, economically plausible implicit depreciation and depletion rates, additivity across assets, and historically coherent investment--capital dynamics.
+
+\subsection{Net--Gross Ordering}
+
+A fundamental consistency condition is that net capital never exceeds gross capital for any asset or year, i.e. \(K^n_t \leq K^g_t\) for all \(t\). The audit finds no violations of this inequality at either the aggregate or disaggregated level.
+
+This outcome reflects the resolution of the scale distortion initially present in the Clio-Lab net capital series. Replacing Clio-Lab as the level anchor for net capital with Hofman (2000) eliminates the structural stock inconsistency and restores a coherent net--gross hierarchy. The problem is thus traced to the absolute scale of the Clio-Lab series rather than to any intrinsic flaw in the stock--flow structure.
+
+\subsection{Accumulation Identities}
+
+The second criterion concerns the exact fulfillment of the accumulation identities for gross and net capital:
+\[
+K^g_t - K^g_{t-1} = I^g_t - R_t, \qquad
+K^n_t - K^n_{t-1} = I^g_t - D_t,
+\]
+where \(I^g_t\) denotes gross investment, \(R_t\) retirements, and \(D_t\) depreciation.
+
+Residuals associated with these identities---\(\varepsilon_{K^g}\), \(\varepsilon_{K^n}\), and \(\varepsilon_{\text{joint}}\)---are on the order of \(10^{-10}\), that is, at machine precision. This indicates that the accumulation relationships hold exactly in the constructed series: there is no flow inconsistency in \(I^g_t\) and no stock inconsistency in either \(K^g_t\) or \(K^n_t\). From an algebraic point of view, the integration of the underlying sources behaves as a fully SFC-consistent system.
+
+\subsection{Implicit Depreciation and Depletion Rates}
+
+The audit next examines the behavior of the implicit depreciation and depletion rates,
+\[
+\delta_t = \frac{D_t}{K^n_t}, \qquad
+z_t = \frac{R_t}{K^g_t}.
+\]
+Two conditions are central: non-negativity of \(\delta_t\) and \(z_t\), and magnitudes consistent with the technological and economic characteristics of each asset class.
+
+Both \(\delta_t\) and \(z_t\) are non-negative across all assets and years. For construction-related categories (C, NRC, RC), \(\delta_t\) lies within ranges typically associated with long-lived structures. For machinery and equipment (ME), \(\delta_t\) is considerably higher---often between 15 and 30 percent, with peaks in early industrialization and crisis periods---consistent with a small and volatile ME capital base rather than with mismeasurement. Throughout the sample, \(z_t < \delta_t\), as expected given that retirements represent only one component of the processes captured by depreciation.
+
+No rate-level inconsistencies emerge from these diagnostics. Elevated \(\delta_{ME}\) values are best interpreted as an empirical signature of Chile’s historical pattern of modernization and crisis, not as evidence of an SFC violation.
+
+\subsection{Additivity Across Assets}
+
+SFC coherence also requires that asset-level series exactly reproduce the corresponding aggregates:
+\[
+K^g_{\text{total},t} = \sum_a K^g_{a,t}, \qquad
+K^n_{\text{total},t} = \sum_a K^n_{a,t},
+\]
+with analogous relationships for \(I^g_t\), \(D_t\), and \(R_t\).
+
+The audit confirms that these additivity conditions hold identically. There is no indication of misaligned splices, inconsistent level adjustments, or residual discrepancies between disaggregated and aggregate series. The sectoral decomposition is therefore fully consistent with the aggregate capital-stock and flow series.
+
+\subsection{Real Investment--Capital Ratios}
+
+The real investment--capital ratio,
+\[
+i_t = \frac{I^g_t}{K^g_{t-1}},
+\]
+serves as a behavioral diagnostic of the harmonized series. For construction assets, \(i_t\) typically lies between 4 and 6 percent, which is consistent with standard perpetual inventory method (PIM) assumptions and broadly aligned with OECD and BEA benchmarks.
+
+For machinery and equipment, \(i_t\) generally ranges from 14 to 25 percent, with occasional peaks close to 30 percent. These magnitudes are characteristic of an economy undergoing accelerated modernization on top of a relatively small ME capital stock, where investment surges translate into high flow-to-stock ratios. There is no suggestion of implausibly low \(K^g_t\) or overstated \(I^g_t\) after the level correction. Observations outside conventional bounds coincide with identifiable phases of boom or contraction rather than with artifacts of the construction procedure.
+
+\subsection{Net Fixed Capital Formation}
+
+Real net fixed capital formation,
+\[
+\text{FNKF}_t = I^g_t - D_t,
+\]
+provides a complementary diagnostic of the interaction between gross investment and depreciation. Approximately twenty instances of \(\text{FNKF}_t < 0\) appear between 1950 and 1994, concentrated around the major crisis episodes of 1973--77 and 1982--86. These negative values are small relative to the underlying stocks and flows.
+
+Such episodes are entirely consistent with deep macroeconomic contractions in which depreciation temporarily exceeds investment, leading to a net decline in the capital stock. In this context, negative FNKF indicates genuine reductions in net capital accumulation rather than structural flaws in the SFC construction. The underlying stock--flow architecture remains intact.
+
+\subsection{Source Reconciliation and Preferred Benchmarks}
+
+The SFC audit provides a disciplined basis for reconciling the different historical sources and specifying preferred benchmarks for each component of the system.
+
+\subsubsection*{Flows (\(I^g_t\))}
+
+\begin{itemize}
+    \item Levels are taken from Pérez-Eyzaguirre’s series in constant 2003 CLP.
+    \item Asset shares are derived from average patterns in Hofman and Tafunell (2013).
+\end{itemize}
+
+This combination yields a flow series that passes all SFC diagnostics without red flags.
+
+\subsubsection*{Gross Stocks (\(K^g_t\))}
+
+\begin{itemize}
+    \item The structural composition of gross capital is derived from Tafunell \& Ducoing (2016).
+    \item Aggregate levels are anchored in Hofman’s 1950 benchmark (converted to 2003 CLP).
+    \item The series is propagated forward and backward using the SFC accumulation identity.
+\end{itemize}
+
+The resulting gross stock series satisfies both the accumulation and additivity criteria documented above.
+
+\subsubsection*{Net Stocks (\(K^n_t\))}
+
+\begin{itemize}
+    \item For 1950--1994, absolute levels are taken directly from Hofman’s net capital estimates.
+    \item For the pre-1950 period, Clio-Lab is used exclusively to recover relative profiles (time trends and composition), which are then rescaled to the Hofman-consistent level structure.
+\end{itemize}
+
+This procedure preserves the early structural information contained in Clio-Lab while eliminating the level distortion present in the raw series. Clio-Lab is thus retained as a source of early structural proportions but not as a level benchmark, a restriction imposed directly by the SFC diagnostics.
+
+\subsection{Recommended TD--SFC Baseline Specification}
+
+The evidence above supports the following TD--SFC baseline for Cluster 1:
+
+\begin{enumerate}
+    \item \textbf{\(I^g_{2003}\)}: Aggregate levels are drawn from Pérez-Eyzaguirre; asset-level disaggregation is based on Hofman and Tafunell (2013). This preserves reliable level information while imposing a historically plausible composition.
+    \item \textbf{\(K^g_{2003}\)}: Aggregate gross capital in 1950 is anchored to Hofman and extended through time via the SFC accumulation identity, while Tafunell \& Ducoing (2016) provide the asset-level composition. The resulting series passes both stock--flow and additivity checks.
+    \item \textbf{\(K^n_{2003}\)}: Hofman’s net capital series defines the absolute benchmark for 1950--1994. For earlier years, Clio-Lab is used to shape the relative profiles and asset structure, rescaled to the Hofman-consistent level. This avoids the severe scale distortions of raw Clio-Lab while exploiting its informational content where no alternative exists.
+    \item \textbf{Interpretive guidance}: Elevated early \(\delta_{ME}\) values are treated as a substantive historical feature of the Chilean accumulation process rather than as an artifact of the construction. Similarly, negative FNKF during crisis episodes is interpreted as reflecting genuine contractions in net capital accumulation.
+\end{enumerate}
+
+\subsection{Final Assessment}
+
+Taken together, these results indicate that the integrated TD--SFC framework---Hofman + TD-2016 + Pérez-Eyzaguirre + selectively rescaled Clio-Lab---satisfies all major SFC criteria. It preserves the net--gross hierarchy, enforces the accumulation identities at machine precision, yields economically plausible implicit rates, maintains strict additivity, and generates investment--capital patterns that align with the historical record. This specification is therefore adopted as the baseline for the historical and empirical analysis developed in the remainder of the study.

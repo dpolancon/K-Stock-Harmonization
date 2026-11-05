@@ -1,0 +1,35 @@
+For the case of capital stock measurements in machinery and equipment ${K^{g}}_{ME}$, Perez (2019) extension of Lüders et al. (2016) have included gross fixed capital formation series available in Tafunell et al. (2015) in its exended version of chilean historical statistics. Hence, to sustain stock flow consistency for net and gross capital stock measurements of machinery and equipment I leverage on Tafunell index for real gross capital stock in machinery and equipment, using only a point estimate of Hofman (2000) for the year 1950 to turn the index into levels.  An important detail worth to mention is that Hofman series are in 1980 chilean pesos, while Perez (2019) are in 2003 millions of pesos. Hence, before estimating gross capital stock using Hofman's point estimate for the year 1950 and Tafunell index, the 1950 point estimate is deflated to 2003 thousands of millions of pesos (instead of millions as Perez only for more parsimonious visualization of the data while working with it). 
+	
+Utilizes gross fixed capital formation (${I^{g}}_{ME}$=), data from the consolidated dataset by Perez (2019) and Clio-Lab. This data is harmonized with Tafunell \& Ducoing (2015) indices to estimate consistent gross fixed capital formation aggregates aligned with sectoral GDP estimates for the 1860-1940 period, thereby extending Chile's national accounts historical statistics. Retirements of machinery and equipment ($R_{ME}$), are determined by the formula presented previously $R_{ME} = Ig_{ME} - \Delta Kg_{ME}$. While the implicit depletion rate of machinery and equipment ($z_{ME}$) are determined by the stock-flow consistency formula, and its estimations can be appreciated in the figure below. 
+
+\begin{figure}[H]
+	\centering
+	\caption{Implicit Annual Depletion Rate of Gross Capital Stocks. Machinery and Equipment (1901-1994).}
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[scale=0.5]{AppendixA_Figures/AppendixA_z_ME_Kstock_appendix_plot_Zrates.png}
+	\end{subfigure}
+	\hfill
+	\caption*{\tikz\draw[darkgreen, thick] (0,0) -- (0.5,0) node[right] {(dark green)}; Linear Time Trend}
+	\hfill
+	\caption*{\tikz\draw[blue, thick] (0,0) -- (0.5,0) node[right] {(blue)}; LOESS function Time Trend}
+	\label{fig: d_ME_Kstock_appendix_plot_A}
+\end{figure}
+
+As \citet{Tafunell2016} provide only an index of gross capital stock, net capital stock (${K^{n}}_{ME}$) calculations are sourced from Clio-Lab. \citet{PerezEyzaguirre2019} relies on gross fixed capital formation for machinery and equipment without discrepancies when incorporating net capital stocks estimated via a perpetual inventory method, as presented by \citet{Diaz2016}. However, to sustain level consistency levels, I rely on \citet{Hofman2000} point estimate of net capital stocks in $ME$ and used Clio-Lab PUC data to build an index of real net capital stocks at year base $= 100$ to construct the series. Total fixed capital consumption ($D_{ME}$) is identified by the difference between gross fixed capital formation in machinery and equipment with the annual variation of net capital stocks, i.e $D_{t} = {K^{g}}_{t}- {K^{n}}_{t}$. This series is necessary to be estimated for estimating net output and net profit income measures. 
+
+The implicit annual depreciation rate is calculated with the formula presented previously in the introduction of the appendix. The average rate registers in -1.6\%, a standard deviation of 3.9\%, and the slope of its time trend registers a negative slope. This results are intuitive once considering that negative values in average might dominate to positive ones, given that in some periods the depreciation of machinery might rise or decrease the value of net assets in bumpy and asymmetric patterns. Moreover, the negative slope of its time trend, is consistent with the fact that technological progress foster longer duration of machinery and equipment, but also higher pace of their replacements with technological innovations. A time series plot for each implicitly annual depreciation rate of net stocks in machinery and equipment is presented in the figure below of this appendix subsection. 
+
+\begin{figure}[H]
+\centering
+\caption{Implicit Annual Depreciation Rate of Net Capital Stocks. Machinery and Equipment (1901-1994).}
+\begin{subfigure}{0.5\textwidth}
+	\centering
+	\includegraphics[scale=0.5]{AppendixA_Figures/AppendixA_d_ME_Kstock_appendix_plot_Drates.png}
+\end{subfigure}
+\hfill
+\caption*{\tikz\draw[darkgreen, thick] (0,0) -- (0.5,0) node[right] {(dark green)}; Linear Time Trend}
+\hfill
+\caption*{\tikz\draw[blue, thick] (0,0) -- (0.5,0) node[right] {(blue)}; LOESS function Time Trend}
+\label{fig: d_ME_Kstock_appendix_plot_B}
+\end{figure}

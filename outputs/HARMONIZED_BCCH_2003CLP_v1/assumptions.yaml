@@ -1,10 +1,10 @@
 primary_price_space: 2003 CLP
 bundle_type: additive BCCh extension
 command: python codes/run_harmonization_bcch.py
-git_commit: 57bd6129f8a870162b3288b79bf521022d645e16
+git_commit: 54800133bb9cb47ed0e060009f5a5d5c9f5af995
 generated_by: HARMONIZED_BCCH_2003CLP_v1
-python_version: 3.11.9
-repo_status: clean
+python_version: 3.14.3
+repo_status: dirty
 history_through_1994_exact: true
 bcch_start_year: 1995
 pk_start_year: 1940
@@ -43,4 +43,4 @@ input_hashes:
   data/raw/BCCH_ref2018_Pk.xlsx: 6e0c2ed29b005091d717056f38e6a25c84f51b032f50f929c9ecb849253e74e0
   data/raw/ClioLab_GFKF_Freal_nominal_Pk.xlsx: 502b4d2e8d213df0b49fbaee585abeac297171fbb31abb7f387ced009c776b98
   data/raw/Kn_ClioLab.xlsx: cfa25be0bcb7ab3a8649e2289a463fed5863b900886c0e9358c0b802418d9750
-generated_at_utc: '2026-03-11T04:09:34Z'
+generated_at_utc: '2026-08-28T23:25:56Z'

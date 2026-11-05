@@ -1,0 +1,83 @@
+\section{A Stock--Flow Accounting Framework for Capital Accumulation}\label{sec:framework}
+
+The core structure of our data reconstruction rests upon an explicit Stock--Flow Consistent (SFC) accounting framework. Rather than assuming arbitrary continuous depreciation schedules or treating gross and net stocks as independent series, the methodology links all stock levels, investment flows, retirements, depreciation, and price deflators through strict dynamic accounting identities.
+
+\subsection{Laws of Motion for Gross and Net Capital}
+Let $K_{g,t}$ and $K_{n,t}$ denote the real gross capital stock and real net capital stock at the end of period $t$, respectively, expressed in constant 2003 CLP. Let $I_t$ denote real gross fixed capital formation (investment flow) during period $t$.
+
+The law of motion for the \emph{gross capital stock} is governed by physical accumulation and retirements:
+\begin{equation}\label{eq:gross_motion}
+\Delta K_{g,t} \equiv K_{g,t} - K_{g,t-1} = I_t - R_t
+\end{equation}
+where $R_t \ge 0$ represents real capital retirements (scrapping, physical disposals, and structural demolitions). Equation~\eqref{eq:gross_motion} dictates that gross installed capacity increases with gross investment $I_t$ and decreases only when physical assets exit the productive capital base through retirement $R_t$.
+
+The law of motion for the \emph{net capital stock} is governed by real net accumulation and consumption of fixed capital (depreciation):
+\begin{equation}\label{eq:net_motion}
+\Delta K_{n,t} \equiv K_{n,t} - K_{n,t-1} = I_t - D_t
+\end{equation}
+where $D_t \ge 0$ denotes consumption of fixed capital (economic depreciation). Equation~\eqref{eq:net_motion} measures the change in surviving productive value, where $D_t$ incorporates physical wear and tear, age-related efficiency decline, and obsolescence.
+
+\subsection{Capacity Backlog and Joint Stock--Flow Identities}
+We define the \emph{Capacity Backlog} ($B_t$) as the non-negative difference between physical gross capacity ($K_{g,t}$) and net book value ($K_{n,t}$):
+\begin{equation}\label{eq:backlog_def}
+B_t \equiv K_{g,t} - K_{n,t} \ge 0 \quad \forall t
+\end{equation}
+The capacity backlog measures accumulated accounting depreciation that has not yet materialized as physical retirements (scrapping). Subtracting Equation~\eqref{eq:net_motion} from Equation~\eqref{eq:gross_motion} yields the exact law of motion for the backlog:
+\begin{equation}\label{eq:backlog_motion}
+\Delta B_t \equiv B_t - B_{t-1} = R_t - D_t
+\end{equation}
+When depreciation exceeds retirements ($D_t > R_t$), the backlog expands ($\Delta B_t > 0$), reflecting the aging of installed capacity. Conversely, during periods of physical scrapping and structural crisis ($R_t > D_t$), obsolete capital is discarded, shrinking the backlog ($\Delta B_t < 0$).
+
+Equating gross investment $I_t$ from Equations~\eqref{eq:gross_motion} and \eqref{eq:net_motion} establishes the fundamental \emph{Joint Stock--Flow Identity}:
+\begin{equation}\label{eq:joint_identity}
+\Delta K_{g,t} + R_t = \Delta K_{n,t} + D_t = I_t
+\end{equation}
+Equation~\eqref{eq:joint_identity} guarantees joint consistency: gross stock accumulation plus retirements must identically equal net stock accumulation plus depreciation, with both sums equating to gross fixed capital formation.
+
+\paragraph{Pedagogical Numerical Example:} To make the accounting mechanics concrete, consider a stylized capital stock where initial gross physical capacity is $K_{g,0} = 100$ billion CLP and net book value is $K_{n,0} = 70$ billion CLP, giving an initial capacity backlog $B_0 = 30$ billion CLP. Suppose in year $t=1$, new gross investment is $I_1 = 10$ billion CLP, accounting depreciation is $D_1 = 4$ billion CLP, and physical retirements are $R_1 = 2$ billion CLP. Net capital grows by $\Delta K_{n,1} = 10 - 4 = 6$ billion CLP (to $K_{n,1} = 76$), while gross physical capacity grows by $\Delta K_{g,1} = 10 - 2 = 8$ billion CLP (to $K_{g,1} = 108$). The capacity backlog expands by $\Delta B_1 = D_1 - R_1 = 4 - 2 = 2$ billion CLP (to $B_1 = 32$). If an economic downturn subsequently triggers an intensive scrappage wave where retirements jump to $R_2 = 6$ billion CLP while investment drops to $I_2 = 3$ billion CLP and depreciation is $D_2 = 4$ billion CLP, physical capacity contracts by $\Delta K_{g,2} = 3 - 6 = -3$ billion CLP, while net capital contracts by $\Delta K_{n,2} = 3 - 4 = -1$ billion CLP. The backlog shrinks by $\Delta B_2 = D_2 - R_2 = 4 - 6 = -2$ billion CLP (to $B_2 = 30$), demonstrating how physical scrapping reduces accumulated obsolete capacity.
+
+\subsection{Empirical Identification of Implicit Depreciation and Depletion Rates}
+Standard perpetual inventory methods pre-specify exogenous, constant depreciation rates (e.g., $\delta = 0.05$). In contrast, our SFC framework treats depreciation $D_t$ and retirements $R_t$ as empirical outcomes derived directly from Equation~\eqref{eq:joint_identity}:
+\begin{align}
+D_t &= I_t - \Delta K_{n,t} \label{eq:D_derived} \\
+R_t &= I_t - \Delta K_{g,t} \label{eq:R_derived}
+\end{align}
+
+We define the corresponding implicit annual rates relative to lagged capital stocks:\footnote{Because $\delta_t$ is derived implicitly from net stock variations, it summarizes both physical wear and tear and economic revaluations embodied in book-value series, whereas $z_t$ tracks physical asset exits ($R_t$).}
+\begin{align}
+\text{Net Depreciation Rate: } \delta_t &\equiv \frac{D_t}{K_{n,t-1}} = \frac{I_t - \Delta K_{n,t}}{K_{n,t-1}} \label{eq:delta_rate} \\
+\text{Gross Depletion / Scrappage Rate: } z_t &\equiv \frac{R_t}{K_{g,t-1}} = \frac{I_t - \Delta K_{g,t}}{K_{g,t-1}} \label{eq:z_rate}
+\end{align}
+
+Substituting Equation~\eqref{eq:joint_identity} into Equations~\eqref{eq:delta_rate} and \eqref{eq:z_rate} yields the structural rate identities:
+\begin{align}
+\delta_t &= \frac{\Delta K_{g,t} - \Delta K_{n,t} + R_t}{K_{n,t-1}} \label{eq:delta_structural} \\
+z_t &= \frac{\Delta K_{n,t} - \Delta K_{g,t} + D_t}{K_{g,t-1}} \label{eq:z_structural}
+\end{align}
+Equations~\eqref{eq:delta_structural} and \eqref{eq:z_structural} demonstrate that variations in $\delta_t$ and $z_t$ reflect genuine structural shifts in the relative rates of gross capacity growth, net value retention, and cohort retirements.
+
+\subsection{Asset Aggregation Hierarchy and Additivity Constraints}
+The reconstruction operates over five core asset categories:
+\begin{equation}
+\mathcal{A} = \{\text{ME}, \text{NRC}, \text{RC}, \text{NR}, \text{Total}\}
+\end{equation}
+where $\text{ME}$ is Machinery \& Equipment, $\text{NRC}$ is Non-Residential Construction, $\text{RC}$ is Residential Construction, $\text{NR}$ is Total Non-Residential Capital, and $\text{Total}$ is Total Fixed Capital.
+
+Additivity is enforced strictly across all flows and stocks at every point in time $t$:
+\begin{align}
+\text{NR}_t &\equiv \text{ME}_t + \text{NRC}_t \label{eq:add_NR} \\
+\text{Total}_t &\equiv \text{NR}_t + \text{RC}_t = \text{ME}_t + \text{NRC}_t + \text{RC}_t \label{eq:add_Total}
+\end{align}
+
+Equations~\eqref{eq:add_NR} and \eqref{eq:add_Total} apply identically to $I_t, K_{g,t}, K_{n,t}, B_t, R_t$, and $D_t$. Component additivity prevents structural misalignments between disaggregated asset behavior and macroeconomic aggregates.
+
+\subsection{Capital Price Index Integration ($P_k$)}
+To link real constant 2003 CLP stock measures with nominal national accounts and monetary valuation, the framework incorporates a single continuous capital price deflator ($P_{k,t}$, $2003=100$) for 1940--2024:
+\begin{equation}\label{eq:Pk_deflator}
+P_{k,t} = \begin{cases}
+P_{k,t+1} \times \left( \dfrac{P_{k,t}^{\text{Clio}}}{P_{k,t+1}^{\text{Clio}}} \right), & 1940 \le t \le 1959 \quad \text{(Chained ClioLab Growth)} \\
+100.0 \times \left( \dfrac{\text{FBKF}_{\text{nominal},t} / \text{FBKF}_{\text{real},t}}{\text{FBKF}_{\text{nominal},2003} / \text{FBKF}_{\text{real},2003}} \right), & 1960 \le t \le 2024 \quad \text{(BCCh Ratio Deflator)}
+\end{cases}
+\end{equation}
+
+Equation~\eqref{eq:Pk_deflator} ensures that $P_k(2003) = 100.0$ exactly, anchoring official Central Bank deflator dynamics for 1960--2024 while preserving pre-1960 relative price trends from historical trade and production indices.

@@ -1,0 +1,36 @@
+In the case of the non-residential construction sector (${K^{g}}_{NRC}$), \citet{Tafunell2016}  does provide an index for its rate of growth in real terms, since 1900 year onwards. As previously mentioned,\citet{Tafunell2016} based on \citet{Tafunell2013} series and Ducoing (2012) doctoral dissertation, is built leveraging on data of cement inputs. While I asume this is not adequate for the construction sector as a whole, I do consider it a plausible assumption for the non-residential one. Thus, to sustain stock-flow consistency I estimate a new index for the growth of non-residential construction by using Tafunell et al. index as a proportion of the rate of growth of the gross fixed capital stock explained above, which allows also to estimate the residential sector as a reminder of the compound index implicit once considering Tafunell and Cilo-Lab PUC historical statistics. This index register an average and standard deviation statistical discrepancy with Tafunell et al (2015) of 1\% and 1.9\% respectively. To leverage on initial point estimates at $t=1900$, I assume that ${K^{n}}_{NRC}= \alpha {K^{n}}_{C}$  where $\alpha$  is the share of gross fixed capital formation in non-residential construction sector over the sum of residential and non-residential gross fixed capital formation available in Hofman (2000) table D, and follow the same assumption for the initial point estimate of total fixed capital consumption $D_{NRC} = \alpha D_{C}$.  From here, I got an initial point estimate at $t=1900$ for ${K^{g}}_{NRC}$ and then I use the compounded index constructed to sustain stock-flow consistency.  
+
+For the data of gross fixed capital investment for the non-residential sector ${I^{g}}_{NRC}$ I leverage on gross fixed capital formation data in the construction sector as a whole from the consolidated date set by \citet{PerezEyzaguirre2019}, but preponderated by the share of investments implicit in Hofman (2000) series of gross fixed capital formation corresponding to the non-residential sector. In this case, the series do not rely on \citet{Tafunell2016} indexes to estimate gross fixed capital formation in the construction sector due the aforementioned assessment above. Therefore, I keep following a stock-flow consistency to build gross and net capital stocks with \citet{PerezEyzaguirre2019} extension of Clio-Lab Chilean Historical Statistics. 
+	   
+Retirements of capital stocks in the non-residential sector ($R_{NRC}$) that refers to fully depreciated value of plant infrastructure is estimated with stock-flow consistency by the equation $R_{NRC} = Ig_{NRC} - \Delta {K^{g}}_{NRC}$. Implicit annual depletion rate of non-residential construction ($z_{NRC}$) is determined with stock-flow consistency, and can be appreciated in the figure below. 
+
+
+\begin{figure}[H]
+	\centering
+	\caption{Implicit Annual Depletion Rate of Gross Capital Stocks. Non-Residential Construction Sector (1901-1994).}
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[scale=0.5]{AppendixA_Figures/AppendixA_z_NRC_Kstock_appendix_plot_Zrates.png}
+	\end{subfigure}
+	\hfill
+	\caption*{\tikz\draw[darkgreen, thick] (0,0) -- (0.5,0) node[right] {(dark green)}; Linear Time Trend}
+	\hfill
+	\caption*{\tikz\draw[blue, thick] (0,0) -- (0.5,0) node[right] {(blue)}; LOESS function Time Trend}
+	\label{fig: d_ME_Kstock_appendix_plot_A}
+\end{figure}
+
+Departing from the initial point estimates for  ${K^{n}}_{NRC}$  ${D}_{NRC}$  with the assumptions presented above, and already having a series of gross capital stocks and retirements, I applied the identity coming out from the equations of motions previously mentioned and iteratively estimates of ${K^{n}}_{NRC}$ and also $D_{NRC}$. The implicit yearly depreciation rate ($d_{NRC}$) is estimated with the equation presented in the introduction of the appendix having as a result an average value of 2.16\%, a standard deviation of 0.73\%, and linear time trend slope of 0.86. This result seems consistent with the notion that depreciation of net NRC capital stocks should be characterized by higher variance in its flows of capital consumption than the construction sector as a whole, but lower than capital stocks in machinery and equipment. The figure presented below plots the time series of the depreciatation rate of net capital stocks for the non residential construction sector, suggesting an upward tendency that can be interpeted as an upward tendency of depreciation of the net value of plant infrastuctures, which is consistent with \cite{Harvey2018} understanding of built environments for the production process under a capital circuit framework. 
+
+\begin{figure}[H]
+	\centering
+	\caption{Implicit Annual Depreciation Rate of Net Capital Stocks. Non-Residential Construction Sector (1901-1994).}
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[scale=0.5]{AppendixA_Figures/AppendixA_d_NRC_Kstock_appendix_plot_Drates.png}
+	\end{subfigure}
+	\hfill
+	\caption*{\tikz\draw[darkgreen, thick] (0,0) -- (0.5,0) node[right] {(dark green)}; Linear Time Trend}
+	\hfill
+	\caption*{\tikz\draw[blue, thick] (0,0) -- (0.5,0) node[right] {(blue)}; LOESS function Time Trend}
+	\label{fig: d_ME_Kstock_appendix_plot_B}
+\end{figure}

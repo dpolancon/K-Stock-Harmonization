@@ -643,6 +643,20 @@ def write_outputs(
     )
     base_pipeline.normalize_xlsx(out_dir / "harmonized_series_2003CLP_1900_2024.xlsx")
 
+    master_panel = panel.merge(pk_panel[["year", "Pk_2003base"]], on="year", how="left")
+    master_panel.to_csv(
+        out_dir / "harmonized_master_dataset_2003CLP_1900_2024.csv",
+        index=False,
+        float_format="%.17g",
+    )
+    master_panel.to_excel(
+        out_dir / "harmonized_master_dataset_2003CLP_1900_2024.xlsx",
+        index=False,
+        sheet_name="master_harmonized_dataset",
+        float_format="%.17g",
+    )
+    base_pipeline.normalize_xlsx(out_dir / "harmonized_master_dataset_2003CLP_1900_2024.xlsx")
+
     pk_panel.to_csv(out_dir / "harmonized_pk_2003base_1940_2024.csv", index=False, float_format="%.17g")
     pk_panel.to_excel(
         out_dir / "harmonized_pk_2003base_1940_2024.xlsx",

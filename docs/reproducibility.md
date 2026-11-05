@@ -1,6 +1,10 @@
-# Reproducibility
+## Master reproduction command
 
-This repository is reproducible at the publication-bundle level through committed commands and committed artifact bundles.
+To execute all three production stages in sequence and verify full audit compliance in a single command, run:
+
+`python run_all.py`
+
+This master runner executes the frozen Hofman 1980 baseline, the canonical Perez 2003 baseline, and the additive BCCh extension bundle, and verifies that all required output files exist and pass admissibility audits.
 
 ## Canonical `1900-1994` command
 

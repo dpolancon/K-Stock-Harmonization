@@ -1,0 +1,35 @@
+In the case of the construction sector as a whole (${K^{g}}_{C}$), Tafunell \& Ducoing (2015) do not provide an index on the construction sector as a whole, rather only on the Non-Residential sector. An assessment on the series based on GFCF index by Tafunell (2013) points out that the series is build leveraging on data of cement inputs\footnote{I'm grateful to Ignacio Perez for pointing this out to me, as every discussion on proper measures to sustain stock-flow consistency with his data set.}. While this is not an appropriate for a measure of the construction sector as a whole because does not consider more basic materials of residential construction, as for example adobe houses, it is plausible  that the non-residential sector was intensive on cement inputs. Hence, it is plausible to assume that their estimates are appropriate to measure the non-residential construction sector.  Nevertheless they are not for the construction sector as a whole. Hence, my approach was to sustaint the consistency between gross and net capital stocks by means of identifying fixed capital consumption in the construction sector implicit in the net stock series of Diaz \& Wagner (2016) presented in the Clio-Lab PUC series and its corresponding extension spliced by Perez (2019). To do so, I rely on the accounting equations of gross and net capital stocks previously presented, identifying the total fund of fixed capital consumption to later identify the gross capital stock for the construction sector as a whole. Having point estimates on gross capital stocks and consumption of fixed capital of the construction sector, while complete series of fixed capital formation and net capital stocks, then the equations of motions for both measures and the presented identities at the begining of this appendix, identified allows me to calculate iteratively total fixed capital consumption and gross capital with the cost of losing the initial period $t=1900$.
+	
+The gross fixed capital formation data in the construction sector (${I^{g}}_{C}$) from the consolidated data set by Perez (2019) and Clio-Lab are available. In this case, he does not rely on Tafunell \& Ducoing (2015) indexes to estimate gross fixed capital formation in the construction sector due to the aforementioned assessment. Therefore, I keep following stock flow consistency to build gross and net capital stocks with Perez (2019) splice with Lüders et al. (2016) data. Consequently, retirements of machinery and equipment ($R_{C}$) are determined by the formula $R_{C} = Ig_{C} - \Delta {K^{g}}_{C}$, ex-post estimating gross capital stocks. Implicit annual depletion rate of the construction sector determined by the formula presented above ($z_{C}$). As can be appreciated in the figure below. 
+
+
+\begin{figure}[H]
+	\centering
+	\caption{Implicit Annual Depletion Rate of Gross Capital Stocks. Total Construction sector (1901-1994).}
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[scale=0.5]{AppendixA_Figures/AppendixA_z_C_Kstock_appendix_plot_Zrates.png}
+	\end{subfigure}
+	\hfill
+	\subcaption*{\tikz\draw[darkgreen, thick] (0,0) -- (0.5,0) node[right] {(dark green)}; Linear Time Trend}
+	\hfill
+	\subcaption*{\tikz\draw[blue, thick] (0,0) -- (0.5,0) node[right] {(blue)}; LOESS function Time Trend}
+	\label{fig: d_ME_Kstock_appendix_plot}
+\end{figure}
+
+For the case of net capital stocks of the construction sector (${K^{n}}_{C}$), I rely on the series of capital stock presented in Clio-Lab PUC historical statistics (Lüders, et al., 2016), estimated under a perpetual inventory method by \citet{Diaz2016}. As previosuly mentioned, the total fixed capital consumption for the construction sector ($D_{C}$) is identified by the difference between gross fixed capital formation in construction sector with the annual variation of net capital stocks, i.e $D_{t} = {I^{g}}_{t}- \Delta {K^{n}}_{t}$. Correspondingly, the implicit annual depreciation rate ($d_{C}$) is calculated with the identity presented in the introduction of the appendix, with an average of 2.47\% and standard deviation of 0.73\%, while presenting a positive slope in its linear time trend at a value of 1.17 as can be appreciated in the table ~\ref{table:depraciation_rates}, presented above at the introduction of the appendix. 
+
+
+\begin{figure}[H]
+	\centering
+	\caption{Implicit Annual Depreciation Rate of Net Capital Stocks. Total Construction sector (1901-1994).}
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[scale=0.5]{AppendixA_Figures/AppendixA_d_C_Kstock_appendix_plot_Drates.png}
+	\end{subfigure}
+	\hfill
+	\subcaption*{\tikz\draw[darkgreen, thick] (0,0) -- (0.5,0) node[right] {(dark green)}; Linear Time Trend}
+	\hfill
+	\subcaption*{\tikz\draw[blue, thick] (0,0) -- (0.5,0) node[right] {(blue)}; LOESS function Time Trend}
+	\label{fig: d_ME_Kstock_appendix_plot}
+\end{figure}

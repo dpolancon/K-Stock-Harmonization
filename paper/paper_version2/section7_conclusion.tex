@@ -1,0 +1,16 @@
+\section{Conclusion and Data Availability}\label{sec:conclusion}
+
+This paper has presented a unified, stock--flow consistent reconstruction of net and gross capital stocks, investment flows, retirements, depreciation, implicit rates, and capital price deflators for Chile spanning 125 years (1900--2024).
+
+By synthesizing five major historical data sources under an explicit accounting rule, the framework resolves long-standing measurement mismatches between gross physical capacity ($K_g$) and net book value ($K_n$). The resulting master dataset provides empirical researchers with a transparent, consistent dataset across five core asset categories in constant 2003 CLP.
+
+The empirical findings highlight the critical importance of distinguishing between gross capacity and net wealth. The expanding capacity backlog ($B = K_g - K_n$) during structural crisis regimes (1973--1985) and the post-1985 mechanization surge demonstrate that macroeconomic inferences regarding profitability, capacity utilization, and total factor productivity depend heavily on using stock-flow consistent measures.
+
+\subsection{Data Availability and Reproduction Package}
+In accordance with the American Economic Association (AEA) Data Editor Guidelines and FAIR Open Science principles, the complete dataset, codebook, reproduction scripts, and documentation are available in an open-access repository:
+
+\begin{itemize}
+    \item \textbf{Definitive Master Dataset}: Available as a flat CSV (\texttt{harmonized\_master\_dataset\_2003CLP\_1900\_2024.csv}) and Excel workbook (\texttt{harmonized\_master\_dataset\_2003CLP\_1900\_2024.xlsx}) containing all stock/flow series, implicit rates, and $P_k$ deflators.
+    \item \textbf{Master Single-Command Reproduction}: Executing \texttt{python run\_all.py} at the repository root reproduces all dataset series from raw data in under 10 seconds and verifies zero accounting errors.
+    \item \textbf{Master Codebook \& Provenance}: Detailed variable specifications, units, formulas, and source lineages are documented in \texttt{CODEBOOK.md}, while \texttt{assumptions.yaml} records machine-readable SHA-256 hashes and git commit provenance.
+\end{itemize}
