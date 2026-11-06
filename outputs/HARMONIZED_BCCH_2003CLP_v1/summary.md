@@ -11,15 +11,15 @@ The legacy Perez-based 1900-1994 production surface remains frozen and is preser
 - Pk(2003)=100 check: True
 
 ## Provenance
-- Generated at UTC: 2026-08-28T23:25:56Z
-- Git commit: 54800133bb9cb47ed0e060009f5a5d5c9f5af995
+- Generated at UTC: 2026-11-05T21:00:39Z
+- Git commit: f558ca81d4ca937d3e4433870534f6ba4bb9028b
 - Repo status at generation: dirty
 - Command: python codes/run_harmonization_bcch.py
 
 ## Bridge factors (1994)
-- ME: 5.888124411554
-- NRC: 1.033303538667
-- RC: 1.049933189026
+- ME: 6.296786961409
+- NRC: 1.069109782405
+- RC: 0.964691049191
 
 ## Pk splice
 - Primary source 1960-2024: ratio deflator `FBKF_nom / FBKF_real` from `data/raw/BCCH_ref2018_Pk.xlsx`, rebased to 2003=100.

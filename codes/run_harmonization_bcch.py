@@ -185,14 +185,24 @@ def accumulate_gross_and_retirements(
     investment: pd.DataFrame,
     survival_path: Path,
 ) -> Tuple[Dict[str, pd.Series], Dict[str, pd.Series]]:
-    specs = base_pipeline.load_survival_specs(survival_path)
     kg_series: Dict[str, pd.Series] = {}
     retirements: Dict[str, pd.Series] = {}
+    max_age = len(investment)
+    ages = np.arange(max_age)
 
     for asset in ASSETS:
-        survival = base_pipeline.survival_from_spec(specs[asset])
-        kg_series[asset] = base_pipeline.stock_from_survival(investment[f"I_{asset}"], survival)
-        retirements[asset] = base_pipeline.retirement_from_survival(investment[f"I_{asset}"], survival)
+        params = base_pipeline.DUAL_PIM_PARAMS[asset]
+        survival = np.exp(-((ages / params["alpha"]) ** params["beta"]))
+        survival_padded = np.insert(survival, 0, 1.0)
+        d = -np.diff(survival_padded)
+        kg_series[asset] = pd.Series(
+            np.convolve(investment[f"I_{asset}"].values, survival, mode="full")[:max_age],
+            index=investment.index,
+        )
+        retirements[asset] = pd.Series(
+            np.convolve(investment[f"I_{asset}"].values, d, mode="full")[:max_age],
+            index=investment.index,
+        )
 
     kg_series["NR"] = kg_series["ME"] + kg_series["NRC"]
     kg_series["Total"] = kg_series["NR"] + kg_series["RC"]

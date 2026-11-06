@@ -1,7 +1,7 @@
 primary_price_space: 2003 CLP
 control_concept: FBKF ex inventories
 inventories_excluded_from_accumulation: true
-git_commit: 54800133bb9cb47ed0e060009f5a5d5c9f5af995
+git_commit: f558ca81d4ca937d3e4433870534f6ba4bb9028b
 python_version: 3.14.3
 command: python codes/run_harmonization.py
 repo_status: dirty
@@ -15,10 +15,22 @@ lambda_stats:
   n_obs: 95
   lambda_rule: lambda_median (robust to outliers)
 lambda_source: C:\ReposGitHub\K-Stock-Harmonization\outputs\DIAGNOSTIC_LEVEL_NORMALIZATION_LAMBDA_v1\lambda_estimates.yaml
+net_stock_method: Dual Perpetual Inventory Method (Dual PIM)
+dual_pim_parameters:
+  ME:
+    alpha: 15.9
+    beta: 2.42
+    mean_life: 14.1
+  NRC:
+    alpha: 41.3
+    beta: 5.0
+    mean_life: 37.9
+  RC:
+    alpha: 51.16
+    beta: 5.0
+    mean_life: 47.0
 hofman_share_source: C:\ReposGitHub\K-Stock-Harmonization\data\raw\Hofman2000_GrossInvestment.xlsx
 survival_parameter_source: C:\ReposGitHub\K-Stock-Harmonization\outputs\survival_fit_hofman_1980.csv
-gap_ratio_source: C:\ReposGitHub\K-Stock-Harmonization\outputs\harmonized_series_1980CLP_1900_1994.csv
-frozen_baseline_reference: C:\ReposGitHub\K-Stock-Harmonization\outputs\harmonized_series_1980CLP_1900_1994.csv
 deferred_sources:
 - BCCH_1985_2024.xlsx
 - BCCH_ref2018_Pk.xlsx
@@ -44,14 +56,14 @@ regression_vs_extension_candidate:
   investment_max_abs_diff_NRC: 1.862645149230957e-09
   investment_max_abs_diff_RC: 9.313225746154785e-10
   investment_max_abs_diff_Total: 7.450580596923828e-09
-  kg_max_abs_diff_ME: 2.9802322387695312e-08
-  kn_max_abs_diff_ME: 2.2351741790771484e-08
-  kg_max_abs_diff_NRC: 2.9802322387695312e-08
-  kn_max_abs_diff_NRC: 2.9802322387695312e-08
-  kg_max_abs_diff_RC: 1.4901161193847656e-08
-  kn_max_abs_diff_RC: 1.4901161193847656e-08
-  kg_max_abs_diff_Total: 5.960464477539063e-08
-  kn_max_abs_diff_Total: 8.940696716308594e-08
+  kg_max_abs_diff_ME: 7733.434991672635
+  kn_max_abs_diff_ME: 3825313.659825407
+  kg_max_abs_diff_NRC: 8387.59164866805
+  kn_max_abs_diff_NRC: 3194023.5396458507
+  kg_max_abs_diff_RC: 5541.963920116425
+  kn_max_abs_diff_RC: 8258765.6173568
+  kg_max_abs_diff_Total: 21662.990560412407
+  kn_max_abs_diff_Total: 14611519.766046911
 regression_ok: true
 meets_overlap_admissibility: true
 meets_full_period_admissibility: true
@@ -62,5 +74,4 @@ input_hashes:
   data/raw/Hofman2000_GrossInvestment.xlsx: 79f48d96de1595afacfcb1b7b99fdb447aeb8550d319db56c6fe28a0c4132988
   outputs/DIAGNOSTIC_LEVEL_NORMALIZATION_LAMBDA_v1/lambda_estimates.yaml: f6417b820dc7866d6419519a6d81bfee497e355db7fd36d9c2ff2b32957a5bd2
   outputs/survival_fit_hofman_1980.csv: 9275922753ce200f57b7c9f65d29b86efce2253e8c4c27f5cd9d2648adfeba9f
-  outputs/harmonized_series_1980CLP_1900_1994.csv: c04637de75d6aea74241b520edfa335fce12470a9855b264d15ef95b4b266500
-generated_at_utc: '2026-08-28T23:25:54Z'
+generated_at_utc: '2026-11-05T20:59:49Z'

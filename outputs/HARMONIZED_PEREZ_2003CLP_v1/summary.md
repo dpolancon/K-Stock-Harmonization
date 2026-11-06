@@ -14,8 +14,8 @@ Frozen Hofman 1980 baseline remains unchanged.
 - Early rate tolerance (max allowed): 0
 
 ## Provenance
-- Generated at UTC: 2026-08-28T23:25:54Z
-- Git commit: 54800133bb9cb47ed0e060009f5a5d5c9f5af995
+- Generated at UTC: 2026-11-05T20:59:49Z
+- Git commit: f558ca81d4ca937d3e4433870534f6ba4bb9028b
 - Repo status at generation: dirty
 - Command: python codes/run_harmonization.py
 
@@ -24,14 +24,14 @@ Frozen Hofman 1980 baseline remains unchanged.
 - investment_max_abs_diff_NRC: 0.000000001863
 - investment_max_abs_diff_RC: 0.000000000931
 - investment_max_abs_diff_Total: 0.000000007451
-- kg_max_abs_diff_ME: 0.000000029802
-- kg_max_abs_diff_NRC: 0.000000029802
-- kg_max_abs_diff_RC: 0.000000014901
-- kg_max_abs_diff_Total: 0.000000059605
-- kn_max_abs_diff_ME: 0.000000022352
-- kn_max_abs_diff_NRC: 0.000000029802
-- kn_max_abs_diff_RC: 0.000000014901
-- kn_max_abs_diff_Total: 0.000000089407
+- kg_max_abs_diff_ME: 7733.434991672635
+- kg_max_abs_diff_NRC: 8387.591648668051
+- kg_max_abs_diff_RC: 5541.963920116425
+- kg_max_abs_diff_Total: 21662.990560412407
+- kn_max_abs_diff_ME: 3825313.659825406969
+- kn_max_abs_diff_NRC: 3194023.539645850658
+- kn_max_abs_diff_RC: 8258765.617356799543
+- kn_max_abs_diff_Total: 14611519.766046911478
 
 ## Deferred non-Perez sources
 - BCCH_1985_2024.xlsx

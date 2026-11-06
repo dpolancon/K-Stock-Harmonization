@@ -3,17 +3,17 @@ Legacy history through 1994 preserved exactly: True
 Max raw Kn total add-up gap: 0.000000
 Max raw D total add-up gap: 0.000000
 1994 hard-anchor bridge factors:
-- ME: 5.888124411554
-- NRC: 1.033303538667
-- RC: 1.049933189026
+- ME: 6.296786961409
+- NRC: 1.069109782405
+- RC: 0.964691049191
 Median overlap ratios (current / raw BCCh):
-- ME: Kn=7.034991; D=6.146401
-- NRC: Kn=0.951789; D=1.758985
-- RC: Kn=1.071072; D=1.994204
-- NR: Kn=1.298682; D=2.844633
-- Total: Kn=1.207550; D=2.640407
+- ME: Kn=6.554911; D=5.320420
+- NRC: Kn=0.935876; D=1.429208
+- RC: Kn=0.929826; D=1.879081
+- NR: Kn=1.256502; D=2.443964
+- Total: Kn=1.122639; D=2.290454
 Secondary diagnostics:
-- Median scaled BCCh / Clio ratio (ME, 1985-2010): 5168.859338
-- Median scaled BCCh / Clio ratio (Construction, 1985-2010): 2748.779896
-- Median scaled BCCh / Clio ratio (Total, 1985-2010): 3213.568775
-- Median implied-I / BCCh real FBKF ratio (1986-2024): 2.516175
+- Median scaled BCCh / Clio ratio (ME, 1985-2010): 5527.601629
+- Median scaled BCCh / Clio ratio (Construction, 1985-2010): 2706.219398
+- Median scaled BCCh / Clio ratio (Total, 1985-2010): 3215.984474
+- Median implied-I / BCCh real FBKF ratio (1986-2024): 2.633088
